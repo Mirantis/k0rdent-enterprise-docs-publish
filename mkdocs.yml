@@ -16,7 +16,7 @@ theme:
   highlightjs: true
   language: "en"
   custom_dir: docs/custom_theme
-  favicon: img/k0rdent-logo-mark-inverted.svg
+  favicon: img/k0rdent-logo-mark.svg
   logo: img/k0rdent-enterprise-logo-horizontal-inverted.svg
   
   palette:
