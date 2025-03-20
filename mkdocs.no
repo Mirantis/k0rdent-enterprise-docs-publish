@@ -16,7 +16,7 @@ theme:
   highlightjs: true
   language: "en"
   custom_dir: docs/custom_theme
-  favicon: img/k0rdent-logo-mark.svg
+  favicon: img/k0rdent-logo-mark-inverted.svg
   logo: img/k0rdent-enterprise-logo-horizontal-inverted.svg
   
   palette:
@@ -230,8 +230,6 @@ markdown_extensions:
   - def_list
 
 extra:
-  repo_url: https://github.com/Mirantis/k0rdent-enterprise-docs
-  docs_repo_name: Mirantis/docs
   generator: false
   social:
     - icon: fontawesome/brands/x-twitter

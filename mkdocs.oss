@@ -1,14 +1,14 @@
 site_name: Documentation
-site_description: Documentation for Mirantis k0rdent Enterprise.
+site_description: Documentation for k0rdent.
 site_author: Mirantis, Inc.
 
 docs_dir: docs/
-repo_name: Mirantis/k0rdent-enterprise-docs
-repo_url: https://github.com/Mirantis/k0rdent-enterprise-docs/
-edit_uri: https://github.com/Mirantis/k0rdent-enterprise-docs/edit/main/docs/
+repo_name: k0rdent/kcm
+repo_url: https://github.com/k0rdent/kcm
+edit_uri: https://github.com/k0rdent/docs/edit/main/docs/
 
 copyright:
-  Copyright &copy; 2025 Mirantis | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>.
+  Copyright &copy; 2025 The k0rdent authors | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>.
   -- <a href="#__consent">Change cookie settings</a>
 
 theme:
@@ -16,8 +16,9 @@ theme:
   highlightjs: true
   language: "en"
   custom_dir: docs/custom_theme
-  favicon: img/k0rdent-logo-mark.svg
-  logo: img/k0rdent-enterprise-logo-horizontal-inverted.svg
+
+  favicon: img/k0rdent-logo-mark-inverted.svg
+  logo: img/k0rdent-logo-horizontal-inverted.svg
   
   palette:
     - scheme: default
@@ -230,10 +231,13 @@ markdown_extensions:
   - def_list
 
 extra:
-  repo_url: https://github.com/Mirantis/k0rdent-enterprise-docs
-  docs_repo_name: Mirantis/docs
+  docs_repo_name: k0rdent/docs
+  repo_url: https://github.com/k0rdent/kcm
   generator: false
   social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/k0rdent/kcm
+      name: k0rdent on GitHub
     - icon: fontawesome/brands/x-twitter
       link: https://x.com/k0rdent
       name: k0rdent on X
@@ -263,9 +267,9 @@ extra:
           data: 0
           note: >-
             Thanks for your feedback! Help us improve this page by
-            using our <a href="https://github.com/Mirantis/k0rdent-enterprise-docs/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
+            using our <a href="https://github.com/k0rdent/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
-    k0rdentName: Mirantis k0rdent Enterprise
+    k0rdentName: k0rdent
     k0rdentVersion: 0-1-0
     k0rdentDotVersion: 0.1.0
     ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
@@ -301,4 +305,3 @@ extra:
         openstackStandaloneCpCluster: 0.1.0
         vsphereHostedCpCluster: 0.1.0
         vsphereStandaloneCpCluster: 0.1.0
-
