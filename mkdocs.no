@@ -230,8 +230,6 @@ markdown_extensions:
   - def_list
 
 extra:
-  repo_url: https://github.com/Mirantis/k0rdent-enterprise-docs
-  docs_repo_name: Mirantis/docs
   generator: false
   social:
     - icon: fontawesome/brands/x-twitter
