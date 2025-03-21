@@ -295,7 +295,7 @@ extra:
     k0rdentName: Mirantis k0rdent Enterprise
     k0rdentVersion: 0-1-0
     k0rdentDotVersion: 0.1.0
-    ociRegistry: oci://ghcr.io/k0rdent/kcm/charts/kcm
+    ociRegistry: oci://registry.mirantis.com/k0rdent-enterprise
     kofVersions:
       kofVersion: 0-1-1
       kofDotVersion: 0.1.1
