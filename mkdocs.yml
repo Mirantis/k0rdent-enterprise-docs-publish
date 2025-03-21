@@ -211,6 +211,30 @@ nav:
     - Overview: contrib/index.md
     - k0rdent documentation contributor's guide: contrib/k0rdent-documentation-contributors-guide.md
     - k0rdent documentation style guide: contrib/k0rdent-documentation-style-guide.md
+  - GAP: index.md # TEMP DOC; SHOULD BE GAP
+  - AddOns:
+    - Overview: addons/index.md
+    - Virtualization and KubeVirt:
+      - Overview: addons/virtualization/index.md
+      - Getting Started: addons/virtualization/getting-started.md
+      - Installing KubeVirt and HCO: addons/virtualization/kubevirt-install.md
+      - Virtualization Configuration: addons/virtualization/configuration.md
+      - Windows on KubeVirt: addons/virtualization/kubevirt-windows.md
+      - Virtualization Best Practices: addons/virtualization/best-practices.md
+    - Ceph:
+      - Overview: addons/ceph/index.md
+      - Installing Ceph: addons/ceph/ceph-install.md
+      - Configuring Ceph: 
+        - Overview:  addons/ceph/configuration/index.md
+        - MiraCeph: addons/ceph/configuration/MiraCeph.md
+        - MiraCephHealth: addons/ceph/configuration/MiraCephHealth.md
+        - MiraCephSecret: addons/ceph/configuration/MiraCephSecret.md
+        - CephOsdRemoveRequest: addons/ceph/configuration/CephOsdRemoveRequest.md
+        - CephPerfTestRequest: addons/ceph/configuration/CephPerfTestRequest.md
+      - Using MiraCeph Instead of KaasCephCluster: addons/ceph/replace-kaascephcluster.md
+      - Operating Ceph: addons/ceph/ceph-operating.md
+      - Ceph Examples: addons/ceph/ceph-user-scenarios.md
+  - Mirantis Support and Services: addons/services-support.md
 
 markdown_extensions:
   - callouts
