@@ -16,6 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
+          ref: release-v0.1.0  # Explicitly checkout this branch
           fetch-depth: 0  # Ensure all history and tags are fetched
 
       - name: Configure Git Credentials
@@ -50,5 +51,5 @@ jobs:
         if: steps.check_branch.outputs.exists == 'false'
         run: mkdocs gh-deploy
 
-      - name: Deploy to main branch (head)
+      - name: Deploy to gh-pages from release-v0.1.0 branch (v0.1.0 latest stable)
         run: mike deploy --push --update-aliases v0.1.0 latest stable
