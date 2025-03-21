@@ -215,7 +215,6 @@ nav:
     - Overview: contrib/index.md
     - k0rdent documentation contributor's guide: contrib/k0rdent-documentation-contributors-guide.md
     - k0rdent documentation style guide: contrib/k0rdent-documentation-style-guide.md
-  - GAP: index.md # TEMP DOC; SHOULD BE GAP
   - AddOns:
     - Overview: addons/index.md
     - Virtualization and KubeVirt:
