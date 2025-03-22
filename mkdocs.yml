@@ -279,16 +279,16 @@ extra:
     default: stable
   consent:
     title: Cookie consent
-  description: >-
-    By clicking "Accept All Cookies", you agree to the storing of cookies on your device to
-    enhance site navigation, analyze site usage, and assist in our marketing efforts. You can
-    manage your preferences or opt-out at any time by clicking "Cookie Settings". For more
-    information see our [Cookie Policy](https://www.mirantis.com/cookie-policy-us/) and
-    [Privacy Notice](https://legal.mirantis.com/#privacy-notice).
-  actions:
-    - accept
-    - manage
-    - reject
+    description: >-
+      By clicking "Accept All Cookies", you agree to the storing of cookies on your device to
+      enhance site navigation, analyze site usage, and assist in our marketing efforts. You can
+      manage your preferences or opt-out at any time by clicking "Cookie Settings". For more
+      information see our <a href="https://www.mirantis.com/cookie-policy-us/">Cookie Policy</a> and
+      <a href="https://legal.mirantis.com/#privacy-notice">Privacy Notice</a>.
+    actions:
+      - accept
+      - reject
+      - manage
   analytics:
 #    provider: google
 #    property: #id goes here
