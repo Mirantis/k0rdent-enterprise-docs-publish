@@ -107,7 +107,8 @@ plugins:
         k0rdent-documentation-style-guide.md: contrib/k0rdent-documentation-style-guide.md
  
 nav:
-  - Welcome to the Mirantis k0rdent Enterprise docs: index.md
+  - Welcome to the docs: index.md
+  - Mirantis k0rdent AI: k0rdent_ai.md
   - k0rdent concepts:
     - Overview: concepts/index.md
     - Why k0rdent?: concepts/why-k0rdent.md
