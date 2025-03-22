@@ -4,47 +4,27 @@ This tutorial is intended to be a Step-by-Step example of installing and configu
 
 ## Prerequisites
 
-- KinD for setting up a k8s cluster (Kubeadm/KubeSpray clusters are also applicable).
-- Helm for installing charts.
-- cURL for endpoint validation.
+- **{{{ docsVersionInfo.k0rdentName }}} Management Cluster:** Although KinD is used in this guide, you may use any {{{ docsVersionInfo.k0rdentName }}} management cluster that supports deploying k0rdent.
+- **[Helm](https://helm.sh/):** A package manager for Kubernetes to install and manage applications.
+- **[cURL](https://curl.se/):** A versatile command-line tool that enables users to send requests to network endpoints, helping to verify connectivity and inspect API responses.
+- **Familiarity with basic Kubernetes operations** as well as working knowledge of TLS, DNS, and RBAC concepts.
 
-## Step 1. Create a k8s cluster
+## Step 1. Create a the {{{ docsVersionInfo.k0rdentName }}} management cluster
 
-```bash
-cat <<EOF > /tmp/kind-config.yaml
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-  - role: control-plane
-    extraPortMappings:
-      - protocol: TCP
-        containerPort: 443
-        hostPort: 443
-        listenAddress: 0.0.0.0
-EOF
+Follow instructions in the [documentation](../install-k0rdent.md) to install the management cluster.  
 
-kind create cluster --config /tmp/kind-config.yaml
-```
+## Step 2. Install the `Pinniped` Supervisor on the management cluster
 
-## Step 2. Deploy k0rdent to the cluster using Helm
-
-```bash
-helm install kcm oci://ghcr.io/k0rdent/kcm/charts/kcm --version 0.1.0 -n kcm-system --create-namespace
-```
-
-## Step 3. Verify that k0rdent is running
-
-```bash
-kubectl get pods -n kcm-system
-```
-
-## Step 4. Install the `Pinniped` Supervisor on the supervisor cluster
+The Pinniped Supervisor is the core component that handles authentication requests and token validation.
 
 ```bash
 kubectl apply -f https://get.pinniped.dev/v0.37.0/install-pinniped-supervisor.yaml
 ```
+The Pinniped Supervisor installs the necessary resources and configures the Supervisor to manage authentication across clusters.
 
-## Step 5. Expose the pinniped-supervisor deployment
+## Step 3. Expose the pinniped-supervisor deployment
+
+To enable internal access to the Supervisor, expose its service:
 
 ```bash
 cat <<EOF | kubectl create -f -
@@ -65,13 +45,19 @@ spec:
 EOF
 ```
 
-## Step 6. Install an Ingress Controller (Contour)
+This YAML creates a ClusterIP service that maps port 443 on the service to port 8443 on the Supervisor pods, enabling internal cluster communication over TLS.
+
+## Step 4. Install an Ingress Controller (Contour)
+
+You'll need an ingress controller, such as Contour, to manage external access and TLS termination.
 
 ```bash
 kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
 ```
 
-## Step 7. Create an Ingress for the Supervisor which uses TLS passthrough to allow the Supervisor to terminate TLS
+Contour handles ingress traffic and route requests to the Supervisor. {{{ docsVersionInfo.k0rdentname}}} uses it for managing external access with secure, TLS-passthrough configurations. You can accomplish the same thing with other Ingress controllers such as Nginx.
+
+## Step 5. Create an Ingress for the Supervisor which uses TLS passthrough to allow the Supervisor to terminate TLS
 
 ```bash
 cat <<EOF | kubectl apply -f -
@@ -92,13 +78,19 @@ spec:
 EOF
 ```
 
-## Step 8. Check the status of the HTTP proxy
+This configuration sets up an ingress route that directs traffic for the specified FQDN to the Supervisor service on port 443. TLS passthrough ensures that TLS termination happens at the Supervisor, preserving end-to-end encryption.
+
+## Step 6. Check the status of the HTTP proxy
+
+To access the Supervisor via a web browser, add a custom DNS record on your local machine.
+
+Check that the HTTP proxy has been correctly configured and is running as expected:
 
 ```bash
 kubectl get httpproxy supervisor-proxy --namespace pinniped-supervisor -o yaml
 ```
 
-## Step 9. Add a custom DNS record to make it available to reach the supervisor through DNS
+## Step 7. Add a custom DNS record to make it available to reach the supervisor through DNS
 
 Do this on the machine where you will be accessing authorization via Web Browser.
 
@@ -111,15 +103,26 @@ sudo bash -c \
 
 ### Windows `c:\Windows\System32\Drivers\etc\hosts`
 
---- ToDo
+In a Powershell window with elevated privileges, type:
 
-## Step 10. Install cert-manager
+```shell
+Add-Content -Path "C:\Windows\System32\drivers\etc\hosts" -Value "127.0.0.1 pinniped-supervisor.pinniped-supervisor.svc.cluster.local"
+```
+
+These commands add a local DNS entry so that requests to the specified FQDN are resolved to your local machine, enabling access to the Pinniped Supervisor.
+
+## Step 8. Install cert-manager
+
+cert-manager is used to manage TLS certificates within Kubernetes.
 
 ```bash
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.15.0/cert-manager.yaml
 ```
+cert-manager automates the issuance and renewal of TLS certificates. This installation is essential for generating and managing certificates used by the Pinniped Supervisor.
 
-## Step 11. Generate a self-signed certificate
+## Step 9. Generate a self-signed certificate
+
+Create a self-signed certificate to secure the Supervisor’s communications.
 
 ```bash
 cat <<EOF | kubectl create -f -
@@ -181,7 +184,11 @@ spec:
 EOF
 ```
 
-## Step 12. Read the CA’s public key from the Secret and save it locally for later use
+This multi-part YAML creates a self-signed issuer, generates a CA, and issues a serving certificate for the Pinniped Supervisor. The certificate is stored in a `Secret` and later referenced in the `FederationDomain` configuration.
+
+## Step 10. Read the CA’s public key from the Secret and save it locally for later use
+
+Retrieve the public key of the CA to use later when configuring the Pinniped Concierge.
 
 ```bash
 kubectl get secret supervisor-tls-cert \
@@ -189,36 +196,33 @@ kubectl get secret supervisor-tls-cert \
     -o jsonpath="{.data['ca\.crt']}" | base64 -d > /tmp/supervisor-ca.crt
 ```
 
-## Step 13. Configure an Identity Provider in the `Pinniped` Supervisor
+Storing the CA's public key locally allows you to verify TLS connections and configure trust for downstream components like Pinniped Concierge.
 
-### Create an OIDC client app
+## Step 11. Configure an Identity Provider in the Pinniped Supervisor
 
-- In the Okta Admin Console, navigate to Applications > Applications.
-- Create a new app:
-- Click Create App Integration.
-- For the Sign-on method, select OIDC.
-- For Application type, app Web Application, then click next. Only if you would like to offer the password grant flow to your end users should you choose Native Application instead.
-- Enter a name for your app, such as "My Kubernetes Clusters". If you chose to create a Web Application then in the General Settings section, choose Grant Types Authorization Code and Refresh Token. If you chose Native Application then in the General Settings section, choose Grant Types Authorization Code, Refresh Token, and Resource Owner Password.
-- Enter the sign-in redirect URI. This will the `spec.issuer` you will be configuring in your FederationDomain appended with "/callback", in our dem this value will be `https://pinniped-supervisor.pinniped-supervisor.svc.cluster.local/demo-issuer/callback`.
-- Optionally select Limit access to selected groups to restrict which Okta users can log in to Kubernetes using this integration.
-- Save the app and make note of the Client ID and Client secret. If you chose to create a Native Application then there is an extra step required to get a client secret: after saving the app, in the Client Credentials section click Edit, choose Use Client Authentication, and click Save.
-- Navigate to the Sign On tab > OpenID Connect ID Token and click Edit. Fill in the Groups claim filter. For example, for all groups to be present under the claim name groups, fill in "groups" in the first box, then select "Matches regex" and ".*".
+In this step, you configure an OIDC client application (for example, using Okta) to integrate with Pinniped. Although the configuration below references Okta, you can adjust it to use your preferred identity provider.
 
-### Create a group
+### Create an OIDC Client Application
 
-- Go to your Okta admin console
-- Go to the sidebar menu and select Directory > Groups > Add Group.
-- Then enter a name in the Name field, in the demo we use `k8s-group`.
-- Click Save. Then from the Group screen, go to the People tab and click on Assign people.
+1. **In the Okta Admin Console (or your identity provider):**
+   - Navigate to Applications and create a new OIDC application.
+   - Set the sign-in redirect URI to `https://pinniped-supervisor.pinniped-supervisor.svc.cluster.local/demo-issuer/callback`.
+   - Note the Client ID and Client Secret.
+   - Configure the token to include claims such as `email`, `groups`, and `profile`.
 
-## Step 14. Export the secrets as variables
+2. **Create a Group:**
+   - In your identity provider’s admin console, create a group (e.g., `k8s-group`) and assign users who should have access to Kubernetes.
+
+### Export the Secrets as Environment Variables
 
 ```bash
-export OKTA_APP_CLIENT_ID="paste client ID here"
-export OKTA_APP_CLIENT_SECRET="paste client secret here"
+export OKTA_APP_CLIENT_ID="EXAMPLE_OKTA_APP_CLIENT_ID"
+export OKTA_APP_CLIENT_SECRET="EXAMPLE_OKTA_APP_CLIENT_SECRET"
 ```
 
-## Step 15. Create an OIDCIdentityProvider in the same namespace as the Supervisor
+### Create an OIDCIdentityProvider Resource
+
+Create the identity provider resource in Pinniped by running:
 
 ```bash
 cat <<EOF | kubectl create -f -
@@ -228,23 +232,14 @@ metadata:
   namespace: pinniped-supervisor
   name: okta
 spec:
-  # Specify the upstream issuer URL (no trailing slash). Change this to the actual issuer provided by your Okta account
+  # Specify the upstream issuer URL (no trailing slash). Change this to the actual issuer provided by your identity provider.
   issuer: https://my-company.okta.com
-  # Specify how to form authorization requests to Okta
   authorizationConfig:
-    # Request any scopes other than "openid" for claims besides the default claims in your token. The "openid" scope is always included
-    # To learn more about how to customize the claims returned, see here
-    # https://developer.okta.com/docs/guides/customize-tokens-returned-from-okta/overview/
     additionalScopes: [offline_access, groups, email]
-    # If you would also like to allow your end users to authenticate using a password grant, then change this to true. Password grants only work with applications created in Okta as "Native Applications"
     allowPasswordGrant: false
-  # Specify how Okta claims are mapped to Kubernetes identities
   claims:
-    # Specify the name of the claim in your Okta token that will be mapped to the "username" claim in downstream tokens minted by the Supervisor
     username: email
-    # Specify the name of the claim in Okta that represents the groups that the user belongs to. This matches what you specified above with the Groups claim filter
     groups: groups
-  # Specify the name of the Kubernetes Secret that contains your Okta application's client credentials (created below)
   client:
     secretName: okta-client-credentials
 ---
@@ -259,14 +254,21 @@ stringData:
   clientSecret: "$OKTA_APP_CLIENT_SECRET"
 EOF
 ```
+This resource defines how Pinniped should interact with your OIDC identity provider. It maps token claims to Kubernetes identities and securely references client credentials stored in a secret.
 
-## Step 16. Validate the OIDCIdentityProvider status
+## Step 12. Validate the OIDCIdentityProvider Status
+
+Ensure that the identity provider configuration is active and error-free:
 
 ```bash
 kubectl describe OIDCIdentityProvider -n pinniped-supervisor okta
 ```
 
-## Step 17. Create and configure a FederationDomain in the `Pinniped` Supervisor namespace
+Reviewing the resource status confirms that Pinniped has successfully registered your OIDC identity provider.
+
+## Step 13. Create and Configure a FederationDomain
+
+The `FederationDomain` resource ties together the TLS configuration and identity providers to expose a unified issuer endpoint.
 
 ```bash
 cat <<EOF | kubectl create -f -
@@ -276,10 +278,8 @@ metadata:
   name: demo-federation-domain
   namespace: pinniped-supervisor
 spec:
-  # You can choose an arbitrary path for the issuer URL
   issuer: "https://pinniped-supervisor.pinniped-supervisor.svc.cluster.local/demo-issuer"
   tls:
-    # The name of the secretName from the cert-manager Certificate resource above
     secretName: supervisor-tls-cert
   identityProviders:
     - displayName: okta
@@ -290,36 +290,51 @@ spec:
 EOF
 ```
 
-## Step 18. Check that the FederationDomain status
+This `FederationDomain` configuration declares the external issuer URL, references the TLS certificate, and links the previously configured OIDC identity provider.
+
+## Step 14. Verify the `FederationDomain` Status
+
+Check the status of the `FederationDomain` to ensure that all components are correctly integrated:
 
 ```bash
 kubectl get federationdomain demo-federation-domain --namespace pinniped-supervisor -o yaml
 ```
 
-## Step 19. Check that the DNS, certificate, ingress, and FederationDomain are all working together by trying to fetch one of its endpoints
+## Step 15. Verify DNS, Certificate, Ingress, and FederationDomain Integration
+
+Test that the endpoint is accessible and properly serving OIDC configuration by using curl:
 
 ```bash
 curl --cacert /tmp/supervisor-ca.crt \
     "https://pinniped-supervisor.pinniped-supervisor.svc.cluster.local/demo-issuer/.well-known/openid-configuration"
 ```
 
-## Step 20. Install Concierge (agent)
+This command retrieves the OIDC discovery document, confirming that DNS resolution, TLS, ingress routing, and FederationDomain configuration are all working in unison.
+
+## Step 16. Install Pinniped Concierge (Agent)
+
+The Pinniped Concierge component is responsible for issuing and refreshing authentication tokens on behalf of end users.
 
 ```bash
-kubectl apply -f \
-    "https://get.pinniped.dev/v0.37.0/install-pinniped-concierge-crds.yaml"
-
-kubectl apply -f \
-    "https://get.pinniped.dev/v0.37.0/install-pinniped-concierge-resources.yaml"
+kubectl apply -f "https://get.pinniped.dev/v0.37.0/install-pinniped-concierge-crds.yaml"
+kubectl apply -f "https://get.pinniped.dev/v0.37.0/install-pinniped-concierge-resources.yaml"
 ```
 
-## Step 21. Copy the base64 encoded version of our CA cert saved earlier
+These commands install the necessary Custom Resource Definitions (CRDs) and resources for Pinniped Concierge, enabling it to integrate with your authentication flow.
+
+## Step 17. Prepare the CA Certificate for Concierge
+
+Copy the base64-encoded version of the CA certificate saved earlier. This certificate is needed so that the Concierge can trust the Supervisor’s `FederationDomain`.
 
 ```bash
 cat /tmp/supervisor-ca.crt | base64 -w0
 ```
 
-## Step 22. Configure the Concierge to trust the Supervisor’s FederationDomain for authentication by creating a JWTAuthenticator
+This command outputs the CA certificate in a single base64-encoded line. Save this output for later use when configuring the Concierge.
+
+## Step 18. Configure the Concierge with a `JWTAuthenticator`
+
+Create a `JWTAuthenticator` resource to allow the Concierge to trust the Supervisor’s `FederationDomain`.
 
 ```bash
 cat <<EOF | kubectl create -f -
@@ -328,23 +343,28 @@ kind: JWTAuthenticator
 metadata:
   name: demo-supervisor-jwt-authenticator
 spec:
-  # This should be the issuer URL that was declared in the FederationDomain
   issuer: "https://pinniped-supervisor.pinniped-supervisor.svc.cluster.local/demo-issuer"
-  # The audience value below is an arbitrary value that must uniquely identify this cluster. No other workload cluster should use the same value
-  # It can have a human-readable component, but part of it should be random enough to ensure its uniqueness. Since this tutorial only uses a single cluster, you can copy/paste this example value
   audience: workload1-dd9de13c370982f61e9f
   tls:
     certificateAuthorityData: "---> Paste the base64 encoded CA here <---"
 EOF
 ```
 
-## Step 23. Check the status of the created JWTAuthenticator, it should be in phase “Ready”
+The `JWTAuthenticator` resource configures the Concierge to trust tokens issued by the Supervisor. Replace the placeholder with the base64-encoded CA certificate you generated in the previous step.
+
+## Step 19. Verify the `JWTAuthenticator` Status
+
+Ensure that the JWTAuthenticator resource is ready:
 
 ```bash
 kubectl get jwtauthenticator demo-supervisor-jwt-authenticator -o yaml
 ```
+The status should indicate that the resource is in the “Ready” phase, confirming that the Concierge is configured correctly to validate tokens.
 
-## Step 24. Create a RoleBinding to the KCM ClusterRole for users, groups of your OKTA tenant
+## Step 20. Create a `RoleBinding` for End-User Access
+
+Define RBAC policies to grant authenticated users appropriate permissions. In this example, a `RoleBinding` is created to bind users from a specified identity provider group to a `ClusterRole`.
+
 
 ```bash
 cat <<EOF | kubectl create -f -
@@ -364,7 +384,12 @@ roleRef:
 EOF
 ```
 
-## Step 25. Install the `Pinniped` CLI (for AMD64)
+
+This RoleBinding grants read-only access (as defined by the `kcm-namespace-viewer-role`) to users in the specified group, ensuring that only authorized users can view resources in the `kcm-system` namespace.
+
+## Step 21. Install the Pinniped CLI (for AMD64)
+
+Download and install the Pinniped CLI to interact with Pinniped resources more easily.
 
 ```bash
 curl -Lso pinniped https://get.pinniped.dev/v0.37.0/pinniped-cli-linux-amd64 \
@@ -372,78 +397,60 @@ curl -Lso pinniped https://get.pinniped.dev/v0.37.0/pinniped-cli-linux-amd64 \
     && sudo mv pinniped /usr/local/bin/pinniped
 ```
 
-## Step 26. Create kubeconfig files for the end-user
+
+This command downloads the CLI binary, makes it executable, and moves it to a directory in your PATH for convenient access.
+
+## Step 22. Generate Kubeconfig Files for End Users
+
+Use the Pinniped CLI to generate a kubeconfig file that end users will use for authentication.
 
 ```bash
 pinniped get kubeconfig > /tmp/developer.yaml
 ```
 
-**\#** P.S. If you have configured more than one `identityProvider` then you should pass the name of this IDP as well.
-
-```bash
-Error: multiple Supervisor upstream identity providers were found, so the --upstream-identity-provider-name/--upstream-identity-provider-type flags must be specified. Found these upstreams: [{"name":"GitHub.com","type":"github","flows":["browser_authcode"]},{"name":"okta","type":"oidc","flows":["browser_authcode"]}]
-```
-
-**\#** In my case I have set 2 IDP providers and thus I run the following command:
+If you have multiple identity providers configured, specify the desired one:
 
 ```bash
 pinniped get kubeconfig --upstream-identity-provider-name okta > /tmp/developer.yaml
 ```
 
-**\#** After running this command, the authentication link should automatically open in your default browser (if one is available). If you are in a CLI environment or do not have a browser installed, follow these steps instead:
+The generated kubeconfig file contains the necessary configuration to authenticate with the cluster using Pinniped. When the command is run, it will open an authentication link in your browser. If a browser is not available, follow the command-line instructions to complete authentication.
 
-```bash
-pinniped whoami --kubeconfig /tmp/developer.yaml
+## Step 23. Authenticate and Complete the Flow
 
-Tue, 11 Feb 2025 08:27:46 UTC oidcclient/login.go:888 could not open browser {"error": "exec: \"xdg-open,x-www-browser,www-browser\": executable file not found in $PATH"}
+Upon running the kubeconfig generation command, your default browser should open to an authentication page.  
+- **Action:** Log in using your identity provider credentials (e.g., Okta).  
+- **Outcome:** Once authenticated, an authorization code is provided and processed, generating a kubeconfig file with the proper token.
 
-Log in by visiting this link:
 
-    https://pinniped-supervisor.pinniped-supervisor.svc.cluster.local/demo-issuer/oauth2/authorize?access_type=offline&client_id=pinniped-cli&code_challenge=6BerKgOGAuKLYAGc65sk-sDMtQmcjz4McuTSoTCLnrc&code_challenge_method=S256&nonce=a987151f08933c002428f2e93eeffaad&pinniped_idp_name=okta&pinniped_idp_type=oidc&redirect_uri=http%3A%2F%2F127.0.0.1%3A39371%2Fcallback&response_mode=form_post&response_type=code&scope=groups+offline_access+openid+pinniped%3Arequest-audience+username&state=4ff87f26335b8848c57c5973b03cf22c
-
-    Optionally, paste your authorization code:
 ```
-
-**\#** Open above link in Web Browser and authorize via Okta.
-
-**\#** P.S. You must be able to access `pinniped-supervisor.pinniped-supervisor.svc.cluster.local` on port 443. If necessary, add this domain name to your hosts file.
-
-## Step 27. Perform authentication via your Okta credentials and copy the authorization code provided after
-
-Paste the authorization code to the prompt field from previous step.
-
-```bash
-    Optionally, paste your authorization code: pin_ac_***
-
 Current cluster info:
-
 Name: kind-kind-pinniped
 URL: https://127.0.0.1:38395
 
 Current user info:
-
-Username: <omahmudzada@gmail.com>
+Username: <user@example.com>
 Groups: Everyone, k8s-group, system:authenticated
 ```
 
-**\#** In the groups directive you can see the groups the user is a member of.
+This output confirms that the authentication flow is successful and that the RBAC permissions are applied as expected.
 
-## Step 28. Test the created kubeconfig
+## Step 24. Test the Created Kubeconfig
+
+Verify that the new kubeconfig file works by checking access to various resources.
 
 ```bash
 export KUBECONFIG=/tmp/developer.yaml
 
-~# kubectl auth can-i get secrets --namespace=kcm-system
-
-yes
-
-~# kubectl auth can-i create secrets --namespace=kcm-system
-
-no
+kubectl auth can-i get secrets --namespace=kcm-system
+kubectl auth can-i create secrets --namespace=kcm-system
 ```
 
-**\#** As you can see the RBAC roles are working as expected.
 
-**\#** From this point forward, this kubeconfig file may be provided to the user.
+- `kubectl auth can-i get secrets` should return "yes".
+- `kubectl auth can-i create secrets` should return "no", reflecting the read-only access provided.
 
-**\#** P.S. `Pinniped` performs periodic checks on issued tokens every 5 minutes. If a user who belongs to a group with assigned RBAC permissions is removed from that group, `Pinniped` will revoke their access within 5 minutes.
+
+These tests confirm that the RBAC configuration is working correctly and that the authenticated user only has the permissions granted by the RoleBinding.
+
+By following these detailed steps, you have set up a fully functional Pinniped-based federated authentication solution on your {{{ docsVersionInfo.k0rdentName }}} management cluster. This configuration integrates TLS, Ingress, and your chosen identity provider to provide secure, centralized access management across multiple Kubernetes clusters. The Pinniped system also periodically checks and refreshes authentication tokens, ensuring that access permissions remain up to date.
