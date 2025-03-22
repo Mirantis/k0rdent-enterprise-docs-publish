@@ -238,11 +238,11 @@ nav:
       - Using MiraCeph Instead of KaasCephCluster: addons/ceph/replace-kaascephcluster.md
       - Operating Ceph: addons/ceph/ceph-operating.md
       - Ceph Examples: addons/ceph/ceph-user-scenarios.md
-  - ➤ Support and Services:
+  - ➤ Support, Services, Contact:
     - Overview: support/index.md
-    - Contact us: https://www.mirantis.com/contact/
     - Get support: https://www.mirantis.com/support/enterprise-support-services/
     - Mirantis CloudCare Portal: https://support.mirantis.com/s/login/
+    - Contact us: https://www.mirantis.com/contact/
 
 
 markdown_extensions:
