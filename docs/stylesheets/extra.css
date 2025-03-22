@@ -127,3 +127,11 @@ ul.video-list .thumb {
 .md-nav__item--nested + .md-nav__item:not(.md-nav__item--nested) {
   margin-top: 0.6rem;
 }
+
+/* standardize line-height of first and subsequent paragraphs */
+h1 + p, 
+p {
+  line-height: 1.6 !important; /* Choose your preferred line height */
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
