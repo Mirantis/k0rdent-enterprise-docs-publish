@@ -1,36 +1,80 @@
-# Kubernetes OIDC Authentication with Microsoft Entra ID
+# Microsoft Entra ID
 
-## Overview
-
-This guide provides a step-by-step process to configure OIDC authentication for Kubernetes using Microsoft Entra ID. It assumes that an Entra ID application is already set up with the necessary OIDC configurations.
+This section explains how to configure {{{ docsVersionInfo.k0rdentName }}} to use Microsoft Entra ID as an OIDC provider for authentication. While the examples use KinD (Kubernetes in Docker) for demonstration purposes, the concepts and procedures are fully applicable to any {{{ docsVersionInfo.k0rdentName }}} management cluster (for example, [Minikube](https://minikube.sigs.k8s.io/docs/start/), [MicroK8s](https://microk8s.io/), or a cloud-based cluster) that meets the minimum requirements for k0rdent.
 
 ## Prerequisites
 
-Before proceeding, ensure that the following are already configured in Microsoft Entra ID:
+Before you begin, ensure that your environment meets the following prerequisites.
 
-- An OIDC-enabled application registration with the appropriate redirect URIs (we will be using `http://localhost:8000` for this guide).
-- Users assigned to an Entra ID group that will be used for Kubernetes authentication.
-- The OIDC application should return email, groups, and profile claims.
+### 1. Required Software
 
-### Required Tools
+Make sure your development machine has the following installed:
 
-Ensure that you have the following installed:
+- **[Docker](https://docs.docker.com/):** Container runtime to build and run containerized applications.
+- **{{{ docsVersionInfo.k0rdentName }}} Management Cluster:** Although KinD is used in this guide, you may use any {{{ docsVersionInfo.k0rdentName }}} management cluster that supports deploying k0rdent.
+- **[Helm](https://helm.sh/):** A package manager for Kubernetes to install and manage applications.
+- **[Coreutils](https://www.gnu.org/software/coreutils/):** Standard UNIX utilities for various file operations.
+- **[jq](https://stedolan.github.io/jq/):** A lightweight and flexible command-line JSON processor.
+- **[jwt](https://github.com/mike-engel/jwt-cli):** A CLI tool to decode and inspect JSON Web Tokens.
 
-- Docker (For running KinD clusters)
-- KinD (Kubernetes in Docker)
-- Helm (Package manager for Kubernetes)
-- jq (For parsing JSON output)
-- jwt (JWT parsing utility)
-- kubectl krew (Kubectl plugin manager)
-- kubectl oidc-login plugin
-  - Install using krew: `kubectl krew install oidc-login`
-  - Verify installation: `kubectl oidc-login version`
+### 2. Microsoft Entra ID Setup
 
-## Configuration Files
+Prepare your Microsoft Entra ID environment by completing the following steps:
 
-### Authentication Configuration File
+- **Register an OIDC-Enabled Application:**  
+  In the Microsoft Entra ID (formerly Azure AD) portal, register an application with OIDC enabled. Ensure that you configure the appropriate redirect URIs (for example, `http://localhost:8000`).
 
-Save the following as authentication-config.yaml:
+- **Assign Users to an Entra ID Group:**  
+  Ensure that the users who will authenticate are assigned to an Entra ID group that you will use for Kubernetes RBAC.
+
+- **Configure Claims:**  
+  Verify that the OIDC application returns the necessary claims—**preferred_username** (or **email**/**upn** if preferred), **groups**, and **profile**.  
+  > **Note:** Some Entra ID configurations might not return the `email` claim. In such cases, the `preferred_username` claim is used as the username.
+
+- **Obtain Entra ID Credentials:**  
+  After registering your application, note the following:
+  - Your **Tenant ID**.
+  - The **Authorization Server** URL (for example, `https://login.microsoftonline.com/<tenant-id>/v2.0`).
+  - The **Client ID** and, if applicable, the **Client Secret** generated for your Kubernetes application.
+
+---
+
+## Installation Steps
+
+Follow these steps to deploy Microsoft Entra ID as your OIDC provider.
+
+### 1. Install Krew (Kubectl Plugin Manager)
+
+Krew is a package manager for kubectl plugins. Installing it ensures you can manage the OIDC login plugin easily.
+
+You can install Krew by running the following command in your terminal. This script detects your OS and architecture, downloads the latest Krew release, extracts it, and installs it:
+
+```bash
+(
+  set -x; cd "$(mktemp -d)" &&
+  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/arm.*$/arm/')" &&
+  KREW="krew-${OS}_${ARCH}" &&
+  curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+  tar zxvf "${KREW}.tar.gz" &&
+  ./"${KREW}" install krew
+)
+```
+
+For additional details, troubleshooting tips, and instructions for Windows installations, see the official [Krew Installation Guide](https://krew.sigs.k8s.io/docs/user-guide/setup/install/).
+
+### 2. Install the OIDC Login Plugin
+
+The OIDC login plugin for kubectl simplifies the process of obtaining and refreshing tokens from your Entra ID instance.
+
+```bash
+kubectl krew update
+kubectl krew install oidc-login
+```
+
+### 3. Create the Structured Authentication Configuration
+
+This configuration file tells your Kubernetes API server how to validate JWT tokens issued by Entra ID. Create a file named `authentication-config.yaml` with the following content:
 
 ```yaml
 apiVersion: apiserver.config.k8s.io/v1beta1
@@ -42,7 +86,7 @@ jwt:
         - "<client-id>"
     claimMappings:
       username:
-        claim: preferred_username  # Matches the Entra ID username
+        claim: preferred_username  # Use 'email' or 'upn' if preferred and available
         prefix: ""
       groups:
         claim: groups
@@ -60,19 +104,20 @@ jwt:
         message: "groups string must be non-empty"
     userValidationRules:
       - expression: "!user.username.startsWith('system:')"
-        message: "username cannot used reserved system: prefix"
+        message: "username cannot use reserved system: prefix"
       - expression: "user.groups.all(group, !group.startsWith('system:'))"
-        message: "groups cannot used reserved system: prefix"        
+        message: "groups cannot use reserved system: prefix"
 ```
 
-Note:
+> **Note:** Replace `<tenant-id>` and `<client-id>` with the actual values from your Microsoft Entra ID application registration. Adjust the claim mappings if your token uses different claim names (for example, `email` or `upn`).
 
-- Replace `<tenant-id>` and `<client-id>` with the appropriate values from your Entra ID application registration.
-- `preferred_username` is used as the username claim because some Entra ID configurations may not return "email". If your token does not contain `preferred_username`, update this value to `email` or `upn`.
+### 4. Configure Your Kubernetes Cluster
 
-### KinD Cluster Configuration File
+Below is an example KinD cluster configuration that mounts the authentication configuration file. Adapt these instructions if you are using another Kubernetes system.
 
-Save the following as kind-config.yaml:
+#### Create the KinD Cluster Configuration
+
+Create a file named `kind-config.yaml`:
 
 ```yaml
 kind: Cluster
@@ -92,15 +137,49 @@ nodes:
               hostPath: /etc/kubernetes/authentication-config.yaml
               mountPath: /etc/kubernetes/authentication-config.yaml
               readOnly: true
+              pathType: File
     extraMounts:
       - hostPath: ./authentication-config.yaml
         containerPath: /etc/kubernetes/authentication-config.yaml
         readOnly: true
 ```
 
-### RBAC Configuration File
+For other Kubernetes distributions, the concept remains the same—you need to configure your API server to load the `authentication-config.yaml` file. Consult your cluster’s documentation for mounting configuration files and setting extra API server arguments.
 
-Save the following as rbac-config.yaml:
+### 5. Cluster Management with KinD (Example)
+
+If you are using KinD, execute the following commands. Otherwise, adjust these steps to match your Kubernetes provider’s procedures.
+
+#### Create the KinD Cluster
+
+```bash
+kind create cluster --verbosity 99 --config kind-config.yaml --retain
+```
+
+#### Retrieve API Server Pod Information
+
+To inspect the API server configuration, use:
+
+```bash
+kubectl describe pod -n kube-system kube-apiserver-$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')
+```
+
+#### Debugging the Control Plane
+
+For troubleshooting, you can view logs and container status:
+
+```bash
+docker exec kind-control-plane ls /var/log/containers/
+docker exec kind-control-plane crictl ps
+```
+
+---
+
+## RBAC Configuration
+
+For {{{ docsVersionInfo.k0rdentName }}} to work properly with OIDC-authenticated users, configure RBAC policies. Below is a sample RoleBinding configuration that grants permissions to a specific group.
+
+Create a file named `rolebinding.yaml`:
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -108,67 +187,31 @@ kind: RoleBinding
 metadata:
   name: kcm-ns-viewer
   namespace: kcm-system
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: kcm-namespace-viewer-role
 subjects:
   - kind: Group
     name: "<group-id-from-token>"
     apiGroup: rbac.authorization.k8s.io
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kcm-namespace-viewer-role
 ```
 
-Replace `<group-id-from-token>` with the group ID from the Entra ID token.
+> **Note:** Replace `<group-id-from-token>` with the group identifier returned in the Entra ID token that should have access to the `kcm-system` namespace.
 
-## Steps
-
-### Step 1: Create a KinD Cluster
-
-Create a KinD cluster using the configuration file:
+Apply this configuration using:
 
 ```bash
-kind create cluster --config kind-config.yaml
+kubectl apply -f rolebinding.yaml
 ```
 
-Verify that the cluster is running:
+---
 
-```bash
-kubectl cluster-info
-```
+## Token Management
 
-### Step 2: Deploy k0rdent
+### Obtaining a Microsoft Entra ID OIDC Token
 
-Deploy k0rdent to the cluster using Helm:
-
-```bash
-helm install kcm oci://ghcr.io/k0rdent/kcm/charts/kcm --version 0.1.0 -n kcm-system --create-namespace
-```
-
-Verify k0rdent is running:
-
-```bash
-kubectl get pods -n kcm-system
-```
-
-### Step 3: Apply RBAC Configuration
-
-Apply the RBAC configuration to grant access to the Entra ID group:
-
-```bash
-kubectl apply -f rbac-config.yaml
-```
-
-Verify that the role binding is created:
-
-```bash
-kubectl get rolebinding -n kcm-system
-```
-
-This RoleBinding grants the `kcm-ns-viewer` group read-only access to the `kcm-system` namespace. It uses the `kcm-namespace-viewer-role` ClusterRole (baked into the k0rdent installation) to define the permissions.
-
-### Step 4: Authenticate using OIDC
-
-Retrieve the OIDC token:
+Use the `kubectl oidc-login` plugin to retrieve a token from your Entra ID instance. The token is used for authenticating with your Kubernetes API server.
 
 ```bash
 export K8S_TOKEN=$(kubectl oidc-login get-token \
@@ -179,61 +222,78 @@ export K8S_TOKEN=$(kubectl oidc-login get-token \
   --listen-address=localhost:8000 \
   --skip-open-browser=true \
   --oidc-extra-scope="email profile openid" \
-  --force-refresh | jq -r '.status.token')
+  --force-refresh | jq -r '.status.token' \
+) && echo $K8S_TOKEN | jwt decode -
 ```
 
-Note:
+> **Tip:** Replace `<tenant-id>`, `<client-id>`, and `<client-secret>` with the actual values from your Entra ID application registration. The `--oidc-redirect-url-hostname` should match the redirect URI configured in Entra ID.
 
-- Replace `<tenant-id>`, `<client-id>`, and `<client-secret>` with the appropriate values from your Entra ID application registration.
-- The `--oidc-redirect-url-hostname` should match the redirect URI configured in the Entra ID application registration.
-- The `email profile openid` scopes ensure that the token contains user identity claims. Without these, the token may not include the expected "groups" or "preferred_username".
+### Debug Token Validation
 
-Verify that the token contains the necessary claims (email, groups, profile).
+Validate the token by performing a simple API call that includes a higher verbosity level for debugging:
 
 ```bash
-echo $K8S_TOKEN | jwt decode -
+kubectl --token=$K8S_TOKEN get secrets -n kcm-system -v=9
 ```
 
-## Verification Steps
+---
 
-### Verify Access to the Cluster
+## Configuring Kubernetes CLI
 
-Configure the Kubernetes context to use the OIDC token:
+After obtaining your token, update your kubectl configuration to use these OIDC credentials.
+
+### 1. Set User Credentials
 
 ```bash
-kubectl config set-credentials oidc-user --token=$K8S_TOKEN
-kubectl config set-context oidc-context --cluster=kind-kind --user=oidc-user
-kubectl config use-context oidc-context
+kubectl config set-credentials user --token=$K8S_TOKEN
 ```
 
-To switch back to the default context, use:
+### 2. Create a New Context
+
+Set up a context that references your cluster and the new user credentials. For KinD, you might use:
 
 ```bash
-kubectl config use-context "kind-$(kind get clusters | head -n1)" 
+kubectl config set-context user --cluster="kind-$(kind get clusters | head -1)" --user=user --namespace=kcm-system
 ```
 
-### Verify RBAC Permissions
+For other Kubernetes clusters, replace the cluster name appropriately.
 
-Use the kubectl auth can-i command to verify permissions:
+### 3. Verify Access
+
+Confirm that your OIDC credentials provide the necessary access:
 
 ```bash
-kubectl auth can-i list secrets -n kcm-system
-# yes
-kubectl auth can-i create secrets -n kcm-system
-# no
-kubectl auth can-i list secrets -n kube-public
-# no
+kubectl --context=user auth can-i get namespaces
+kubectl --context=user auth can-i get secrets -n kcm-system
+kubectl --context=user auth can-i get pods -n kcm-system
 ```
 
-Based on the RBAC configuration, the user should have read-only access to the `kcm-system` namespace and no access to the `kube-public` namespace.
+### 4. Switch Contexts
 
-We can also verify this by listing the secrets in the namespaces:
+Switch to the OIDC context when needed:
 
 ```bash
-kubectl get secrets -n kcm-system
-kubectl get secrets -n kube-public  # Expected to fail
+kubectl config use-context user
 ```
 
-## Conclusion
+To revert to your default context, use the standard context name (for example, the KinD default):
 
-This guide has demonstrated how to configure OIDC authentication for Kubernetes using Microsoft Entra ID. By following the steps outlined, you can set up OIDC authentication for your Kubernetes cluster and grant access based on Entra ID group membership.
+```bash
+kubectl config use-context "kind-$(kind get clusters | head -1)"
+```
+
+### 5. View Kubeconfig Details
+
+Inspect your current kubeconfig to confirm the setup:
+
+```bash
+kubectl config view --context=user
+```
+
+### 6. [DEBUG] Inspect API Server Logs
+
+For further troubleshooting, review the API server logs:
+
+```bash
+kubectl --context="kind-$(kind get clusters | head -1)" logs -n kube-system kube-apiserver-kind-control-plane | grep authentication.go
+```
