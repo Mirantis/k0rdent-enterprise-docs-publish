@@ -107,7 +107,7 @@ plugins:
         k0rdent-documentation-style-guide.md: contrib/k0rdent-documentation-style-guide.md
  
 nav:
-  - Welcome to the k0rdent docs: index.md
+  - Welcome to the Mirantis k0rdent Enterprise docs: index.md
   - k0rdent concepts:
     - Overview: concepts/index.md
     - Why k0rdent?: concepts/why-k0rdent.md
@@ -214,11 +214,11 @@ nav:
     - Cloud provider credentials management in CAPI: appendix/appendix-providers.md
   - Contributing:
     - Overview: contrib/index.md
-    - k0rdent documentation contributor's guide: contrib/k0rdent-documentation-contributors-guide.md
-    - k0rdent documentation style guide: contrib/k0rdent-documentation-style-guide.md
-  - AddOns:
+    - Contribute to docs: contrib/k0rdent-documentation-contributors-guide.md
+    - Style guide: contrib/k0rdent-documentation-style-guide.md
+  - ➤ AddOns:
     - Overview: addons/index.md
-    - Virtualization and KubeVirt:
+    - KubeVirt:
       - Overview: addons/virtualization/index.md
       - Getting Started: addons/virtualization/getting-started.md
       - Installing KubeVirt and HCO: addons/virtualization/kubevirt-install.md
@@ -238,7 +238,12 @@ nav:
       - Using MiraCeph Instead of KaasCephCluster: addons/ceph/replace-kaascephcluster.md
       - Operating Ceph: addons/ceph/ceph-operating.md
       - Ceph Examples: addons/ceph/ceph-user-scenarios.md
-  - Mirantis Support and Services: addons/services-support.md
+  - ➤ Support and Services:
+    - Overview: support/index.md
+    - Contact us: https://www.mirantis.com/contact/
+    - Get support: https://www.mirantis.com/support/enterprise-support-services/
+    - Mirantis CloudCare Portal: https://support.mirantis.com/s/login/
+
 
 markdown_extensions:
   - callouts
