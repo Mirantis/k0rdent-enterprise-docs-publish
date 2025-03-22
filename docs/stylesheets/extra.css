@@ -91,3 +91,9 @@ ul.video-list .thumb {
   position: relative;
   float:left
 }
+
+/* k0rdent Enterprise docs overrides */
+
+.md-typeset h1 {
+  font-size: 1.5rem;
+}
