@@ -1,14 +1,14 @@
 # MiraCephSecret
 
-The **MiraCephSecret** object aggregates secrets created by Rook orchestration and Ceph controller components. It is managed automatically by the ceph-controller pod and secrets-controller container.
+The `MiraCephSecret` object aggregates secrets created by Rook orchestration and Ceph controller components. It is managed automatically by the ceph-controller pod and secrets-controller container.
 
 Status fields include:
-- **lastSecretCheck:** Last time secrets were checked.
-- **lastSecretUpdate:** Last time secrets were updated.
-- **state:** Current state of the secrets check.
-- **secretInfo:** Details about secrets, including lists for:
-  - **clientSecrets:** Secrets for Ceph clients.
-  - **rgwUserSecrets:** Secrets for Ceph RGW users.
+- `lastSecretCheck:` Last time secrets were checked.
+- `lastSecretUpdate:` Last time secrets were updated.
+- `state:` Current state of the secrets check.
+- `secretInfo:` Details about secrets, including lists for:
+    - `clientSecrets:` Secrets for Ceph clients.
+    - `rgwUserSecrets:` Secrets for Ceph RGW users.
 
 Example:
 ```yaml
