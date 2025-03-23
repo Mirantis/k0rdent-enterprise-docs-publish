@@ -1,265 +1,234 @@
-
 # Ceph Install
-
-*Deploying Ceph on k0rdent*  
-**Co-authors:** Denis Egorenko, Peter Razumovsky
 
 This document describes the Ceph storage reference architecture for Kubernetes clusters and details how to deploy and manage Ceph. Ceph is a distributed storage system that can be deployed on a Kubernetes cluster using OSS Rook. Deploying Ceph on Kubernetes enables its delivery as a ServiceTemplate. Although Ceph is primarily targeted at KubeVirt solutions, it is also well suited for providing persistent block and filesystem storage for any Kubernetes workload. Rook Ceph integrates with Kubernetes as a CSI driver and supports the deployment of StorageClasses based on Ceph RBD (block volumes) and CephFS (filesystem volumes) in both Read-Write-Once and Read-Write-Many modes.
 
----
-
-## Contents
-
-- [Prerequisites and Requirements](#prerequisites-and-requirements)
-- [Nodes Count](#nodes-count)
-- [Ceph Deployment on k0rdent](#ceph-deployment-on-k0rdent)
-  - [1. Apply Ceph Charts HelmRepository Resource](#1-apply-ceph-charts-helmrepository-resource)
-  - [2. Apply Ceph ServiceTemplate](#2-apply-ceph-servicetemplate)
-  - [3. Edit ClusterDeployment to Enable Ceph](#3-edit-clusterdeployment-to-enable-ceph)
-  - [4. Post-Deployment Steps](#4-post-deployment-steps)
-    - [a. Enable Snapshot Controller for KubeVirt Integration](#a-enable-snapshot-controller-for-kubevirt-integration)
-    - [b. Configure and Apply MiraCeph](#b-configure-and-apply-miraceph)
-
----
-
 ## Prerequisites and Requirements
 
-1. **Deployed, healthy ClusterDeployment**
+1. **Deployed, healthy Kubernetes cluster**: In the context of {{{ docsVersionInfo.k0rdentName }}}, this is typically a deployed `ClusterDeployment`.
 
 2. **Networking**  
-   Two subnets should be defined and configured for Ceph:
-   - **Storage Access Subnet(s):**  
-     Provides IP addresses (allocated statically via IPAM) for Ceph nodes. Ceph OSD services bind to these addresses and serve access traffic to and from storage clients. This is considered the public network in Ceph terms.
-   - **Storage Replication Subnet(s):**  
-     Provides IP addresses for Ceph nodes that are used for internal replication traffic. This is considered the cluster network in Ceph terms.
+     Two subnets should be defined and configured for Ceph:
+     - **Storage Access Subnet(s):**  
+       Provides IP addresses (allocated statically via IPAM) for Ceph nodes. Ceph OSD services bind to these addresses and serve access traffic to and from storage clients. This is considered the public network in Ceph terms.
+     - **Storage Replication Subnet(s):**  
+       Provides IP addresses for Ceph nodes that are used for internal replication traffic. This is considered the cluster network in Ceph terms.
 
-   For more details, refer to the [Ceph Network Configuration Reference](https://docs.ceph.com/en/latest/rados/configuration/network-config-ref/).
+     For more details, refer to the [Ceph Network Configuration Reference](https://docs.ceph.com/en/latest/rados/configuration/network-config-ref/).
 
 3. **Hardware**  
-   Please refer to the official Ceph minimal recommendations for hardware requirements. Note that based on your running applications, the hardware requirements (CPU, RAM, disks) might need to be increased for better performance:  
-   - [Minimum Hardware Recommendations](https://docs.ceph.com/en/quincy/start/hardware-recommendations/#minimum-hardware-recommendations)  
-   - [Overall Hardware Recommendations](https://docs.ceph.com/en/quincy/start/hardware-recommendations/#hardware-recommendations)
+     Please refer to the official Ceph minimal recommendations for hardware requirements. Note that based on your running applications, the hardware requirements (CPU, RAM, disks) might need to be increased for better performance:  
+     - [Minimum Hardware Recommendations](https://docs.ceph.com/en/quincy/start/hardware-recommendations/#minimum-hardware-recommendations)  
+     - [Overall Hardware Recommendations](https://docs.ceph.com/en/quincy/start/hardware-recommendations/#hardware-recommendations)
 
 4. **Nodes Count**
 
-   - **Ceph MON Nodes:**  
-     These nodes host all control daemons including:
-     - **Ceph Monitor:** Stores the health and log information for the cluster.
-     - **Ceph Manager:** Provides an endpoint for monitoring, orchestration, and plug-in modules.
-     - **Ceph Object Gateway (RGW) Daemon:** Offers a RESTful gateway (S3-compatible or Swift) between applications and the Ceph cluster.
-     - **Ceph Metadata Server (MDS):** Manages file metadata when using CephFS.
+     - **Ceph MON Nodes:**  
+        These nodes host all control daemons including:
+        - **Ceph Monitor:** Stores the health and log information for the cluster.
+        - **Ceph Manager:** Provides an endpoint for monitoring, orchestration, and plug-in modules.
+        - **Ceph Object Gateway (RGW) Daemon:** Offers a RESTful gateway (S3-compatible or Swift) between applications and the Ceph cluster.
+        - **Ceph Metadata Server (MDS):** Manages file metadata when using CephFS.
 
-     A minimum of 3 monitor nodes is required to maintain cluster quorum in production.
+        A minimum of 3 monitor nodes is required to maintain cluster quorum in production.
 
-   - **Ceph OSD Nodes:**  
-     These nodes run data daemons (OSDs) which provide the storage capacity of the cluster. Typically, at least 1 OSD per device is deployed. For NVMe devices, it is recommended to run no more than two OSDs per device. By default, Ceph uses a replication factor of 3. If fewer than 3 Ceph OSD daemons are running, the cluster enters a degraded state with restrictions on write operations until the required number of OSDs is restored. For fault tolerance and recovery operations (such as disk or node replacement), it is advisable to have more than 3 Ceph OSD nodes.
-
----
+     - **Ceph OSD Nodes:**  
+        These nodes run data daemons (OSDs) which provide the storage capacity of the cluster. Typically, at least 1 OSD per device is deployed. For NVMe devices, it is recommended to run no more than two OSDs per device. By default, Ceph uses a replication factor of 3. If fewer than 3 Ceph OSD daemons are running, the cluster enters a degraded state with restrictions on write operations until the required number of OSDs is restored. For fault tolerance and recovery operations (such as disk or node replacement), it is advisable to have more than 3 Ceph OSD nodes.
 
 ## Ceph Deployment on k0rdent
 
 Deploying Ceph on k0rdent follows these steps:
 
-### 1. Apply Ceph Charts HelmRepository Resource
+1. Create the Ceph Charts HelmRepository Resource
 
-Create a HelmRepository resource for Ceph charts:
+    Create a HelmRepository resource for Ceph charts by applying the following YAML to the target cluster:
 
-```yaml
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  labels:
-    k0rdent.mirantis.com/managed: "true"
-  name: ceph-templates
-  namespace: kcm-system
-spec:
-  interval: 10m0s
-  url: https://binary.mirantis.com/ceph/helm/
-```
-
-*Refer to the [Ceph Hardware Recommendations](https://docs.ceph.com/en/quincy/start/hardware-recommendations/#minimum-hardware-recommendations) for further details.*
-
----
-
-### 2. Apply Ceph ServiceTemplate
-
-Deploy the Ceph ServiceTemplate using the actual Ceph chart version:
-
-```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
-kind: ServiceTemplate
-metadata:
-  name: ceph-1-0-3
-  namespace: kcm-system
-spec:
-  helm:
-    chartSpec:
-      chart: ceph-operator
+    ```yaml
+    apiVersion: source.toolkit.fluxcd.io/v1
+    kind: HelmRepository
+    metadata:
+      labels:
+        k0rdent.mirantis.com/managed: "true"
+      name: ceph-templates
+      namespace: kcm-system
+    spec:
       interval: 10m0s
-      reconcileStrategy: ChartVersion
-      sourceRef:
-        kind: HelmRepository
-        name: ceph-templates
-      version: 1.0.3
-```
+      url: https://binary.mirantis.com/ceph/helm/
+    ```
 
----
+2. Apply the Ceph ServiceTemplate
 
-### 3. Edit ClusterDeployment to Enable Ceph
+    Deploy the Ceph ServiceTemplate using the appropriate Ceph chart version:
 
-Modify the ClusterDeployment to enable Ceph as a service:
+    ```yaml
+    apiVersion: k0rdent.mirantis.com/v1alpha1
+    kind: ServiceTemplate
+    metadata:
+      name: ceph-{{{ docsVersionInfo.addonVersions.dashVersions.ceph }}}
+      namespace: kcm-system
+    spec:
+      helm:
+        chartSpec:
+          chart: ceph-operator
+          interval: 10m0s
+          reconcileStrategy: ChartVersion
+          sourceRef:
+            kind: HelmRepository
+            name: ceph-templates
+          version: {{{ docsVersionInfo.addonVersions.dotVersions.ceph }}}
+    ```
+    This makes Ceph available to deployments.
 
-```yaml
-spec:
-  serviceSpec:
-    services:
-    - name: ceph
-      namespace: ceph-lcm-mirantis
-      template: ceph-1-0-3
-      values: |
-        global:
-          dockerBaseUrl: docker-dev-kaas-local.docker.mirantis.net
-        rookExtraConfig:
-          csiKubeletPath: /var/lib/k0s/kubelet
-        controllers:
-          cephMaintenance:
-            enabled: false
-        installNamespaces: false
-```
+3. Edit ClusterDeployment to Enable Ceph
 
----
+    Modify the ClusterDeployment to enable Ceph as a service:
 
-### 4. Post-Deployment Steps
+    ```yaml
+    ...
+    spec:
+      serviceSpec:
+        services:
+        ...
+        - name: ceph
+          namespace: ceph-lcm-mirantis
+          template: ceph-{{{ docsVersionInfo.addonVersions.dashVersions.ceph }}}
+          values: |
+            global:
+              dockerBaseUrl: docker-dev-kaas-local.docker.mirantis.net
+            rookExtraConfig:
+              csiKubeletPath: /var/lib/k0s/kubelet
+            controllers:
+              cephMaintenance:
+                enabled: false
+            installNamespaces: false
+    ```
 
-After the Ceph Rook infrastructure is ready, perform the following tasks:
+4. Post-Deployment Steps
 
-#### a. Enable Snapshot Controller for KubeVirt Integration
+    After the Ceph Rook infrastructure is ready, perform the following tasks:
 
-Update the ClusterDeployment’s `spec.serviceSpec.services[ceph].values` to enable the snapshot-controller. This step should be done after the initial Ceph chart has been deployed.
+    1. Enable Snapshot Controller for KubeVirt Integration
 
-*(The specific YAML changes for this step should follow your environment’s guidelines.)*
+        According to your environment’s guidelines, update the ClusterDeployment’s `spec.serviceSpec.services[ceph].values` to enable the snapshot-controller. This step should be done after the initial Ceph chart has been deployed.
 
-#### b. Configure and Apply MiraCeph
+    2. Configure and Apply MiraCeph
 
-Create a MiraCeph resource to configure the Ceph cluster. Below is a simple example of a minimal MiraCeph configuration:
+        Create a `MiraCeph` resource to configure the Ceph cluster. Below is a simple example of a minimal `MiraCeph` configuration:
 
-```yaml
-apiVersion: lcm.mirantis.com/v1alpha1
-kind: MiraCeph
-metadata:
-  name: rook-ceph
-  namespace: ceph-lcm-mirantis
-spec:
-  rookNamespace: rook-ceph
-  dashboard: false
-  network:
-    publicNet: 10.6.0.0/24
-    clusterNet: 10.6.0.0/24
-  hyperconverge:
-    tolerations:
-      mon:
-        rules:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
-          operator: Exists
-      mgr:
-        rules:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
-          operator: Exists
-      mds:
-        rules:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
-          operator: Exists
-      rgw:
-        rules:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
-          operator: Exists
-    services:
-    - name: ceph
-      namespace: ceph-lcm-mirantis
-      template: ceph-1-0-3
-      values: |
-        global:
-          dockerBaseUrl: docker-dev-kaas-local.docker.mirantis.net
-        rookExtraConfig:
-          csiKubeletPath: /var/lib/k0s/kubelet
-        controllers:
-          cephMaintenance:
-            enabled: false
-        installNamespaces: false
-        snapshotController:
-          enabled: true
-  nodes:
-  - name: pr-k0rdent-env-cp-0
-    roles: [ "mon", "mgr", "mds" ]
-  - name: pr-k0rdent-env-cp-1
-    roles: [ "mon", "mgr", "mds" ]
-  - name: pr-k0rdent-env-cp-2
-    roles: [ "mon", "mgr", "mds" ]
-  - name: pr-k0rdent-env-md-8b7t7-2tnxw
-    roles: []
-    devices:
-    - name: vdb
-      config:
-        deviceClass: hdd
-  - name: pr-k0rdent-env-md-8b7t7-nml9d
-    roles: []
-    devices:
-    - name: vdb
-      config:
-        deviceClass: hdd
-  - name: pr-k0rdent-env-md-8b7t7-pz46v
-    roles: []
-    devices:
-    - name: vdb
-      config:
-        deviceClass: hdd
-  pools:
-  - name: block-pool
-    useAsFullName: true
-    deviceClass: hdd
-    default: true
-    replicated:
-      size: 3
-    role: block-pool
-  objectStorage:
-    rgw:
-      name: rgw-store
-      dataPool:
-        deviceClass: hdd
-        replicated:
-          size: 3
-      metadataPool:
-        deviceClass: hdd
-        replicated:
-          size: 3
-      gateway:
-        allNodes: false
-        instances: 3
-        port: 8080
-        securePort: 8443
-      preservePoolsOnDelete: false
-  sharedFilesystem:
-    cephFS:
-    - name: cephfs-store
-      dataPools:
-      - name: filesystem-pool
-        deviceClass: hdd
-        replicated:
-          size: 3
-      metadataPool:
-        deviceClass: hdd
-        replicated:
-          size: 3
-      metadataServer:
-        activeCount: 1
-        activeStandby: false
-```
-
----
+        ```yaml
+        apiVersion: lcm.mirantis.com/v1alpha1
+        kind: MiraCeph
+        metadata:
+          name: rook-ceph
+          namespace: ceph-lcm-mirantis
+        spec:
+          rookNamespace: rook-ceph
+          dashboard: false
+          network:
+            publicNet: 10.6.0.0/24
+            clusterNet: 10.6.0.0/24
+          hyperconverge:
+            tolerations:
+              mon:
+                rules:
+                - key: node-role.kubernetes.io/master
+                  effect: NoSchedule
+                  operator: Exists
+              mgr:
+                rules:
+                - key: node-role.kubernetes.io/master
+                  effect: NoSchedule
+                  operator: Exists
+              mds:
+                rules:
+                - key: node-role.kubernetes.io/master
+                  effect: NoSchedule
+                  operator: Exists
+              rgw:
+                rules:
+                - key: node-role.kubernetes.io/master
+                  effect: NoSchedule
+                  operator: Exists
+            services:
+            - name: ceph
+              namespace: ceph-lcm-mirantis
+              template: ceph-1-0-3
+              values: |
+                global:
+                  dockerBaseUrl: docker-dev-kaas-local.docker.mirantis.net
+                rookExtraConfig:
+                  csiKubeletPath: /var/lib/k0s/kubelet
+                controllers:
+                  cephMaintenance:
+                    enabled: false
+                installNamespaces: false
+                snapshotController:
+                  enabled: true
+          nodes:
+          - name: pr-k0rdent-env-cp-0
+            roles: [ "mon", "mgr", "mds" ]
+          - name: pr-k0rdent-env-cp-1
+            roles: [ "mon", "mgr", "mds" ]
+          - name: pr-k0rdent-env-cp-2
+            roles: [ "mon", "mgr", "mds" ]
+          - name: pr-k0rdent-env-md-8b7t7-2tnxw
+            roles: []
+            devices:
+            - name: vdb
+              config:
+                deviceClass: hdd
+          - name: pr-k0rdent-env-md-8b7t7-nml9d
+            roles: []
+            devices:
+            - name: vdb
+              config:
+                deviceClass: hdd
+          - name: pr-k0rdent-env-md-8b7t7-pz46v
+            roles: []
+            devices:
+            - name: vdb
+              config:
+                deviceClass: hdd
+          pools:
+          - name: block-pool
+            useAsFullName: true
+            deviceClass: hdd
+            default: true
+            replicated:
+              size: 3
+            role: block-pool
+          objectStorage:
+            rgw:
+              name: rgw-store
+              dataPool:
+                deviceClass: hdd
+                replicated:
+                  size: 3
+              metadataPool:
+                deviceClass: hdd
+                replicated:
+                  size: 3
+              gateway:
+                allNodes: false
+                instances: 3
+                port: 8080
+                securePort: 8443
+              preservePoolsOnDelete: false
+          sharedFilesystem:
+            cephFS:
+            - name: cephfs-store
+              dataPools:
+              - name: filesystem-pool
+                deviceClass: hdd
+                replicated:
+                  size: 3
+              metadataPool:
+                deviceClass: hdd
+                replicated:
+                  size: 3
+              metadataServer:
+                activeCount: 1
+                activeStandby: false
+        ```
 
 *References:*  
 For further details on network configuration and hardware requirements, please refer to:  

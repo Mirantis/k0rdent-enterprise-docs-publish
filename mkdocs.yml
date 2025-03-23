@@ -349,4 +349,9 @@ extra:
         openstackStandaloneCpCluster: 0.1.0
         vsphereHostedCpCluster: 0.1.0
         vsphereStandaloneCpCluster: 0.1.0
+    addonVersions:
+      dashVersions:
+        ceph: 1-0-3
+      dotVersions:
+        ceph: 1.0.3
 
