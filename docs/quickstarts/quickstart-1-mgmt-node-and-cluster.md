@@ -1,4 +1,4 @@
-# QuckStart 1 - Set up Management Node and Cluster
+# QuickStart 1 - Setup Management Cluster
 
 Please review the [Guide to QuickStarts](index.md) for preliminaries. This QuickStart unit details setting up a single-VM environment for managing and interacting with {{{ docsVersionInfo.k0rdentName }}}, and for hosting {{{ docsVersionInfo.k0rdentName }}} components on a single-node local Kubernetes management cluster. Once {{{ docsVersionInfo.k0rdentName }}} is installed on the management cluster, you can drive {{{ docsVersionInfo.k0rdentName }}} by SSHing into the management node (kubectl is there and will be provisioned with the appropriate kubeconfig) or remotely by various means (for example, install the management cluster kubeconfig in Lens or another Kubernetes dashboard on your laptop, tunnel across from your own local kubectl, and so on).
 
@@ -82,7 +82,7 @@ Preparing to install helm into /usr/local/bin
 helm installed into /usr/local/bin/helm
 ```
 
-## Install {{{ docsVersionInfo.k0rdentName }}} into the k0s management cluster
+## Install {{{ docsVersionInfo.k0rdentName }}}
 
 Now we'll install {{{ docsVersionInfo.k0rdentName }}} itself into the k0s management cluster:
 
@@ -109,7 +109,7 @@ TEST SUITE: None
 
 ## Check that {{{ docsVersionInfo.k0rdentName }}} cluster management pods are running
 
-One fundamental {{{ docsVersionInfo.k0rdentName }}} subsystem, {{{ docsVersionInfo.k0rdentName }}} Cluster Manager (KCM), handles cluster lifecycle management on clouds and infrastructures: for example, it helps you configure and compose clusters and manages infrastructure via Cluster API (CAPI). Before continuing, check that the KCM pods are ready:
+One fundamental {{{ docsVersionInfo.k0rdentName }}} subsystem, k0rdent Cluster Manager (KCM), handles cluster lifecycle management on clouds and infrastructures: for example, it helps you configure and compose clusters and manages infrastructure via Cluster API (CAPI). Before continuing, check that the KCM pods are ready:
 
 ```shell
 kubectl get pods -n kcm-system   # check pods in the kcm-system namespace
