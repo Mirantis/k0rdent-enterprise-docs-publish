@@ -1,12 +1,14 @@
 # Ceph User Scenarios
 
-This section describes basic user scenarios for Ceph usage in Kubernetes workloads. It also covers Ceph usage as the underlying storage system for KubeVirt.
-
----
+This section outlines common scenarios for using Ceph as a storage backend in Kubernetes workloads and in KubeVirt environments. It demonstrates how Ceph, when integrated with {{{ docsVersionInfo.k0rdentName}}} via `MiraCeph`, simplifies storage provisioning by automatically generating the necessary StorageClasses and PVs.
 
 ## Ceph Block PVC Creation
 
-The Ceph solution allows creating Block Ceph-based PVCs without any additional steps. The Ceph Controller automatically creates a corresponding StorageClass for every Ceph Block pool defined in the `spec.pools` section of the MiraCeph specification.
+The Ceph solution supports the creation of Block-based Persistent Volume Claims (PVCs) without requiring manual intervention. When a Ceph Block pool is defined in the `spec.pools` section of the `MiraCeph` specification, the Ceph Controller automatically creates a corresponding `StorageClass`. This automation reduces operational overhead and minimizes configuration drift.
+
+- **Automated `StorageClass` Creation:** By deriving `StorageClass` objects directly from the `MiraCeph` spec, operators avoid the manual steps typically needed to configure storage.  
+- **Volume Modes and Access:** Ceph RADOS Block Device supports both Block `volumeMode` (for Read-Write-Once, Read-Only-Many, and Read-Write-Many) and Filesystem `volumeMode` (for specific access modes). This flexibility allows you to match storage configurations precisely to application needs.  
+- **Operational Consistency:** The automatic association between a Ceph pool and its `StorageClass` helps maintain consistency across environments, reducing configuration errors and streamlining troubleshooting.
 
 For example, if there is a pool named `block-pool` defined as:
 
@@ -22,7 +24,7 @@ spec:
     role: block-pool
 ```
 
-Then a corresponding StorageClass will be created along with the pool’s creation:
+Upon creation of this pool, {{{ docsVersionInfo.k0rdentName}}} creates a matching `StorageClass`:
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -51,11 +53,11 @@ volumeBindingMode: Immediate
 ```
 
 Ceph RADOS Block Device supports creating Persistent Volumes (PVs) with:
+
 - **Block volumeMode:** for access modes such as Read-Write-Once (RWO), Read-Only-Many (ROX), and Read-Write-Many (RWX).
 - **Filesystem volumeMode:** for RWO and ROX access modes.
 
-For the full support matrix, see:  
-[Ceph CSI Support Matrix](https://github.com/ceph/ceph-csi?tab=readme-ov-file#support-matrix).
+For the full support matrix, see:  [Ceph CSI Support Matrix](https://github.com/ceph/ceph-csi?tab=readme-ov-file#support-matrix).
 
 To create a Ceph-based Block PV, define a PVC manifest on the Block pool StorageClass:
 
@@ -75,13 +77,14 @@ spec:
   volumeMode: Block
 ```
 
-This PVC can now be attached as a volume to any Kubernetes workload (e.g., Deployments, StatefulSets, Pods).
-
----
+This PVC can now be attached as a volume to any Kubernetes workload (for example, `Deployments`, `StatefulSets`, or `Pods`).
 
 ## Ceph Filesystem PVC Creation
 
-The Ceph solution also supports creating Filesystem Ceph-based PVCs without additional steps. The Ceph Controller automatically creates a corresponding StorageClass for every CephFS data pool defined in the `spec.sharedFilesystem.cephFS[].dataPools` section of the MiraCeph specification.
+Ceph and {{{ docsVersionInfo.k0rdentName }}} also supports creating Filesystem Ceph-based PVCs without additional steps. The Ceph Controller automatically creates a corresponding `StorageClass` for every CephFS data pool defined in the `spec.sharedFilesystem.cephFS[].dataPools` section of the MiraCeph specification.
+
+- **Unified Management:** The automation extends to CephFS, ensuring that file-based storage is managed in the same seamless way as block storage.  
+- **Simplified Provisioning:** By creating `StorageClass` objects on pool creation, CephFS PVCs require no additional manual configuration. Simply define a PVC manifest referencing the appropriate `StorageClass`, and the underlying file system is provisioned automatically.
 
 For example, if there is a data pool named `filesystem-pool` defined as:
 
@@ -103,20 +106,22 @@ sharedFilesystem:
       activeStandby: false
 ```
 
-Then a corresponding StorageClass will be created along with the pool’s creation (the StorageClass parameters are similar to those used for Block PVCs).
+Then a corresponding `StorageClass` will be created along with the pool’s creation. The `StorageClass` parameters are similar to those used for Block PVCs.
 
 To create a Ceph-based Filesystem PV, define a PVC manifest using the appropriate StorageClass.
 
----
-
 ## Ceph Usage in KubeVirt VMs
 
-KubeVirt can use Ceph-based StorageClasses to provide persistent storage for Virtual Machines.
+KubeVirt leverages Ceph-based `StorageClass` objects to provide persistent storage for Virtual Machines (VMs). Ceph's ability to support both block and filesystem volumes makes it a versatile backend for diverse workloads.
 
-> **Note:** It is recommended to enable the `device_ownership_from_security_context` functionality in the container runtime (CRI) for correct handling of Block volumes by KubeVirt. More details are available at:  
+> **Note:** It is recommended to enable the `device_ownership_from_security_context` feature in the container runtime (CRI) for proper handling of block volumes by KubeVirt. More details are available at:  
 > [Block CRI Ownership Configuration](https://github.com/kubevirt/containerized-data-importer/blob/main/doc/block_cri_ownership_config.md).
 
-Ceph-based persistent volumes can be defined in a KubeVirt VirtualMachine manifest. For example:
+- **Dual Mode Support:** This example illustrates the use of both a filesystem (RWX) and a block (RWO) volume in the same VM, demonstrating Ceph's flexibility in supporting diverse storage requirements.  
+- **Unified Storage for VMs and Containers:** Using Ceph as the underlying storage system allows for consistent management of storage resources, whether they are being used for traditional container workloads or virtual machine environments.  
+- **Simplified VM Provisioning:** With pre-configured `StorageClass` objects, creating and attaching persistent volumes to VMs becomes a seamless process, reducing manual intervention and potential configuration errors.
+
+Ceph-based persistent volumes are defined within a KubeVirt VirtualMachine manifest. Consider the following example:
 
 ```yaml
 apiVersion: kubevirt.io/v1
@@ -184,8 +189,9 @@ spec:
         name: datavolumedisk2
 ```
 
-In this example, two different Ceph-based PVCs are used as DataVolumes for the Virtual Machine:
-- A **Filesystem RWX volume** based on the CephFS StorageClass (`cephfs-store-filesystem-pool`) used as the root disk.
+In this example, two different Ceph-based PVCs are used as `DataVolume` objects for the Virtual Machine:
+
+- A **Filesystem RWX volume** based on the CephFS `StorageClass` (`cephfs-store-filesystem-pool`) used as the root disk.
 - A **Block RWO volume** based on an already created PVC (`cirros-dv-add-vol`) using the Block StorageClass (`block-pool`).
 
 The underlying Block PVC manifest for `cirros-dv-add-vol` is as follows:
@@ -206,4 +212,6 @@ spec:
   volumeMode: Block
 ```
 
-This manifest creates the additional Block PVC, which can then be attached to the Virtual Machine as an extra DataVolume.
+This manifest creates the additional Block PVC, which can then be attached to the Virtual Machine as an extra `DataVolume`.
+
+By automating the creation of `StorageClass` objects and abstracting much of the complexity involved in provisioning persistent volumes, Ceph simplifies the operational tasks for administrators. Whether you're dealing with container workloads or VMs, the consistent and unified approach provided by {{{ docsVersionInfo.k0rdentName }}} Ceph, integrated through `MiraCeph`, streamlines storage management and enhances operational reliability without requiring extensive manual configuration.
