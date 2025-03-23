@@ -221,9 +221,9 @@ nav:
     - Overview: addons/index.md
     - KubeVirt:
       - Overview: addons/virtualization/index.md
-      - Getting Started: addons/virtualization/getting-started.md
-      - Installing KubeVirt and HCO: addons/virtualization/kubevirt-install.md
+      - Install KubeVirt and HCO: addons/virtualization/kubevirt-install.md
       - Virtualization Configuration: addons/virtualization/configuration.md
+      - Getting Started: addons/virtualization/getting-started.md
       - Windows on KubeVirt: addons/virtualization/kubevirt-windows.md
       - Virtualization Best Practices: addons/virtualization/best-practices.md
     - Ceph:
@@ -349,9 +349,24 @@ extra:
         openstackStandaloneCpCluster: 0.1.0
         vsphereHostedCpCluster: 0.1.0
         vsphereStandaloneCpCluster: 0.1.0
+    servicesVersions:
+      dashVersions:
+        certManager: 1-16-2  
+        externalSecrets: 0-11-0
+        ingressNginx: 4-11-3   
+        kyverno: 3-2-6       
+        velero: 8-1-0   
+      dotVersions:
+        certManager: 1.16.2  
+        externalSecrets: 0.11.0
+        ingressNginx: 4.11.3   
+        kyverno: 3.2.6       
+        velero: 8.1.0        
     addonVersions:
       dashVersions:
         ceph: 1-0-3
+        hco: 1-14-1-mira
       dotVersions:
         ceph: 1.0.3
+        hco: 1.14.1-mira
 

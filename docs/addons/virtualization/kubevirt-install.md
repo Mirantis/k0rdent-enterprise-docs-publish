@@ -1,120 +1,136 @@
 # How-To Deploy HCO on k0rdent Environment
 
+This guide outlines the step-by-step process for deploying the Hyperconverged Cluster Operator (HCO) on a {{{ docsVersionInfo.k0rdentName}}} child cluster. The HCO simplifies the deployment of virtualization components such as KubeVirt, CDI, networking, and kubevirt-manager, providing a unified method to manage virtual machine workloads on Kubernetes.
+
 ## Prerequisites
 
-- A deployed k0rdent child cluster
-- `kubectl` utility
-- kubeconfig files for both the KCM and child clusters
+Before proceeding, ensure you have the following in place:
+
+- A deployed k0rdent child cluster.
+- The `kubectl` utility installed and configured.
+- kubeconfig files for both the KCM (k0rdent Control Manager) and the child clusters.
 
 ## Manifests
 
-HCO deployment on a k0rdent child environment uses two manifests:
+Deploying HCO in a {{{ docsVersionInfo.k0rdentName }}} child environment relies on two key manifests, which need to be added to the **management** cluster. The first defines the Helm repository, and the second specifies the `ServiceTemplate` used to deploy HCO.
 
-### 1. Helm Repository Manifest
+1. Helm Repository Manifest
 
-```yaml
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  labels:
-    k0rdent.mirantis.com/managed: 'true'
-  name: kubevirt-repo
-  namespace: kcm-system
-spec:
-  interval: 10m0s
-  url: https://binary.mirantis.com/kubevirt/helm/
-```
+      This manifest sets up the Helm repository from which the HCO chart will be pulled:
 
-### 2. Service Template Manifest
-
-```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
-kind: ServiceTemplate
-metadata:
-  name: hco-1-14-1-mira
-  namespace: kcm-system
-spec:
-  helm:
-    chartSpec:
-      chart: hco
-      interval: 10m0s
-      reconcileStrategy: ChartVersion
-      sourceRef:
-        kind: HelmRepository
+      ```yaml
+      apiVersion: source.toolkit.fluxcd.io/v1
+      kind: HelmRepository
+      metadata:
+        labels:
+          k0rdent.mirantis.com/managed: 'true'
         name: kubevirt-repo
-      version: 1.14.1-mira
-```
+        namespace: kcm-system
+      spec:
+        interval: 10m0s
+        url: https://binary.mirantis.com/kubevirt/helm/
+      ```
 
----
+      Defining the Helm repository ensures that you always pull the correct version of the HCO chart, and the label indicates that this resource is managed by the k0rdent system.
+
+2. `ServiceTemplate` Manifest
+
+      The `ServiceTemplate` manifest directs the deployment of HCO using the Helm chart:
+
+      ```yaml
+      apiVersion: k0rdent.mirantis.com/v1alpha1
+      kind: ServiceTemplate
+      metadata:
+        name: hco-{{{ docsVersionInfo.addonVersions.dashVersions.hco }}}
+        namespace: kcm-system
+      spec:
+        helm:
+          chartSpec:
+            chart: hco
+            interval: 10m0s
+            reconcileStrategy: ChartVersion
+            sourceRef:
+              kind: HelmRepository
+              name: kubevirt-repo
+            version: {{{ docsVersionInfo.addonVersions.dotVersions.hco }}}
+      ```
+
+      By specifying the chart version and the reconcile strategy, this template ensures that HCO remains up to date with minimal manual intervention.
 
 ## Steps
 
-1. **Apply Manifests on the KCM Cluster**
+To deploy HCO, you will add the relevant templates and changes to the management cluster. These
+changes will then affect the relevant child cluster. To install and verify HCO, follow these steps:
 
-   Apply the pre-created manifests (Helm Repository and Service Template) in the `kcm-system` namespace on the KCM cluster. Then verify that the HCO service template is added and in a VALID state. For example, the output should resemble:
+1. Apply Manifests on the KCM Cluster
 
-   ```bash
-   $ kubectl -n kcm-system get servicetemplate
-   NAME                     VALID
-   cert-manager-1-16-2      true
-   dex-0-19-1               true
-   external-secrets-0-11-0  true
-   hco-1-14-1-mira          true
-   ingress-nginx-4-11-0     true
-   ingress-nginx-4-11-3     true
-   kyverno-3-2-6            true
-   velero-8-1-0             true
-   ```
+    Apply the pre-created manifests (see [Manifests](#manifests), above) to the `kcm-system` namespace on the management cluster. Then verify that the HCO `ServiceTemplate` has been added and is in a `VALID` state by listing the servicetemplate objects, as in:
 
-2. **Add HCO Service Definitions to the Clusterdeployment**
+    ```bash
+    $ kubectl -n kcm-system get servicetemplate
+    NAME                     VALID
+    cert-manager-{{{ docsVersionInfo.servicesVersions.dashVersions.certManager }}}      true
+    external-secrets-{{{ docsVersionInfo.servicesVersions.dashVersions.externalSecrets }}}  true
+    hco-{{{ docsVersionInfo.addonVersions.dashVersions.hco}}}          true
+    ingress-nginx-4-11-0     true
+    ingress-nginx-{{{ docsVersionInfo.servicesVersions.dashVersions.ingressNginx }}}     true
+    kyverno-{{{ docsVersionInfo.servicesVersions.dashVersions.kyverno }}}            true
+    velero-{{{ docsVersionInfo.servicesVersions.dashVersions.velero }}}             true
+    ```
 
-   HCO can be added to an existing k0rdent child cluster or defined as part of a k0rdent Clusterdeployment object from scratch. The structure of the Clusterdeployment object remains the same in both cases.  
-   Add the following HCO service definition to the `spec.serviceSpec.services` array on the KCM cluster:
+2. Add HCO Service Definitions to the `Clusterdeployment`
 
-   ```yaml
-   spec:
-     ...
-     serviceSpec:
-       services:
-       - name: hco
-         namespace: kubevirt
-         template: hco-1-14-1-mira
-         values: |
-           admission:
-             enabled: false
-     ...
-   ```
+    Integrate HCO into your existing {{{ docsVersionInfo.k0rdentName}}} child cluster or include it when creating a new `Clusterdeployment` object by updating the `spec.serviceSpec.services` array with the following definition:
 
-   This configuration deploys the HCO operator on the k0rdent child cluster.
+    ```yaml
+    spec:
+      ...
+      serviceSpec:
+        services:
+        - name: hco
+          namespace: kubevirt
+          template: hco-{{{ docsVersionInfo.addonVersions.dashVersions.hco}}}
+          values: |
+            admission:
+              enabled: false
+      ...
+    ```
 
-3. **Verify HCO Deployment on the Child Cluster**
+    This step links the HCO service definition to the {{{ docsVersionInfo.k0rdentName}}} cluster, instructing it to deploy the HCO operator in the `kubevirt` namespace on the child cluster represented by the `ClusterDeployment`.
 
-   Next, switch context to the k0rdent child cluster and verify the HCO deployment. For example, run:
+3. Verify HCO Deployment on the Child Cluster
 
-   ```bash
-   kubectl -n kubevirt get pods
-   ```
+    To verify the installation, switch your KUBECONFIG context to the {{{ docsVersionInfo.k0rdentName }}} child cluster and verify the HCO deployment. For example, run:
 
-   Wait until the pod named similar to `hyperconverged-cluster-operator-xxxxxxxxxx-xxxxx` is in the **Ready** state.
+    ```bash
+    kubectl -n kubevirt get pods
+    ```
 
-4. **Apply the HCO Custom Resource (CR)**
+    Wait until the pod named `hyperconverged-cluster-operator-xxxxxxxxxx-xxxxx` is in the `Ready` state. 
 
-   Once the HCO operator is ready, apply the HCO CR to deploy KubeVirt and its subcomponents (such as network and storage plugins):
+    Monitoring pod status on the child cluster is critical to ensure that the operator is running and ready to manage virtualization components.
 
-   ```yaml
-   apiVersion: hco.kubevirt.io/v1beta1
-   kind: HyperConverged
-   metadata:
-     name: kubevirt-hyperconverged
-     namespace: kubevirt
-   spec:
-     featureGates:
-       downwardMetrics: true
-     infra:
-       nodePlacement:
-         nodeSelector:
-           kubernetes.io/os: linux
-     platform: mke4
-   ```
+4. Apply the HCO Custom Resource (CR)
 
-   > **Note:** Currently, you must specify `platform: mke4` in the HCO CR to properly set up the KubeVirt component on a k0rdent environment. This option’s value may be renamed in the future.
+    Once the HCO operator is ready, apply the HCO `CustomResource` to the child cluster to activate KubeVirt and its subcomponents (such as network and storage plugins):
+
+    ```yaml
+    apiVersion: hco.kubevirt.io/v1beta1
+    kind: HyperConverged
+    metadata:
+      name: kubevirt-hyperconverged
+      namespace: kubevirt
+    spec:
+      featureGates:
+        downwardMetrics: true
+      infra:
+        nodePlacement:
+          nodeSelector:
+            kubernetes.io/os: linux
+      platform: mke4
+    ```
+
+    > NOTE: 
+    > Currently, you must specify `platform: mke4` in the HCO CR to properly set up the KubeVirt component on a k0rdent environment. This option's value may be renamed in the future.
+
+    Applying the HCO CR is the final step that triggers the deployment of all virtualization components, ensuring that your cluster is fully equipped to handle VM workloads.
