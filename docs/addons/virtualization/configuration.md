@@ -1,61 +1,54 @@
 # Configuration
 
+This section describes how to fine-tune the virtualization capabilities of {{{ docsVersionInfo.k0rdentName }}} by modifying the HyperConverged (HCO) custom resource, which is the central configuration point for KubeVirt and its related components. By updating this resource, administrators can adjust certificate management, live migration behavior, resource allocation, and various operational strategies.
+
 ## HCO Custom Resource
 
-Administrators can adjust the configuration of MKE virtualization by updating the HyperConverged custom resource. The default configuration includes:
+Administrators can adjust the configuration of {{{ docsVersionInfo.k0rdentName }}} virtualization by updating the HyperConverged custom resource. The default configuration includes:
 
-- **CertConfig:**  
-  Rotation policy for internal, self-signed certificates, including duration and renewBefore settings.
-  - **Ca:**
-    - Duration: `48h0m0s`
-    - Renew Before: `24h0m0s`
-  - **Server:**
-    - Duration: `24h0m0s`
-    - Renew Before: `12h0m0s`
+- `CertConfig`:  Rotation policy for internal, self-signed certificates, including duration and renewBefore settings. It includes:
+    - `Ca`:
+        - `Duration`: The lifespan of the certificate authority (CA) certificate, such as `48h0m0s`.
+        - `Renew Before`: When the certificate should be renewed prior to expiration, for example, `24h0m0s`.
+    - `Server`:
+        - `Duration`: The validity period for server certificates, as in `24h0m0s`.
+        - `Renew Before`: How early a server certificate is renewed before it expires, as in `12h0m0s`.
 
-- **EvictionStrategy:**  
-  Defines whether a VirtualMachineInstance should be migrated instead of being shut off during a node drain.  
-  **Default:** LiveMigrate
+- `EvictionStrategy`: Specifies how `VirtualMachineInstance` objects (VMIs) should behave during node drains. The default setting, `LiveMigrate`, instructs the system to migrate VMIs rather than shutting them down, thereby minimizing service disruption.
 
-- **FeatureGates:**  
-  A map of feature gate flags with enabled defaults:
-  - `DownwardMetrics` – Allows exposing a limited set of host metrics to guests.
-  - `EnableCommonBootImageImport` – Enables automatic delivery/updates of common data import cron templates.
+- `FeatureGates`:  A map of feature gate flags that enable experimental or optional functionality. The default settings include:  
+    - `DownwardMetrics`: Allows a limited set of host metrics to be exposed to virtual machine guests.
+    - `EnableCommonBootImageImport`: Enables the automatic delivery and updates of common data import cron templates.
 
-- **HigherWorkloadDensity:**  
-  Configuration aimed at increasing virtual machine density.
-  - **MemoryOvercommitPercentage:** The percentage of memory allocated to VMIs compared to the amount given to the hosting pod (`virt-launcher`). **Default:** 100%
+- `HigherWorkloadDensity`: Provides options to increase virtual machine density on nodes.
+    - `MemoryOvercommitPercentage`: Specifies the ratio of virtual machine memory allocation relative to the physical memory assigned to the hosting pod (`virt-launcher`). Default: `100%`
 
-- **NodePlacement:**  
-  Describes node scheduling configuration, defaulted to k0rdent expected node labels.
+- `NodePlacement`:  
+  Describes node scheduling preferences and constraints, defaulted to the node labels expected by {{{ docsVersionInfo.k0rdentName }}}. This configuration ensures that VM workloads are scheduled on appropriate nodes based on resource availability and policy.
 
-- **LiveMigrationConfig:**  
-  Sets live migration limits and timeouts:
-  - **ParallelMigrationsPerCluster:** Maximum number of parallel migrations in the cluster. **Default:** 5
-  - **ParallelOutboundMigrationsPerNode:** Maximum number of outbound migrations per node. **Default:** 2
-  - **CompletionTimeoutPerGiB:** Timeout for migration completion based on guest size (RAM and disks). **Default:** 150
-  - **ProgressTimeout:** Timeout in seconds if the memory copy fails to make progress. **Default:** 150
+- `LiveMigrationConfig`:  Sets parameters for live migration operations, ensuring minimal downtime during migration processes:  
+    - `ParallelMigrationsPerCluster`: Maximum number of concurrent live migrations across the cluster. Default: `5`
+    - `ParallelOutboundMigrationsPerNode`: Maximum number of migrations leaving a single node simultaneously. Default: `2`
+    - `CompletionTimeoutPerGiB`: Timeout for migration completion based on guest resource size (RAM and disk). Default: `150`
+    - `ProgressTimeout`: Timeout in seconds if no progress is observed during memory copying. Default: `150`
 
-- **ResourceRequirements:**  
-  Defines resource requirements for workload pods.
-  - **VmiCPUAllocationRatio:** The fraction of a physical CPU to request per virtual CPU requested by the VMI. **Default:** 10
+- `ResourceRequirements`:  Specifies resource allocation strategies for workload pods.
+    - `VmiCPUAllocationRatio`: Defines the fraction of a physical CPU that is requested per virtual CPU (vCPU) requested by the VMI. Default: `10`
 
-- **UninstallStrategy:**  
-  Defines how to proceed on uninstall when workloads (VirtualMachines, DataVolumes) still exist.  
-  **Default:** BlockUninstallIfWorkloadsExist
+- `UninstallStrategy`: Defines how to proceed on uninstall when workloads (`VirtualMachine`, `DataVolume`, and so on) still exist.  
+  Default: `BlockUninstallIfWorkloadsExist`
 
-- **WorkloadUpdateStrategy:**  
-  Specifies methods for disrupting workloads during automated updates:
-  - **WorkloadUpdateMethods:** **Default:** LiveMigrate
-  - **BatchEvictionInterval:** Time interval to wait before issuing the next batch of shutdowns. **Default:** 1 minute
-  - **BatchEvictionSize:** The number of VMIs that can be forcefully updated per batch. **Default:** 10
+- `WorkloadUpdateStrategy`: Specifies how to handle disruptions during automated updates to workloads: 
+    - `WorkloadUpdateMethods`: Default: `LiveMigrate`
+    - `BatchEvictionInterval`: Time interval to wait before issuing the next batch of shutdowns. Default: `1 minute`
+    - `BatchEvictionSize`: The number of VMIs that can be forcefully updated per batch. Default: `10`
 
 ## Integration with Ceph
 
-Details for integrating with Ceph can be configured as needed.
+Integration with Ceph allows you to seamlessly configure storage backends for your virtual machine workloads. Specific details such as storage class configuration, block or filesystem options, and persistent volume claims can be customized as needed to match your environment's requirements. This integration is designed to ensure that your virtual machines have access to robust, scalable storage solutions managed by Ceph, while remaining within the Kubernetes ecosystem. Details for integrating with Ceph can be configured as needed.
 
 ## Integration with StackLight
 
-Details for integrating with StackLight can be configured as needed.
+StackLight integration provides advanced monitoring and logging capabilities for your virtualized workloads. This integration allows you to capture detailed performance metrics and logs, aiding in both troubleshooting and capacity planning. By integrating with StackLight, administrators can gain deeper insights into the behavior of virtual machines and the underlying infrastructure, facilitating proactive management and optimization. Details for integrating with StackLight can be configured as needed.
 
 
