@@ -1,17 +1,16 @@
-# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs - test3
+# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs
 
 ## Introduction
 
-{{{ docsVersionInfo.k0rdentName }}} has been developed to provide a way to manage distributed infrastructure
-at massive scale leveraging kubernetes.
+Mirantis k0rdent Enterprise is a Kubernetes-native platform engineering solution that provides open source composability to simplify the creation of use case-specific developer platforms at scale. It delivers the open source k0rdent Distributed Container Management Environment (DCME) via a secure software supply chain, with components fully validated by Mirantis and enhanced with additional [Enterprise-class features](addons.index.md) and [24/7 Enterprise or Fully-Managed Support](support/index.md).
 
-The project is based on the premise that:
+Mirantis k0rdent Enterprise (and k0rdent) are based on the premise that:
 
 * Kubernetes and its ecosystem are mature and inherently stable.
 * Large scale adoption of Kubernetes means that {{{ docsVersionInfo.k0rdentName }}} can run anywhere.
 * Community standards and open source projects ensure support and reduce adoption risk.
 
-The goal of the {{{ docsVersionInfo.k0rdentName }}} project is to provide platform engineers with the means
+The goal of {{{ docsVersionInfo.k0rdentName }}} is to provide platform engineers with means
 to deliver a distributed container management environment (DCME) and enable them to
 compose unique internal developer platforms (IDP) to support a diverse range
 of complex modern application workloads.
@@ -32,7 +31,7 @@ manage your Kubernetes clusters in a central location.
 
 ## Structure and History
 
-The project has a number of components, including:
+As noted above, Mirantis k0rdent Enterprise delivers open source k0rdent (with additional features) for Enterprise use, via a tightly-controlled software supply chain and validation process. k0rdent comprises:
 
 * **k0rdent**: the overall project
 
@@ -64,7 +63,7 @@ There are a few historical names that may show up in the code and in older docs,
 
 ## Quick Start
 
-See the [{{{ docsVersionInfo.k0rdentName }}} Quick Start Guide](quickstarts/index.md) to get started with a small deployment.
+See the [{{{ docsVersionInfo.k0rdentName }}} Quick Start Guide](quickstarts/index.md) to get started with a small deployment of Mirantis k0rdent Enterprise.
 
 ## Supported Providers
 
