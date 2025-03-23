@@ -115,7 +115,7 @@ nav:
     - k0rdent architecture: concepts/k0rdent-architecture.md
   - QuickStarts:
     - Guide to Quickstarts: quickstarts/index.md
-    - Set up Management Node and Cluster: quickstarts/quickstart-1-mgmt-node-and-cluster.md
+    - Setup Management Cluster: quickstarts/quickstart-1-mgmt-node-and-cluster.md
     - Configure and Deploy to AWS: quickstarts/quickstart-2-aws.md
     - Configure and Deploy to Azure: quickstarts/quickstart-2-azure.md
   - Administrator Guide:
