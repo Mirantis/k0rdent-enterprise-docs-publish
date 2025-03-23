@@ -171,6 +171,7 @@ hyperconverge:
 This section lets you optimize daemon performance relative to your cluster's overall workload while ensuring that Ceph daemons can coexist with other system components on shared nodes.
 
 ### Ingress Configuration
+
 Ceph on k0rdent enables you to provide the configuration of custom ingress rules for external access, 
 such as setting a public endpoint for the RADOS Gateway (RGW).
 
@@ -180,7 +181,6 @@ such as setting a public endpoint for the RADOS Gateway (RGW).
     - `certs`: TLS certificate details (`cacert`, `tlsCert`, `tlsKey`).
 - `annotations`: Extra key-value annotations.
 - `controllerClassName`: Name of the ingress controller.
-
 
 Example:
 ```yaml
@@ -298,6 +298,7 @@ Includes:
     - `displayName`
     - `capabilities`
     - `quotas`
+
 - `buckets`: List of bucket names.
 - `skipAutoZoneGroupHostnameUpdate`: Flag to disable auto-update of allowed hostnames.
 - `zone`: Specifies the Ceph Multisite zone.
