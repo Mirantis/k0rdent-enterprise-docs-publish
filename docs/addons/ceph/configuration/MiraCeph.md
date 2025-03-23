@@ -60,6 +60,9 @@ By customizing the external cluster configuration, you can bridge an externally 
   
 
 ### Extra Options
+
+The `extraOpts` values help in fine-tuning and safeguarding the cluster. For example, `preventClusterDestroy` is a simple yet effective guard against unintended operations that could lead to data loss.
+
 - `extraOpts`: Extra options for managing the Ceph cluster.  
   Contains fields such as:
   - `customDeviceClasses`: List of custom device classes (besides the default ssd, hdd, nvme).
@@ -80,12 +83,24 @@ extraOpts:
 ```
 
 ### Health Check
-Provides settings for internal daemon healthchecks and liveness probes for monitors (mon), managers (mgr), and OSDs.
-- `startupProbe`: Configuration for the startup probe, with options like:
-  - `timeoutSeconds`, `periodSeconds`, `successThreshold`, and `failureThreshold`.
+
+The `healthCheck` object provides settings for internal daemon healthchecks and liveness probes for monitors (`mon`), managers (`mgr`), and OSDs. It includes values such as:
+
+- `startupProbe`: Configuration for the startup probe, with options such as:
+    - `timeoutSeconds`
+    - `periodSeconds`
+    - `successThreshold`
+    - `failureThreshold`
 - `livenessProbe`: Configuration for the liveness probe, with options such as:
-  - `initialDelaySeconds`, `timeoutSeconds`, `periodSeconds`, `successThreshold`, and `failureThreshold`.
-- `daemonHealth`: Settings for overall health checks for daemon types (mon, osd, status).
+    - `initialDelaySeconds`
+    - `timeoutSeconds`
+    - `periodSeconds`
+    - `successThreshold`
+    - `failureThreshold`
+- `daemonHealth`: Settings for overall health checks for daemon types, including:
+    - `mon`
+    - `osd`
+    - `status`
 
 Example:
 ```yaml
@@ -125,8 +140,12 @@ healthCheck:
         successThreshold: 3
 ```
 
+Properly configured probes not only support operational stability but also provide early warnings of potential issues, enabling proactive remediation.
+
 ### Hyperconverge
+
 Configures resource requests and limits for Ceph daemons and enables scheduling on tainted nodes.
+
 - `tolerations`: Tolerations for tainted nodes (see [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)).
 - `resources`: Specifies resource requests or limits (see [Manage Resources](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)).
 
@@ -149,14 +168,19 @@ hyperconverge:
         cpu: 3
 ```
 
+This section lets you optimize daemon performance relative to your cluster's overall workload while ensuring that Ceph daemons can coexist with other system components on shared nodes.
+
 ### Ingress Configuration
-Allows configuration of custom ingress rules for external access (e.g., public endpoint for RGW).
+
+Ceph on k0rdent enables you to provide the configuration of custom ingress rules for external access, 
+such as setting a public endpoint for the RADOS Gateway (RGW).
+
 - `tlsConfig`: TLS configuration including:
-  - `publicDomain`: Domain name for public endpoints.
-  - `tlsSecretRefName`: Name of the secret holding TLS certs.
-  - `certs`: TLS certificate details (`cacert`, `tlsCert`, `tlsKey`).
+    - `publicDomain`: Domain name for public endpoints.
+    - `tlsSecretRefName`: Name of the secret holding TLS certs.
+    - `certs`: TLS certificate details (`cacert`, `tlsCert`, `tlsKey`).
 - `annotations`: Extra key-value annotations.
-- `controllerClassName`: Name of the ingress controller (default for MOSK clouds is `openstack-ingress-nginx`).
+- `controllerClassName`: Name of the ingress controller.
 
 Example:
 ```yaml
@@ -174,7 +198,7 @@ ingressConfig:
         <tlsCert>
 ```
 
-Alternate example:
+Or perhaps:
 ```yaml
 ingressConfig:
   controllerClassName: custom-ingress-controller
@@ -183,8 +207,12 @@ ingressConfig:
     tlsSecretRefName: ingress-custom-certs
 ```
 
+Configuring ingress in this way allows controlled exposure of services (such as RGW) with security parameters defined as needed. This approach integrates well with standard Kubernetes practices without adding unnecessary layers of abstraction.
+
 ### Manager Modules (mgr)
-Configures Ceph Manager modules to enable.
+
+Enabling specific manager modules helps streamline cluster operations by offloading workload balancing and pool autoscaling, all configured directly within the Ceph management interface.
+
 Example:
 ```yaml
 mgr:
@@ -196,7 +224,9 @@ mgr:
 ```
 
 ### Network
-Defines network ranges for daemon communication.
+
+The `network` object defines ranges for daemon communication.
+
 - `clusterNet`: CIDR for OSD replication network.
 - `publicNet`: CIDR for service-to-operator communication.
   
@@ -207,9 +237,14 @@ network:
   clusterNet: "10.10.0.0/24,10.11.0.0/24"
 ```
 
+Separating network traffic based on purpose—replication versus external communication—supports better network hygiene and easier troubleshooting.
+
 ### Nodes
-Full configuration for Ceph nodes.
+
+The `node` object includes the full configuration for Ceph nodes.
+
 Each node entry includes:
+
 - `name`: Kubernetes node name.
 - `roles`: List of daemons to spawn (e.g., `mon`, `mgr`, `rgw`, `mds`).
 - `crush`: Explicit key-value CRUSH topology (see [CRUSH Maps](https://docs.ceph.com/en/latest/rados/operations/crush-map/)).
@@ -217,9 +252,9 @@ Each node entry includes:
 - `nodeGroup / nodesByLabel`: For grouping nodes.
 - `resources`: Kubernetes resource requirements.
 - `devices`: List of devices with:
-  - `name`: Device name.
-  - `fullpath`: Device symlink.
-  - `config`: Device configuration (must include `deviceClass` and may include `metadataDevice` or `osdsPerDevice`).
+    - `name`: Device name.
+    - `fullpath`: Device symlink.
+    - `config`: Device configuration (must include `deviceClass` and may include `metadataDevice` or `osdsPerDevice`).
 
 Example:
 ```yaml
@@ -242,29 +277,51 @@ nodes:
         name: disk-1
 ```
 
+Detailed node configuration—including CRUSH maps and resource definitions—allows operators to align the cluster layout with existing infrastructure and performance requirements.
+
 ### Object Storage
-Full configuration for RadosGW and multisite features.
+
+Full configuration for RadosGW and multisite features. This section provides a unified method for configuring both object storage and multi-zone capabilities, ensuring that settings remain consistent and traceable.
+
 Includes:
-- `rgw`: RGW settings such as:
-  - `name, dataPool, metadataPool, preservePoolsOnDelete, gateway, externalRgwEndpoints, resources.`
-- `objectUsers`: List of object storage users (with `name`, `displayName`, `capabilities`, `quotas`).
+
+- `rgw`: RADOS Gateway settings such as:
+    - `name`
+    - `dataPool`
+    - `metadataPool`
+    - `preservePoolsOnDelete`
+    - `gateway`
+    - `externalRgwEndpoints`
+    - `resources`
+- `objectUsers`: A list of object storage users. Each includes:
+    - `name`
+    - `displayName`
+    - `capabilities`
+    - `quotas`
+
 - `buckets`: List of bucket names.
 - `skipAutoZoneGroupHostnameUpdate`: Flag to disable auto-update of allowed hostnames.
 - `zone`: Specifies the Ceph Multisite zone.
 - `SSLCert / SSLCertInRef`: TLS certificate configuration for RGW.
 
 ### Pools
-Defines Ceph RBD pools.
+
+The `pools` object lets you define Ceph RBD pools. Pool configuration is where you define data redundancy and performance characteristics. The ability to choose between replication and erasure coding provides flexibility to match different workload requirements.
+
 Each pool includes:
+
 - `name`: Pool name prefix (final name is `<name>-<deviceClass>` unless `useAsFullName` is true).
 - `useAsFullName`: If true, use the pool name as-is.
 - `role`: Pool role.
 - `default`: Indicates if this pool (and its StorageClass) is the default.
 - `deviceClass`: Device class (HDD, SSD, NVMe).
-- `replicated`: Replication settings (e.g., `size`, `targetSizeRatio`).
-- `erasureCoded`: Erasure coding settings (e.g., `codingChunks`, `dataChunks`, `algorithm`).
+- `replicated`: Replication settings (for example, `size` or `targetSizeRatio`).
+- `erasureCoded`: Erasure coding settings (for example, `codingChunks`, `dataChunks`, `algorithm`).
 - `failureDomain`: The domain for data replication (default: host).
-- `allowVolumeExpansion, rbdDeviceMapOptions, parameters, reclaimPolicy.`
+- `allowVolumeExpansion`
+- `rbdDeviceMapOptions`
+- `parameters`
+- `reclaimPolicy`
 
 Example:
 ```yaml
@@ -273,22 +330,23 @@ pools:
     role: kubernetes
     deviceClass: hdd
     replicated:
-      size: 3
-      targetSizeRatio: 10.0
+      - size: 3
+      - targetSizeRatio: 10.0
     default: true
   - name: datapool
     failureDomain: rack
     role: custom-pool
     deviceClass: hdd
     erasureCoded:
-      codingChunks: 1
-      dataChunks: 2
+      - codingChunks: 1
+      - dataChunks: 2
 ```
 
 ### Rook Config
-A key-value map for Ceph configuration parameters. You can specify the config section with a delimiter (`|`).
 
-Example:
+The `rookConfig` object is a key-value map for Ceph configuration parameters. You can specify 
+the config section with a delimiter (`|`). For example:
+
 ```yaml
 rookConfig:
   mon|mon_warn_on_insecure_global_id_reclaim: true
@@ -296,11 +354,16 @@ rookConfig:
   osd.100|bluestore_allocator: hybrid
 ```
 
+Fine-tuning through the Rook configuration helps in aligning Ceph's behavior with both operational policies and the underlying hardware characteristics.
+
 ### Rook Namespace
+
 - `rookNamespace`: Should be set to `rook-ceph`.
 
 ### Shared Filesystem (CephFS)
+
 Enables CephFS with a list of CephFS configurations. Each entry includes:
+
 - `name`: CephFS instance name.
 - `dataPools`: List of data pool specifications (first pool is the default and must be replicated).
 - `metadataPool`: CephFS metadata pool (replicated only).
@@ -412,3 +475,5 @@ status:
     lastValidatedGeneration: 2
     result: Succeed
 ```
+
+Regular status reporting through this section provides operators with a clear, technical view of cluster health and configuration state, aiding in troubleshooting and routine maintenance.
