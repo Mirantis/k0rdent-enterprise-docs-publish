@@ -4,8 +4,8 @@ site_author: Mirantis, Inc.
 
 docs_dir: docs/
 repo_name: Mirantis/k0rdent-enterprise-docs
-repo_url: https://github.com/Mirantis/k0rdent-enterprise-docs/
-edit_uri: https://github.com/Mirantis/k0rdent-enterprise-docs/edit/main/docs/
+repo_url: https://github.com/kedstaging/k0rdent-enterprise-docs/
+edit_uri: https://github.com/kedstaging/k0rdent-enterprise-docs/edit/main/docs/
 
 copyright:
   Copyright &copy; 2025 Mirantis | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>.
@@ -107,7 +107,8 @@ plugins:
         k0rdent-documentation-style-guide.md: contrib/k0rdent-documentation-style-guide.md
  
 nav:
-  - Welcome to the k0rdent docs: index.md
+  - Welcome to the docs: index.md
+  - Mirantis k0rdent AI: k0rdent_ai.md
   - k0rdent concepts:
     - Overview: concepts/index.md
     - Why k0rdent?: concepts/why-k0rdent.md
@@ -214,11 +215,11 @@ nav:
     - Cloud provider credentials management in CAPI: appendix/appendix-providers.md
   - Contributing:
     - Overview: contrib/index.md
-    - k0rdent documentation contributor's guide: contrib/k0rdent-documentation-contributors-guide.md
-    - k0rdent documentation style guide: contrib/k0rdent-documentation-style-guide.md
-  - AddOns:
+    - Contribute to docs: contrib/k0rdent-documentation-contributors-guide.md
+    - Style guide: contrib/k0rdent-documentation-style-guide.md
+  - ➤ AddOns:
     - Overview: addons/index.md
-    - Virtualization and KubeVirt:
+    - KubeVirt:
       - Overview: addons/virtualization/index.md
       - Getting Started: addons/virtualization/getting-started.md
       - Installing KubeVirt and HCO: addons/virtualization/kubevirt-install.md
@@ -238,7 +239,12 @@ nav:
       - Using MiraCeph Instead of KaasCephCluster: addons/ceph/replace-kaascephcluster.md
       - Operating Ceph: addons/ceph/ceph-operating.md
       - Ceph Examples: addons/ceph/ceph-user-scenarios.md
-  - Mirantis Support and Services: addons/services-support.md
+  - ➤ Support, Services, Contact:
+    - Overview: support/index.md
+    - Get support: https://www.mirantis.com/support/enterprise-support-services/
+    - Mirantis CloudCare Portal: https://support.mirantis.com/s/login/
+    - Contact us: https://www.mirantis.com/contact/
+
 
 markdown_extensions:
   - callouts
@@ -278,17 +284,17 @@ extra:
     provider: mike
     default: stable
   consent:
-  title: Cookie consent
-  description: >-
-    By clicking “Accept All Cookies”, you agree to the storing of cookies on your device to
-    enhance site navigation, analyze site usage, and assist in our marketing efforts. You can
-    manage your preferences or opt-out at any time by clicking "Cookie Settings". For more
-    information see our [Cookie Policy]()(https://www.mirantis.com/cookie-policy-us/) and
-    [Privacy Notice](https://legal.mirantis.com/#privacy-notice).
-  actions:
-    - accept
-    - manage
-    - reject
+    title: Cookie consent
+    description: >-
+      By clicking "Accept All Cookies", you agree to the storing of cookies on your device to
+      enhance site navigation, analyze site usage, and assist in our marketing efforts. You can
+      manage your preferences or opt-out at any time by clicking "Cookie Settings". For more
+      information see our <a href="https://www.mirantis.com/cookie-policy-us/">Cookie Policy</a> and
+      <a href="https://legal.mirantis.com/#privacy-notice">Privacy Notice</a>.
+    actions:
+      - accept
+      - reject
+      - manage
   analytics:
 #    provider: google
 #    property: #id goes here

@@ -97,3 +97,41 @@ ul.video-list .thumb {
 .md-typeset h1 {
   font-size: 1.5rem;
 }
+
+/* Base spacing for all navigation items */
+.md-nav__item {
+  margin: 0.4rem 0; /* Base spacing for all items */
+}
+
+/* First child in a nested section gets less top margin */
+.md-nav__item--nested .md-nav__list > .md-nav__item:first-child {
+  margin-top: 0.1rem;
+}
+
+/* Last child in a nested section gets less bottom margin */
+.md-nav__item--nested > .md-nav > .md-nav__list > .md-nav__item:last-child {
+  margin-bottom: 0.1rem;
+}
+
+/* Directories (nested items) with special handling */
+.md-nav__item--nested {
+  margin-bottom: 0.5rem; /* Space after a directory and its children */
+}
+
+/* Extra space between consecutive directories */
+.md-nav__item--nested + .md-nav__item--nested {
+  margin-top: 1rem;
+}
+
+/* Space between a directory and a non-directory that follows */
+.md-nav__item--nested + .md-nav__item:not(.md-nav__item--nested) {
+  margin-top: 0.6rem;
+}
+
+/* standardize line-height of first and subsequent paragraphs */
+h1 + p, 
+p {
+  line-height: 1.6 !important; /* Choose your preferred line height */
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
