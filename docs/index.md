@@ -82,11 +82,11 @@ or even into an existing local infrastructure.
 ## Development Documentation
 
 Documentation related to the development process and developer-specific notes is
-located in the [main k0rdent repository](https://github.com/k0rdent/kcm/blob/main/docs/dev.md).
+located in the [main k0rdent open source repository](https://github.com/k0rdent/kcm/blob/main/docs/dev.md).
 
 ## Where to go from here
 
-This documentation covers all aspects of administering, using, and contributing to {{{ docsVersionInfo.k0rdentName }}}, including:
+This documentation covers all aspects of administering, using, and contributing to {{{ docsVersionInfo.k0rdentName }}}, documentation for Mirantis k0rdent Enterprise AddOns, plus where to get support and services. It includes:
 
 - [{{{ docsVersionInfo.k0rdentName }}} concepts](concepts/index.md)
 - [QuickStarts](quickstarts/index.md)
@@ -96,4 +96,8 @@ This documentation covers all aspects of administering, using, and contributing 
 - [Troubleshooting](troubleshooting/index.md)
 - [Glossary](appendix/glossary.md)
 - [Appendix](appendix/index.md)
-- [Contributor's Guide](contrib/index.md)
+
+... plus:
+
+- [Appendix](addons/index.md)
+- [Services, Support, and Contact](support/index.md)

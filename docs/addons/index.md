@@ -10,5 +10,5 @@ Together, these add-ons increase the utility of {{{ docsVersionInfo.k0rdentName 
 
 For more information:
 
-- [Mirantis k0rdent Enterprise Virtualization (kubevirt)](addons/kubevirt/index.md)
-- [Ceph](addons/ceph/index.md)
+- [Mirantis k0rdent Enterprise Virtualization (kubevirt)](kubevirt/index.md)
+- [Ceph](ceph/index.md)
