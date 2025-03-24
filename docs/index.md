@@ -99,5 +99,5 @@ This documentation covers all aspects of administering, using, and contributing 
 
 ... plus:
 
-- [Appendix](addons/index.md)
-- [Services, Support, and Contact](support/index.md)
+- [Addons](addons/index.md) - Composable components and solutions, validated by Mirantis, ready for use with Mirantis k0rdent Enterprise
+- [Services, Support, and Contact](support/index.md) - Enterprise support for Mirantis k0rdent Enterprise
