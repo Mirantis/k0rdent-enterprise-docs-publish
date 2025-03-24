@@ -1,8 +1,8 @@
 # Virtualization Best Practices
 
-This document outlines best practices to ensure stable performance and effective management of KubeVirt virtual machines. Here, “VM” refers to Virtual Machines and also covers VMIs and VMI ReplicaSets. The guidelines provided help ensure that VMs remain live-migratable and recoverable, even under challenging conditions.
+This document outlines best practices to ensure stable performance and effective management of virtual machines running on {{{ docsVersionInfo.k0rdentName }}} Virtualization. Here, “VM” refers to Virtual Machines and also covers VMIs and VMI ReplicaSets. The guidelines provided help ensure that VMs remain live-migratable and recoverable, even under challenging conditions.
 
-> **Note:** All recovery procedures required for VMs to be LiveMigradable.
+> **Note:** All recovery procedures required for VMs to be LiveMigratable.
 
 ## Run Strategy
 

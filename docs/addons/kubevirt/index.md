@@ -1,6 +1,6 @@
-# Virtualization
+# {{{ docsVersionInfo.k0rdentName }}} Virtualization
 
-{{{ docsVersionInfo.k0rdentName }}} Virtualization is a complete solution for users looking to run virtual machine–based workloads on top of Kubernetes. The central technology is [KubeVirt](https://kubernetes.io/), a virtual machine management add-on for Kubernetes. At its core, KubeVirt extends Kubernetes by adding additional virtualization resource types (especially the `VirtualMachine` type) through Kubernetes’s Custom Resource Definitions (CRDs) API. This mechanism enables you to manage VirtualMachine resources alongside all other Kubernetes resources.
+{{{ docsVersionInfo.k0rdentName }}} Virtualization is a complete solution for users looking to run virtual machine–based workloads on top of Kubernetes. The central technology is [KubeVirt](https://kubernetes.io/), a virtual machine management add-on for Kubernetes. KubeVirt extends Kubernetes by adding additional virtualization resource types (especially the `VirtualMachine` type) through Kubernetes’s Custom Resource Definitions (CRDs) API. This mechanism enables you to manage VirtualMachine resources alongside all other Kubernetes resources.
 
 ## Concepts
 
@@ -39,4 +39,4 @@ This consolidation reduces operational overhead and contributes to a more mainta
 
 ## Limitations
 
-While the solution is robust, constraints native to `kubevirt` inherent exist. For example, details on live migration limitations can be found in the [KubeVirt Live Migration Limitations](https://kubevirt.io/user-guide/compute/live_migration/#limitations) documentation.
+While the solution is robust, constraints native to `kubevirt` inherently exist. For example, details on live migration limitations can be found in the [KubeVirt Live Migration Limitations](https://kubevirt.io/user-guide/compute/live_migration/#limitations) documentation.

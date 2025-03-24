@@ -1,6 +1,6 @@
 # Configuration
 
-This section describes how to fine-tune the virtualization capabilities of {{{ docsVersionInfo.k0rdentName }}} by modifying the HyperConverged (HCO) custom resource, which is the central configuration point for KubeVirt and its related components. By updating this resource, administrators can adjust certificate management, live migration behavior, resource allocation, and various operational strategies.
+This section describes how to fine-tune {{{ docsVersionInfo.k0rdentName }}} Virtualization by modifying the HyperConverged (HCO) custom resource, which is the central configuration point for KubeVirt and its related components. By updating this resource, administrators can adjust certificate management, live migration behavior, resource allocation, and various operational strategies.
 
 ## HCO Custom Resource
 

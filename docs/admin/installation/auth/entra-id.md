@@ -1,6 +1,6 @@
 # Microsoft Entra ID
 
-This section explains how to configure {{{ docsVersionInfo.k0rdentName }}} to use Microsoft Entra ID as an OIDC provider for authentication. While the examples use KinD (Kubernetes in Docker) for demonstration purposes, the concepts and procedures are fully applicable to any {{{ docsVersionInfo.k0rdentName }}} management cluster (for example, [Minikube](https://minikube.sigs.k8s.io/docs/start/), [MicroK8s](https://microk8s.io/), or a cloud-based cluster) that meets the minimum requirements for k0rdent.
+This section explains how to configure {{{ docsVersionInfo.k0rdentName }}} to use [Microsoft Entra ID](https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-id) (formerly Azure Active Directory) as an OIDC provider for authentication. While the examples use KinD (Kubernetes in Docker) for demonstration purposes, the concepts and procedures are fully applicable to any {{{ docsVersionInfo.k0rdentName }}} management cluster (for example, [Minikube](https://minikube.sigs.k8s.io/docs/start/), [MicroK8s](https://microk8s.io/), or a cloud-based cluster) that meets the minimum requirements for k0rdent.
 
 ## Prerequisites
 

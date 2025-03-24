@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide provides an introduction to setting up and managing virtualization on a {{{ docsVersionInfo.k0rdentName}}} environment using KubeVirt. It covers system requirements, installation steps, and multiple methods for managing virtual machines, ensuring you have the necessary context to deploy and operate virtualization components efficiently.
+This guide provides an introduction to setting up and managing {{{ docsVersionInfo.k0rdentName }}} Virtualization using KubeVirt. It covers system requirements, installation steps, and multiple methods for managing virtual machines, ensuring you have the necessary context to deploy and operate virtualization components efficiently.
 
 ## System Requirements
 

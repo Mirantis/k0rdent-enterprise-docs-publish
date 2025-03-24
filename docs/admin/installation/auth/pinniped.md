@@ -1,6 +1,6 @@
 # Pinniped
 
-This tutorial is intended to be a Step-by-Step example of installing and configuring the `Pinniped` components to provide a multi-cluster federated authentication solution
+This section explains how to configure {{{ docsVersionInfo.k0rdentName }}} to use the [Pinniped0(https://pinniped.dev/) components as an OIDC provider for authentication. While the examples use KinD (Kubernetes in Docker) for demonstration purposes, the concepts and procedures are fully applicable to any {{{ docsVersionInfo.k0rdentName }}} management cluster (for example, [Minikube](https://minikube.sigs.k8s.io/docs/start/), [MicroK8s](https://microk8s.io/), or a cloud-based cluster) that meets the minimum requirements for k0rdent.
 
 ## Prerequisites
 

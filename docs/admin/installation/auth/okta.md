@@ -1,6 +1,6 @@
-# Kubernetes OIDC Authentication Setup Guide for Okta
+# OIDC Authentication Setup Guide for Okta
 
-This setion explains how to configure {{{ docsVersionInfo.k0rdentName}}} to use Okta as an OIDC provider for authentication. While the examples use KinD (Kubernetes in Docker) for demonstration purposes, the concepts and procedures are fully applicable to any Kubernetes environment that meets the minimum requirements for k0rdent.
+This section explains how to configure {{{ docsVersionInfo.k0rdentName }}} to use [Okta](https://www.okta.com/) as an OIDC provider for authentication. While the examples use KinD (Kubernetes in Docker) for demonstration purposes, the concepts and procedures are fully applicable to any {{{ docsVersionInfo.k0rdentName }}} management cluster (for example, [Minikube](https://minikube.sigs.k8s.io/docs/start/), [MicroK8s](https://microk8s.io/), or a cloud-based cluster) that meets the minimum requirements for k0rdent.
 
 ## Prerequisites
 
@@ -139,7 +139,7 @@ nodes:
         readOnly: true
 ```
 
-For other Kubernetes distributions, the concept remains the same—you need to configure your API server to load the `authentication-config.yaml` file. Check your cluster’s documentation for mounting configuration files and setting extra API server arguments.
+For other Kubernetes distributions, the concept remains the same &mdash; you need to configure your API server to load the `authentication-config.yaml` file. Check your cluster’s documentation for mounting configuration files and setting extra API server arguments.
 
 ### 5. Cluster Management with KinD (Example)
 
@@ -277,12 +277,10 @@ Inspect your current kubeconfig to confirm the setup:
 kubectl config view --context=user
 ```
 
-### 6. [DEBUG] Inspect API Server Logs
+### 6. Inspect API Server Logs
 
-For further troubleshooting, review the API server logs:
+If you encounter issues, it can be helpful to review the API server logs:
 
 ```bash
 kubectl --context="kind-$(kind get clusters | head -1)" logs -n kube-system kube-apiserver-kind-control-plane | grep authentication.go
 ```
-
-By following these instructions, you will have a fully functional OIDC authentication system integrated with your Kubernetes cluster, regardless of whether you’re using KinD or another deployment environment.

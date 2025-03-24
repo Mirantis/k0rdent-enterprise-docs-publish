@@ -1,6 +1,6 @@
 # CephPerfTestRequest
 
-The `CephPerfTestRequest` object is designed to run periodic performance tests using FIO in a Kubernetes job or cronjob. Test results can be stored on a PVC.
+The `CephPerfTestRequest` object is designed to run periodic performance tests using [FIO](https://fio.readthedocs.io/en/latest/fio_doc.html) (Flexible I/O Tester) in a Kubernetes job or cronjob. Test results can be stored on a persistent volume (secured with a PVC).
 
 ## Spec
 

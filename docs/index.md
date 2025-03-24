@@ -1,4 +1,4 @@
-# Welcome to the {{{ docsVersionInfo.k0rdentName }}} docs
+# Welcome to Mirantis k0rdent Enterprise
 
 ## Introduction
 

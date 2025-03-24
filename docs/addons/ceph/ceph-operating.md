@@ -1,6 +1,6 @@
 # Ceph Cluster Operations
 
-Each change in the Ceph cluster should be reflected in the `MiraCeph` specification. By directly editing the `MiraCeph` object, you ensure that all desired configuration changes are applied consistently across the Ceph cluster managed by the k0rdent.
+Each change in the Ceph cluster should be reflected in the `MiraCeph` specification. By directly editing the `MiraCeph` object, you ensure that all desired configuration changes are applied consistently across the Ceph cluster managed by Mirantis k0rdent Enterprise.
 
 To update the `MiraCeph` object, use:
 

@@ -1,6 +1,6 @@
-# How to run Windows 2022 Server on Kubevirt
+# Running Windows Server
 
-This guide explains how to deploy and run Windows 2022 Server on KubeVirt. It covers the essential steps—from preparing storage to uploading the Windows image and finally creating the virtual machine (VM). The instructions are aimed at operators who need to set up Windows-based workloads in a Kubernetes-native virtualization environment.
+This guide explains how to deploy and run Windows 2022 Server on {{{ docsVersionInfo.k0rdentName }}} Virtualization. It covers the essential steps—from preparing storage to uploading the Windows image and finally creating the virtual machine (VM). The instructions are aimed at operators who need to set up Windows-based workloads in a Kubernetes-native virtualization environment.
 
 1. Prepare the PVC for Windows
 

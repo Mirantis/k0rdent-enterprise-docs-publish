@@ -185,8 +185,8 @@ nav:
       - Customization: admin/backup/customization.md
   - User Guide:
     - Overview: user/index.md
-    - Creating clusters as a k0rdent user: user/user-create-cluster.md
-    - Creating and adding services to clusters as a k0rdent user: 
+    - Creating clusters: user/user-create-cluster.md
+    - Adding services: 
       - Overview: user/services/index.md
       - Understanding ServiceTemplates: user/services/understanding-servicetemplates.md
       - Adding a Service to a ClusterDeployment: user/services/add-service-to-clusterdeployment.md
@@ -220,12 +220,12 @@ nav:
   - ➤ AddOns:
     - Overview: addons/index.md
     - KubeVirt:
-      - Overview: addons/virtualization/index.md
-      - Install KubeVirt and HCO: addons/virtualization/kubevirt-install.md
-      - Virtualization Configuration: addons/virtualization/configuration.md
-      - Getting Started: addons/virtualization/getting-started.md
-      - Windows on KubeVirt: addons/virtualization/kubevirt-windows.md
-      - Virtualization Best Practices: addons/virtualization/best-practices.md
+      - Overview: addons/kubevirt/index.md
+      - Install KubeVirt and HCO: addons/kubevirt/kubevirt-install.md
+      - Virtualization Configuration: addons/kubevirt/configuration.md
+      - Getting Started: addons/kubevirt/getting-started.md
+      - Windows on KubeVirt: addons/kubevirt/kubevirt-windows.md
+      - Virtualization Best Practices: addons/kubevirt/best-practices.md
     - Ceph:
       - Overview: addons/ceph/index.md
       - Installing Ceph: addons/ceph/ceph-install.md

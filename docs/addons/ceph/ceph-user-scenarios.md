@@ -1,6 +1,6 @@
 # Ceph User Scenarios
 
-This section outlines common scenarios for using Ceph as a storage backend in Kubernetes workloads and in KubeVirt environments. It demonstrates how Ceph, when integrated with {{{ docsVersionInfo.k0rdentName}}} via `MiraCeph`, simplifies storage provisioning by automatically generating the necessary StorageClasses and PVs.
+This section outlines common scenarios for using Ceph as a storage backend for Kubernetes workloads and in KubeVirt environments. It demonstrates how Ceph, when integrated with {{{ docsVersionInfo.k0rdentName}}} via `MiraCeph`, simplifies storage provisioning by automatically generating the necessary StorageClasses and PVs.
 
 ## Ceph Block PVC Creation
 
@@ -214,4 +214,4 @@ spec:
 
 This manifest creates the additional Block PVC, which can then be attached to the Virtual Machine as an extra `DataVolume`.
 
-By automating the creation of `StorageClass` objects and abstracting much of the complexity involved in provisioning persistent volumes, Ceph simplifies the operational tasks for administrators. Whether you're dealing with container workloads or VMs, the consistent and unified approach provided by {{{ docsVersionInfo.k0rdentName }}} Ceph, integrated through `MiraCeph`, streamlines storage management and enhances operational reliability without requiring extensive manual configuration.
+By automating creation of `StorageClass` objects and abstracting much of the complexity involved in provisioning persistent volumes, Ceph simplifies operational tasks for administrators. Whether you're dealing with container workloads or VMs, the consistent and unified approach provided by {{{ docsVersionInfo.k0rdentName }}} Ceph, integrated through `MiraCeph`, streamlines storage management and enhances operational reliability without requiring extensive manual configuration.
