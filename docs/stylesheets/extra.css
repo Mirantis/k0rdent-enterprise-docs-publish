@@ -135,3 +135,9 @@ p {
   margin-top: 1rem !important;
   margin-bottom: 1rem !important;
 }
+
+/* increase size of logo */
+.md-logo img {
+  width: 225px !important;  /* Increase from default (usually 30px) */
+  height: auto !important;  /* Maintain aspect ratio */
+}
