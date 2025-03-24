@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Mirantis k0rdent Enterprise is a Kubernetes-native platform engineering solution that provides open source composability to simplify the creation of use case-specific developer platforms at scale. It delivers the open source k0rdent Distributed Container Management Environment (DCME) via a secure software supply chain, with components fully validated by Mirantis and enhanced with additional [Enterprise-class features](addons.index.md) and [24/7 Enterprise or Fully-Managed Support](support/index.md).
+Mirantis k0rdent Enterprise is a Kubernetes-native platform engineering solution that provides open source composability to simplify the creation of use case-specific developer platforms at scale. It delivers the open source k0rdent Distributed Container Management Environment (DCME) via a secure software supply chain, with components fully validated by Mirantis and enhanced with additional [Enterprise-class features](addons/index.md) and [24/7 Enterprise or Fully-Managed Support](support/index.md).
 
 Mirantis k0rdent Enterprise (and k0rdent) are based on the premise that:
 
