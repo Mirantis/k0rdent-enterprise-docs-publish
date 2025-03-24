@@ -211,7 +211,7 @@ nav:
     - Extended management configuration: appendix/appendix-extend-mgmt.md
     - Understanding the dry run: appendix/appendix-dryrun.md
     - Cloud provider credentials management in CAPI: appendix/appendix-providers.md
-  - ➤ AddOns:
+  - ➤ Solutions:
     - Overview: addons/index.md
     - KubeVirt:
       - Overview: addons/kubevirt/index.md
