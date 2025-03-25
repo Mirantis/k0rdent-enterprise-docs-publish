@@ -1,71 +1,46 @@
-# k0rdent Documentation
-
-The home of the consolidated documentation for k0rdent sponsored by Mirantis.
-
-[k0rdent Docs](https://k0rdent.github.io/docs)
+# Mirantis k0rdent Enterprise Documentation
 
 This project utilises Mkdocs with the Material theme and Mermaid for
 diagrams. Currently the docs are published using github actions on github pages
-from the branch gh-pages.
+from the branch gh-pages, which contains static site files generated from
+Markdown documents and assets. The overall configuration of the site is
+stored in mkdocs.yml in the root directory of the repo. If making contributions
+to docs, it can be useful to host it locally to see the effect of changes.
 
-Development is tracked under [k0rdent](https://github.com/orgs/k0rdent/projects/4) on github.
+## Project layout (root directory)
 
-The k0rdent org is:
- * [k0rdent](https://github.com/k0rdent)
+    mkdocs.yml                # The configuration file
+    requirements.txt          # mkdocs requirements file for pip, used to locally install mkdocs and its plugins (normally in a Python venv)
+    dockerfile                # Docker manifest for locally serving the site through a container (alternative to locally installing mkdocs)
+    docs/                     # Documentation files in Markdown (.md), subfolders for /img, /assets, /stylesheets, /css, etc.
 
-The related k0rdent repositories can be found as follows:
- * [k0rdent Cluster Manager (kcm)](https://github.com/k0rdent/kcm)
- * [k0rdent Observability and FinOps (kof)](https://github.com/k0rdent/kof)
- * [k0rdent Documentation Source (docs)](https://github.com/k0rdent/docs)
- * [k0rdent Community Documentation](https://github.com/k0rdent/community)
+## Setting up MKdocs locally (Linux)
 
-## Project layout
+1. Clone repo and cd to its root:
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        stylesheets  # CSS stylesheets to control look and feel
-        assets  # Images and other served material
-        ...       # Other markdown pages, images and other files.
-
-## Setting up MKdocs and dependancies
-
-1. Setup python Virtual Environment
+    ```bash
+    git clone https://github.com/mirantis-docs/k0rdent-enterprise-docs.git
+    cd k0rdent-enterprise-docs
+    ```
+    
+2. Setup a Python venv and activate it
 
     ```bash
     python3 -m venv ./mkdocs
     source ./mkdocs/bin/activate
     ```
 
-2. Install MkDocs
+3. Install MkDocs and dependencies from requirements.txt
 
     ```bash
-    pip install mkdocs
+    pip install -r requirements.txt
     ```
 
-3. Install plugins
-
-    ```bash
-    pip install mkdocs-mermaid2-plugin
-    pip install mkdocs-material
-    pip install markdown-callouts
-    ```
-
-## Run MKdocs for dev
-
-* Start the live-reloading docs server.
+4. Serve site to 127.0.0.1:8000 (server is live-reloading, so see effects of changes immediately)
 
     ```bash
     mkdocs serve
     ```
-
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
-
-## MKdocs Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
 
 # Documentation Standards
 
