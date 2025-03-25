@@ -36,10 +36,39 @@ to docs, it can be useful to host it locally to see the effect of changes.
     pip install -r requirements.txt
     ```
 
-4. Serve site to 127.0.0.1:8000 (server is live-reloading, so see effects of changes immediately)
+4. Create a feature branch, copying main (next docs) or a version branch (e.g., release-v0.1.0) you want to update
 
     ```bash
-    mkdocs serve
+    git checkout main                     # or release-v0.1.0 etc. - check out the branch you want to update
+    git pull origin main                  # or release-v0.1.0 etc. - update from origin
+    git checkout -b my-feature-branch     # copy the original branch into your feature branch
+    (make changes)
+    git push -u origin my-feature-branch  # push to origin and file Pull Request
+    ```
+      
+5. Serve site to 127.0.0.1:8000 (server is live-reloading, so see effects of changes immediately)
+
+    ```bash
+    git checkout my-feature-branch        # check out your feature branch
+    mkdocs serve                          # serve docs from that feature branch
+    ```
+
+## Use containerized mkdocs instead (assumes you have Docker installed locally)
+
+1. Build the container from the provided Dockerfile
+
+    ```bash
+    docker build -f Dockerfile -t mk-local
+    ```
+
+2. Clone repo as in Step 1, above, and cd to repo root
+
+3. Create and checkout your working branch, as in steps 4 and 5, above.
+
+4. Open a new terminal session (so you can stop the container later by pressing CTRL-C) and run the container
+
+    ```bash
+    docker run --rm -it -p 8000:8000 -v ${PWD}:/docs mk-local
     ```
 
 # Documentation Standards
