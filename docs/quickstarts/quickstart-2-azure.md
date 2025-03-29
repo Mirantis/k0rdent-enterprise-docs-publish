@@ -246,7 +246,7 @@ credential.k0rdent.mirantis.com/azure-cluster-identity-cred created
 
 ## Create the `ConfigMap` resource-template Object
 
-Create a YAML with the specification of our resource-template and save it as
+Create a YAML with the specification of our resource-template (and the necessary `StorageClass`) and save it as
 `azure-cluster-identity-resource-template.yaml`
 
 ```yaml
@@ -305,6 +305,19 @@ data:
     type: Opaque
     data:
       cloud-config: {{ $cloudConfig | toJson | b64enc }}
+    ---
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: managed-csi
+      annotations:
+        storageclass.kubernetes.io/is-default-class: "true"
+    provisioner: disk.csi.azure.com
+    parameters:
+      skuName: StandardSSD_LRS
+    reclaimPolicy: Delete
+    volumeBindingMode: WaitForFirstConsumer
+    allowVolumeExpansion: true
 ```
 
 Object name needs to be exactly `azure-cluster-identity-resource-template.yaml`, `AzureClusterIdentity` object name + `-resource-template` string suffix.
