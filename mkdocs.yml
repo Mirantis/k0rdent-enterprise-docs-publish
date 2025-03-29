@@ -116,6 +116,7 @@ nav:
     - Setup Management Cluster: quickstarts/quickstart-1-mgmt-node-and-cluster.md
     - Configure and Deploy to AWS: quickstarts/quickstart-2-aws.md
     - Configure and Deploy to Azure: quickstarts/quickstart-2-azure.md
+    - Configure and Deploy w/ SSH: quickstarts/quickstart-2-remote.md
   - Administrator Guide:
     - Before you start: admin/index.md
     - Installation:
@@ -201,6 +202,7 @@ nav:
     - Templates for Azure: reference/template/template-azure.md
     - Templates for OpenStack: reference/template/template-openstack.md
     - Templates for vSphere: reference/template/template-vsphere.md
+    - Templates for Remote SSH: reference/template/template-remote.md
   - Troubleshooting: 
     - Overview: troubleshooting/index.md
     - AWS VPCs: troubleshooting/admin-troubleshooting-aws-vpcs.md
@@ -330,6 +332,7 @@ extra:
         azureHostedCpCluster: 0-1-0
         azureStandaloneCpCluster: 0-1-0
         openstackStandaloneCpCluster: 0-1-0
+        remoteCluster: 0-1-0
         vsphereHostedCpCluster: 0-1-0
         vsphereStandaloneCpCluster: 0-1-0
       dotVersions:
@@ -341,6 +344,7 @@ extra:
         azureHostedCpCluster: 0.1.0
         azureStandaloneCpCluster: 0.1.0
         openstackStandaloneCpCluster: 0.1.0
+        remoteCluster: 0.1.0
         vsphereHostedCpCluster: 0.1.0
         vsphereStandaloneCpCluster: 0.1.0
     servicesVersions:
