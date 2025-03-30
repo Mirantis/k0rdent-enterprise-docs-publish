@@ -56,3 +56,4 @@ Next you'll want to learn how to:
 - [Set up the Management Node and Cluster](quickstart-1-mgmt-node-and-cluster.md)
 - [Configure and Deploy to AWS](quickstart-2-aws.md)
 - [Configure and Deploy to Azure](quickstart-2-azure.md)
+- [Configure and Deploy on any SSH-accessible Linux hosts](quickstart-2-remote.md)
