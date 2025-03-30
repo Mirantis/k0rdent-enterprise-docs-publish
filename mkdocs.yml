@@ -86,7 +86,7 @@ plugins:
         admin-service-templates.md: admin/services/admin-service-templates.md
         admin-create-multiclusterservice.md: admin/services/admin-create-multiclusterservice.md
         admin-kof.md: admin/kof/index.md
-        admin-upgrading-k0rdent.md: admin/upgrade/admin-upgrading-k0rdent.md
+        admin-upgrading-k0rdent.md: admin/upgrade/index.md
         admin-credentials.md: admin/access/credentials/index.md
         admin-rbac.md: admin/access/rbac/index.md
         admin-backup.md: admin/backup/index.md
@@ -168,7 +168,9 @@ nav:
       - Maintaining KOF: admin/kof/kof-maintainence.md
       - Resource Limits: admin/kof/kof-limits.md
       - Version Compatibility: admin/kof/kof-version-compat.md
-    - Upgrading k0rdent: admin/upgrade/admin-upgrading-k0rdent.md
+    - Upgrading k0rdent: 
+      - Overview: admin/upgrade/index.md
+      - Upgrade to v0.2.0: admin/upgrade/upgrade-to-0-2-0.md
     - Access Management:
       - Overview: admin/access/index.md
       - k0rdent Credentials Management: 
