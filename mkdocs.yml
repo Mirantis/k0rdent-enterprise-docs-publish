@@ -74,6 +74,8 @@ plugins:
         quickstart-1-mgmt-node-and-cluster.md: quickstarts/quickstart-1-mgmt-node-and-cluster.md
         quickstart-2-aws.md: quickstarts/quickstart-2-aws.md
         quickstart-2-azure.md: quickstarts/quickstart-2-azure.md
+        quickstart-2-remote.md: quickstarts/quickstart-2-remote.md
+        quickstart-2-gcp.md: quickstarts/quickstart-2-gcp.md
         admin-before.md: admin/index.md
         admin-installation.md: admin/installation/index.md
         admin-prepare.md: admin/installation/prepare-mgmt-cluster/index.md
@@ -98,6 +100,7 @@ plugins:
         template-azure.md: reference/template/template-azure.md
         template-openstack.md: reference/template/template-openstack.md
         template-vsphere.md: reference/template/template-vsphere.md
+        template-gcp.md: reference/template/template-gcp.md
         known-issues-eks.md: troubleshooting/known-issues-eks.md
         glossary.md: appendix/glossary.md
         appendix-extend-mgmt.md: appendix/appendix-extend-mgmt.md
@@ -117,6 +120,7 @@ nav:
     - Configure and Deploy to AWS: quickstarts/quickstart-2-aws.md
     - Configure and Deploy to Azure: quickstarts/quickstart-2-azure.md
     - Configure and Deploy w/ SSH: quickstarts/quickstart-2-remote.md
+    - Configure and Deploy to GCP: quickstarts/quickstart-2-gcp.md
   - Administrator Guide:
     - Before you start: admin/index.md
     - Installation:
@@ -131,6 +135,7 @@ nav:
         - Overview: admin/installation/prepare-mgmt-cluster/index.md
         - AWS: admin/installation/prepare-mgmt-cluster/aws.md
         - Azure: admin/installation/prepare-mgmt-cluster/azure.md
+        - GCP: admin/installation/prepare-mgmt-cluster/gcp.md
         - OpenStack: admin/installation/prepare-mgmt-cluster/openstack.md
         - VMware: admin/installation/prepare-mgmt-cluster/vmware.md
       - Authentication:
@@ -152,6 +157,7 @@ nav:
       - AWS: admin/hosted-control-plane/hcp-aws.md
       - Azure: admin/hosted-control-plane/hcp-azure.md
       - VMware: admin/hosted-control-plane/hcp-vmware.md
+      - GCP: admin/hosted-control-plane/hcp-gcp.md
     - k0rdent Observability & FinOps: 
       - Overview: admin/kof/index.md
       - Architecture: admin/kof/kof-architecture.md
@@ -200,6 +206,7 @@ nav:
     - Bring-your-own (BYO) templates: reference/template/template-byo.md
     - Templates for Amazon Web Services: reference/template/template-aws.md
     - Templates for Azure: reference/template/template-azure.md
+    - Templates for GCP: reference/template/template-gcp.md
     - Templates for OpenStack: reference/template/template-openstack.md
     - Templates for vSphere: reference/template/template-vsphere.md
     - Templates for Remote SSH: reference/template/template-remote.md
@@ -331,6 +338,9 @@ extra:
         azureAksCluster: 0-1-0
         azureHostedCpCluster: 0-1-0
         azureStandaloneCpCluster: 0-1-0
+        gcpGkeCluster: 0-1-0
+        gcpHostedCpCluster: 0-1-0
+        gcpStandaloneCpCluster: 0-1-0
         openstackStandaloneCpCluster: 0-1-0
         remoteCluster: 0-1-0
         vsphereHostedCpCluster: 0-1-0
@@ -343,6 +353,9 @@ extra:
         azureAksCluster: 0.1.0
         azureHostedCpCluster: 0.1.0
         azureStandaloneCpCluster: 0.1.0
+        gcpGkeCluster: 0.1.0
+        gcpHostedCpCluster: 0.1.0
+        gcpStandaloneCpCluster: 0.1.0
         openstackStandaloneCpCluster: 0.1.0
         remoteCluster: 0.1.0
         vsphereHostedCpCluster: 0.1.0
