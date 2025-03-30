@@ -17,17 +17,32 @@ Note that if you have already done our AWS QuickStart ([QuickStart 2 - AWS targe
 
 Create a `Secret` object to securely store the private SSH key, under the key `value`, for accessing all remote machines that will be part of the cluster. Save this configuration in a YAML file named `remote-ssh-key-secret.yaml`. Ensure you replace the placeholder `PRIVATE_SSH_KEY_B64` with your base64-encoded private SSH key:
 
-```yaml
+```shell
+# Setup Environment
+KEY_PATH=~/.ssh/id_ed25519
+PRIVATE_SSH_KEY_B64=$(cat $KEY_PATH | base64)
+SECRET_NAME=remote-ssh-key
+KCM_SYSTEM_NS=kcm-system
+CREDENTIAL_NAME=remote-cred
+RESOURCE_TEMPLATE_NAME=remote-ssh-key-resource-template
+CLUSTER_DEPLOYMENT_NAME=my-remote-clusterdeployment1
+MACHINE_0_ADDRESS=127.0.0.1
+MACHINE_1_ADDRESS=127.0.0.2
+```
+
+```shell
+cat > remote-ssh-key-secret.yaml << EOF
 apiVersion: v1
 data:
-  value: PRIVATE_SSH_KEY_B64 # Base64-encoded private SSH key
+  value: $PRIVATE_SSH_KEY_B64
 kind: Secret
 metadata:
-  name: remote-ssh-key
-  namespace: kcm-system
+  name: $SECRET_NAME
+  namespace: $KCM_SYSTEM_NS
   labels:
     k0rdent.mirantis.com/component: "kcm"
 type: Opaque
+EOF
 ```
 
 Apply the YAML to the {{{ docsVersionInfo.k0rdentName }}} management cluster:
@@ -41,18 +56,20 @@ Create a YAML file with the specification of our credential and save it as `remo
 
 Note that `.spec.name` must match `.metadata.name` of the `Secret` object created in the previous step.
 
-```yaml
+```shell
+cat > remote-cred.yaml << EOF
 apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: Credential
 metadata:
-  name: remote-cred
+  name: $CREDENTIAL_NAME
   namespace: kcm-system
 spec:
   identityRef:
     apiVersion: v1
     kind: Secret
-    name: remote-ssh-key
-    namespace: kcm-system
+    name: $SECRET_NAME
+    namespace: $KCM_SYSTEM_NS
+EOF
 ```
 
 Apply the YAML to your cluster:
@@ -70,16 +87,18 @@ credential.k0rdent.mirantis.com/remote-cred created
 
 Now we create the {{{ docsVersionInfo.k0rdentName }}} Cluster Identity resource template `ConfigMap`. As in prior steps, create a YAML file called `remote-ssh-key-resource-template.yaml`:
 
-```yaml
+```shell
+cat > remote-ssh-key-resource-template.yaml << EOF
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: remote-ssh-key-resource-template
-  namespace: kcm-system
+  name: $RESOURCE_TEMPLATE_NAME
+  namespace: $KCM_SYSTEM_NS
   labels:
     k0rdent.mirantis.com/component: "kcm"
   annotations:
     projectsveltos.io/template: "true"
+EOF
 ```
 Note that the `ConfigMap` is empty. This is expected, as we don't need to template any object inside child clusters, but we can use that object in the future if the need arises.
 
@@ -123,12 +142,13 @@ To deploy a cluster, create a YAML file called `my-remote-clusterdeployment1.yam
 > Also, the service type should be correctly configured. If using the `LoadBalancer` service type, ensure the appropriate cloud provider is installed on the management cluster.
 > For other service types (such as `ClusterIP` or `NodePort`), verify that the management cluster network is accessible from the host machines to allow virtual machines to connect to the API server.
 
-```yaml
+```shell
+cat > my-remote-clusterdeployment1.yaml << EOF
 apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
-  name: my-remote-clusterdeployment1
-  namespace: kcm-system
+  name: $CLUSTER_DEPLOYMENT_NAME
+  namespace: $KCM_SYSTEM_NS
 spec:
   template: remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.remoteCluster }}} # name of the clustertemplate
   credential: remote-cred
@@ -138,12 +158,13 @@ spec:
       service:
         type: LoadBalancer
     machines:
-    - address: MACHINE_0_ADDRESS
+    - address: $MACHINE_0_ADDRESS
       user: root # The user must have root permissions 
       port: 22
-    - address: MACHINE_1_ADDRESS
+    - address: $MACHINE_1_ADDRESS
       user: root # The user must have root permissions 
       port: 22
+EOF
 ```
 
 ## Apply the ClusterDeployment to deploy the management cluster
