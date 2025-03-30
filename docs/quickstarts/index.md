@@ -57,3 +57,4 @@ Next you'll want to learn how to:
 - [Configure and Deploy to AWS](quickstart-2-aws.md)
 - [Configure and Deploy to Azure](quickstart-2-azure.md)
 - [Configure and Deploy on any SSH-accessible Linux hosts](quickstart-2-remote.md)
+- [Configure and Deploy to GCP](quickstart-2-gcp.md)
