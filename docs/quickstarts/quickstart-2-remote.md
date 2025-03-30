@@ -242,7 +242,7 @@ clusterdeployment.k0rdent.mirantis.com "my-remote-clusterdeployment1" deleted
 
 Now that you've finished the QuickStart, we have some suggestions for what to do next:
 
-Check out the [Administrator Guide](admin-before.md) ...
+Check out the [Administrator Guide](../admin/index.md) ...
 
 * For a more detailed view of {{{ docsVersionInfo.k0rdentName }}} setup for production
 * For details about setting up {{{ docsVersionInfo.k0rdentName }}} to manage clusters on VMware and OpenStack
