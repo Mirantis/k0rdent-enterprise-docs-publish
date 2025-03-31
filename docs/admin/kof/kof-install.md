@@ -210,7 +210,7 @@ and apply this example for AWS, or use it as a reference:
     ```shell
     REGION=AZURE_LOCATION
     AZURE_SUBSCRIPTION_ID=SUBSCRIPTION_ID_SUBSCRIPTION_ID
-    TEMPLATE=azure-standalone-cp-{{{ docsVersionInfo.providerVersions.azureStandaloneCpCluster }}}
+    TEMPLATE=azure-standalone-cp-{{{ docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}
     cat >regional-cluster.yaml <<EOF
     apiVersion: k0rdent.mirantis.com/v1alpha1
     kind: ClusterDeployment
