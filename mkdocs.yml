@@ -244,6 +244,11 @@ nav:
       - Using MiraCeph Instead of KaasCephCluster: addons/ceph/replace-kaascephcluster.md
       - Operating Ceph: addons/ceph/ceph-operating.md
       - Ceph Examples: addons/ceph/ceph-user-scenarios.md
+    - StackLight:
+      - Overview: addons/stacklight/index.md
+      - Installation: addons/stacklight/install.md
+      - API Documentation: addons/stacklight/api.md
+      - Operations: addons/stacklight/operations.md
   - ➤ Support, Services, Contact:
     - Overview: support/index.md
     - Get support: https://www.mirantis.com/support/enterprise-support-services/
@@ -368,18 +373,22 @@ extra:
         externalSecrets: 0-11-0
         ingressNginx: 4-11-3   
         kyverno: 3-2-6       
-        velero: 8-1-0   
+        velero: 8-1-0 
       dotVersions:
         certManager: 1.16.2  
         externalSecrets: 0.11.0
         ingressNginx: 4.11.3   
         kyverno: 3.2.6       
-        velero: 8.1.0        
+        velero: 8.1.0x 
     addonVersions:
       dashVersions:
         ceph: 1-0-3
-        hco: 1-14-1-mira
+        hco: 1-14-1-mira  
+        stacklightOperator: 0-1-0
+        stacklightChart: 0-1-0-mcp-16
       dotVersions:
         ceph: 1.0.3
-        hco: 1.14.1-mira
+        hco: 1.14.1-mira    
+        stacklightOperator: 0.1.0  
+        stacklightChart: 0.1.0-mcp-16
 
