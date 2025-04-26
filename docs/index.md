@@ -42,8 +42,7 @@ As noted above, Mirantis k0rdent Enterprise delivers open source k0rdent (with a
 
     * **k0rdent State Manager (KSM)**
 
-        Installation and life-cycle management of [beach-head services](appendix/glossary.md#beach-head-services),
-        policy, Kubernetes API configurations, and more.
+        Installation and life-cycle management of deployed services.
 
           * This is currently rolled into kcm, but may be split out in the future
           * ksm leverages [Project Sveltos](https://github.com/projectsveltos/sveltos)
