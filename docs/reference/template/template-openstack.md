@@ -43,6 +43,11 @@ To deploy an OpenStack cluster, the following are the primary parameters in the 
       <td><code>k0rdent: demo</code></td>
       <td>Labels to apply to the cluster. Used by <br>MultiClusterService.</td>
     </tr>
+    <tr>
+      <td>.spec.config.ccmRegional<br>(optional)</td>
+      <td><code>true</code></td>
+      <td>Enables the OpenStack CCM OS_CCM_REGIONAL envvar feature and allows OpenStack CCM to define the region in nodes.</td>
+    </tr>
   </tbody>
 </table>
 
