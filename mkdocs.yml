@@ -130,7 +130,7 @@ nav:
         - Create a single node k0s cluster: admin/installation/create-mgmt-clusters/mgmt-create-k0s-single.md
         - Create a multinode EKS cluster: admin/installation/create-mgmt-clusters/mgmt-create-eks-multi.md
       - Install k0rdent: admin/installation/install-k0rdent.md
-      - Mirantis k0rdent Enterprise SBOM: admin/installation/sbom.md
+      - Verifying sArtifacts and Security: admin/installation/sbom.md
       - Verify the k0rdent installation: admin/installation/verify-install.md
       - Prepare k0rdent to create child clusters:
         - Overview: admin/installation/prepare-mgmt-cluster/index.md
