@@ -105,9 +105,9 @@ You'll see something like the following. Ignore the warnings, since this is an e
 WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: ./KUBECONFIG
 WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: ./KUBECONFIG
 Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
-Digest: sha256:c4cd3cceecbed98512515f080e0a2878118d122532d5e5d8b7ef87bcd991639d
+Digest: {{{ extra.docsVersionInfo.k0rdentDigestValue }}}
 NAME: kcm
-LAST DEPLOYED: Tue Apr  1 22:19:26 2025
+LAST DEPLOYED: {{{ extra.docsVersionInfo.k0rdentDigestDate }}}
 NAMESPACE: kcm-system
 STATUS: deployed
 REVISION: 1
@@ -196,14 +196,17 @@ You should see output similar to:
 
 ```console
 NAME                                   VALID
-cluster-api-{{{ extra.docsVersionInfo.k0rdentVersion }}}                      true
-cluster-api-provider-aws-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-cluster-api-provider-openstack-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-cluster-api-provider-vsphere-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
-k0smotron-{{{ extra.docsVersionInfo.k0rdentVersion }}}                        true
-kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}                              true
-projectsveltos-0-45-0                  true
+cluster-api-{{{ extra.docsVersionInfo.providerVersions.dashVersions.clusterApi }}}                                 true
+cluster-api-provider-aws-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAws }}}                    true
+cluster-api-provider-azure-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAzure }}}                  true
+cluster-api-provider-docker-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderDocker }}}                 true
+cluster-api-provider-gcp-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderGcp }}}                    true
+cluster-api-provider-k0sproject-k0smotron-{{{ docsVersionInfo.providerVersions.dashVersions.k0smotron }}}   true
+cluster-api-provider-openstack-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderOpenstack }}}              true
+cluster-api-provider-vsphere-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderVsphere }}}                true
+k0smotron-{{{ docsVersionInfo.providerVersions.dashVersions.k0smotron }}}                                   true
+kcm-{{{ docsVersionInfo.k0rdentVersion }}}                                         true
+projectsveltos-{{{ docsVersionInfo.providerVersions.dashVersions.sveltosProvider }}}                             true
 ```
 
 ## Verify that KCM ClusterTemplate objects are available
@@ -218,7 +221,7 @@ You should see output similar to:
 
 ```console
 NAME                            VALID
-adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
 aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
 aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
 aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true

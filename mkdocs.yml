@@ -149,6 +149,7 @@ nav:
       - Deploying standalone clusters: admin/clusters/deploy-cluster.md
       - Updating standalone clusters: admin/clusters/update-cluster.md
       - Adopting clusters: admin/clusters/admin-adopting-clusters.md
+      - IP Address Management (IPAM): admin/clusters/cluster-ipam.md
     - Working with services:
       - Overview: admin/services/index.md
       - Using and creating service templates: admin/services/admin-service-templates.md
@@ -184,7 +185,7 @@ nav:
         - Role Definitions: admin/access/rbac/roles-summary.md
     - Backup and Restore:
       - Overview: admin/backup/index.md
-      - Preparing for Backups: admin/backup/prepare-backups.md      
+      - Preparing for Backup: admin/backup/prepare-backups.md      
       - Scheduled Management Backups: admin/backup/scheduled-backups.md
       - Management Backup on Demand: admin/backup/ondemand-backups.md
       - What's Included in a Backup: admin/backup/whats-included.md
@@ -329,48 +330,68 @@ extra:
     k0rdentVersion: 0-2-0
     k0rdentDotVersion: 0.2.0
     ociRegistry: oci://registry.mirantis.com/k0rdent-enterprise/kcm
+    k0rdentDigestValue: sha256:3645c61d59e88143e58a7050ca5b2601f5f5810f1eff163ddba74d1477cdc08c
+    k0rdentDigestDate: Fri May  2 08:42:36 2025    
     kofVersions:
-      kofVersion: 0-2-0
-      kofDotVersion: 0.2.0
-      kofStorageVersion: 0-2-0
-      kofDotStorageVersion: 0.2.0
-      kofOperatorsVersion: 0-2-0
-      kofDotOperatorsVersion: 0.2.0
-      kofCollectorsVersion: 0-2-0
-      kofDotCollectorsVersion: 0.2.0
+      kofVersion: 0-3-0
+      kofDotVersion: 0.3.0
+      kofStorageVersion: 0-3-0
+      kofDotStorageVersion: 0.3.0
+      kofOperatorsVersion: 0-3-0
+      kofDotOperatorsVersion: 0.3.0
+      kofCollectorsVersion: 0-3-0
+      kofDotCollectorsVersion: 0.3.0
     providerVersions:
       dashVersions:
+        clusterApi: 0-2-2
+        clusterApiProviderAws: 0-2-3
+        clusterApiProviderAzure: 0-2-4
+        clusterApiProviderDocker: 0-2-2
+        clusterApiProviderGcp: 0-2-2
+        clusterApiProviderOpenstack: 0-2-2
+        clusterApiProviderVsphere: 0-2-2
+        k0smotron: 0-2-3
         adoptedCluster: 0-2-0
         awsEksCluster: 0-2-0
-        awsHostedCpCluster: 0-2-0
-        awsStandaloneCpCluster: 0-2-0
+        awsHostedCpCluster: 0-2-1
+        awsStandaloneCpCluster: 0-2-1
         azureAksCluster: 0-2-0
-        azureHostedCpCluster: 0-2-0
-        azureStandaloneCpCluster: 0-2-0
+        azureHostedCpCluster: 0-2-2
+        azureStandaloneCpCluster: 0-2-2
+        dockerHostedCpCluster: 0-2-0
         gcpGkeCluster: 0-2-0
-        gcpHostedCpCluster: 0-2-0
-        gcpStandaloneCpCluster: 0-2-0
-        openstackStandaloneCpCluster: 0-2-0
-        remoteCluster: 0-2-0
-        vsphereHostedCpCluster: 0-2-0
-        vsphereStandaloneCpCluster: 0-2-0
-        sveltosProvider: 0-50-0
+        gcpHostedCpCluster: 0-2-1
+        gcpStandaloneCpCluster: 0-2-1
+        openstackStandaloneCpCluster: 0-2-2
+        remoteCluster: 0-2-1
+        vsphereHostedCpCluster: 0-2-1
+        vsphereStandaloneCpCluster: 0-2-1
+        sveltosProvider: 0-52-2
       dotVersions:
+        clusterApi: 0.2.2
+        clusterApiProviderAws: 0.2.3
+        clusterApiProviderAzure: 0.2.4
+        clusterApiProviderDocker: 0.2.2
+        clusterApiProviderGcp: 0.2.2
+        clusterApiProviderOpenstack: 0.2.2
+        clusterApiProviderVsphere: 0.2.2
+        k0smotron: 0.2.3
         adoptedCluster: 0.2.0
         awsEksCluster: 0.2.0
-        awsHostedCpCluster: 0.2.0
-        awsStandaloneCpCluster: 0.2.0
+        awsHostedCpCluster: 0.2.1
+        awsStandaloneCpCluster: 0.2.1
         azureAksCluster: 0.2.0
-        azureHostedCpCluster: 0.2.0
-        azureStandaloneCpCluster: 0.2.0
+        azureHostedCpCluster: 0.2.2
+        azureStandaloneCpCluster: 0.2.2 
+        dockerHostedCpCluster: 0.2.0
         gcpGkeCluster: 0.2.0
-        gcpHostedCpCluster: 0.2.0
-        gcpStandaloneCpCluster: 0.2.0
-        openstackStandaloneCpCluster: 0.2.0
-        remoteCluster: 0.2.0
-        vsphereHostedCpCluster: 0.2.0
-        vsphereStandaloneCpCluster: 0.2.0
-        sveltosProvider: 0.50.0
+        gcpHostedCpCluster: 0.2.1
+        gcpStandaloneCpCluster: 0.2.1
+        openstackStandaloneCpCluster: 0.2.2
+        remoteCluster: 0.2.1
+        vsphereHostedCpCluster: 0.2.1
+        vsphereStandaloneCpCluster: 0.2.1
+        sveltosProvider: 0.52.2
     servicesVersions:
       dashVersions:
         certManager: 1-16-2  

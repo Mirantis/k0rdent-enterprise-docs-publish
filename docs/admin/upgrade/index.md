@@ -41,7 +41,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
         - name: cluster-api-provider-gcp
           template: cluster-api-provider-gcp-{{{ extra.docsVersionInfo.k0rdentVersion }}}          
         - name: projectsveltos
-          template: projectsveltos-0-{{{ extra.docsVersionInfo.providerVersions.dotVersions.sveltosProvider }}}-0
+          template: projectsveltos-{{{ extra.docsVersionInfo.providerVersions.dotVersions.sveltosProvider }}}
     ```
 
     Thankfully, you don't have to build these YAML files yourself. Once you've chosen a release, you can go ahead and create the release object by referencing the YAML file online, as in:
@@ -49,6 +49,9 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
     ```shell
     VERSION=v{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
     kubectl create -f https://github.com/k0rdent/kcm/releases/download/${VERSION}/release.yaml
+    ```
+    ```console
+    release.k0rdent.mirantis.com/kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}} created
     ```
 
 2. List Available `Releases`
@@ -63,6 +66,7 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
     NAME        AGE
     kcm-0-0-6   71m
     kcm-0-0-7   65m
+    kcm-0-2-0   6d9h
     kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   12m
     ```
 
@@ -82,6 +86,8 @@ Upgrading {{{ docsVersionInfo.k0rdentName }}} involves making upgrades to the `M
 
     ```shell
     kubectl get managements.k0rdent.mirantis.com kcm
+    ```
+    ```console
     NAME   READY   RELEASE     AGE
     kcm    True    kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}   4m34s
     ```
