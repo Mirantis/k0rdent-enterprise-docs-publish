@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide provides an introduction to setting up and managing {{{ docsVersionInfo.k0rdentName }}} Virtualization using KubeVirt. It covers system requirements, installation steps, and multiple methods for managing virtual machines, ensuring you have the necessary context to deploy and operate virtualization components efficiently.
+This guide provides an introduction to setting up and managing Mirantis k0rdent Virtualization (KubeVirt). It covers system requirements, installation steps, and multiple methods for managing virtual machines, ensuring you have the necessary context to deploy and operate virtualization components efficiently.
 
 ## System Requirements
 
@@ -14,7 +14,7 @@ These requirements are designed to provide sufficient resources for running virt
 
 ## Installation
 
-Before beginning, ensure that HCO has been [installed](./kubevirt-install.md) and [configured](./configuration.md).
+Before beginning, ensure that HCO has been [installed](./mkvirt-install.md) and [configured](./configuration.md).
 
 ## Managing Virtual Machines
 
@@ -26,7 +26,7 @@ Once your environment is set up, you have several options to create, update, del
 
 Each method provides its own advantages depending on your workflow and requirements.
 
-### Kubevirt-manager
+### kubevirt-manager
 
 Mirantis provides an enhanced version of `kubevirt-manager` that is managed by HCO on {{{ docsVersionInfo.k0rdentName }}} clusters. This Web UI offers an intuitive interface for managing virtual machines. To access the `kubevirt-manager` UI, forward the service port to your local machine using the following command:
 
@@ -165,6 +165,6 @@ spec:
               chpasswd: { expire: False }
 ```
 
-Other templates (for Ubuntu or [Windows](kubevirt-windows.md), for example) can be created in a similar manner.
+Other templates (for Ubuntu or [Windows](mkvirt-windows.md), for example) can be created in a similar manner.
 
 Using YAML templates allows for version-controlled and reproducible VM deployments, enabling infrastructure as code practices. This method is particularly useful in automated and CI/CD workflows.

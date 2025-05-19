@@ -216,6 +216,7 @@ nav:
     - Templates for Remote SSH: reference/template/template-remote.md
   - Troubleshooting: 
     - Overview: troubleshooting/index.md
+    - Events: troubleshooting/events.md
     - AWS VPCs: troubleshooting/admin-troubleshooting-aws-vpcs.md
     - EKS: troubleshooting/known-issues-eks.md
   - Appendix:
@@ -226,13 +227,13 @@ nav:
     - Cloud provider credentials management in CAPI: appendix/appendix-providers.md
   - ➤ Solutions:
     - Overview: addons/index.md
-    - KubeVirt:
-      - Overview: addons/kubevirt/index.md
-      - Install KubeVirt and HCO: addons/kubevirt/kubevirt-install.md
-      - Virtualization Configuration: addons/kubevirt/configuration.md
-      - Getting Started: addons/kubevirt/getting-started.md
-      - Windows on KubeVirt: addons/kubevirt/kubevirt-windows.md
-      - Virtualization Best Practices: addons/kubevirt/best-practices.md
+    - Mirantis k0rdent Virtualization:
+      - Overview: addons/mkvirt/index.md
+      - Install Mirantis k0rdent Virtualization and HCO: addons/mkvirt/mkvirt-install.md
+      - Virtualization Configuration: addons/mkvirt/configuration.md
+      - Getting Started: addons/mkvirt/getting-started.md
+      - Windows on Mirantis k0rdent Virtualization: addons/mkvirt/mkvirt-windows.md
+      - Virtualization Best Practices: addons/mkvirt/best-practices.md
     - Ceph:
       - Overview: addons/ceph/index.md
       - Installing Ceph: addons/ceph/ceph-install.md

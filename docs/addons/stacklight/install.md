@@ -6,7 +6,7 @@ Before installing Stacklight, make sure to satisfy these prerequisites:
 
 *   A k0s cluster: The cluster should have at least 1 worker node for non-HA installations, and a minimum of 3 worker nodes for an HA StackLight installation. 
 *   Metrics scraping: Deploy k0s with the `--enable-metrics-scraper` feature (as described [here](https://docs.k0sproject.io/stable/system-monitoring/).
-*   A configured `StorageClass` in the cluster: StackLight requires persistent volumes for its components. For KubeVirt, StackLight uses the `kubernetes-hdd` `StorageClass` created by Ceph.
+*   A configured `StorageClass` in the cluster: StackLight requires persistent volumes for its components. For Mirantis k0rdent Virtualization (KubeVirt), StackLight uses the `kubernetes-hdd` `StorageClass` created by Ceph.
 *   An external load balancer provider: If you want StackLight's component UIs to be exposed externally, make sure the cluster has this external load balancer provider configured.
 *   Kernel count: The node(s) where StackLight pods will be running should have a `vm.max_map_count` kernel parameter of 262144 or higher. You can also set `opensearch.editMaxMapCount=true` in your StackLight object spec (see [API Documentation](https://docs.google.com/document/d/1YZPEeKGC8u7J_mbSe4vpCphdAMW5N6-10yWYXnV66Rw/edit#heading=h.pplpkjyjv6jh)). This causes `opensearch init container` to set `vm.max_map_count=262144`.
 *   Node roles: Only nodes marked as `role=controller+worker` and `role=worker` are monitored by StackLight, as StackLight monitoring agents are running as k8s workloads in the cluster. Make sure all nodes you want monitored are marked accordingly.
@@ -109,7 +109,7 @@ Follow these steps to install Stacklight on the management cluster:
         ...
     ```
 
-### On the targeted KCM KubeVirt managed child cluster
+### On the targeted KCM Mirantis k0rdent Virtualization managed child cluster
 
 Once you've installed StackLight into the management cluster, you need to install it on the child cluster you want to monitor. Follow these steps, making sure KUBECONFIG points to the proper cluster:
 
@@ -144,7 +144,7 @@ Once you've installed StackLight into the management cluster, you need to instal
     ```
 
     > NOTE:
-    > You must set `kubevirtMonitoringEnabled=true` to enable installation of KubeVirt monitoring-related components.
+    > You must set `kubevirtMonitoringEnabled=true` to enable installation of Mirantis k0rdent Virtualization monitoring-related components.
 
 3. Finally, add the `StackLight` YAML to the cluster:
 
