@@ -242,7 +242,7 @@ vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vs
 
 ## Verify that KSM ServiceTemplate objects are available
 
-{{{ docsVersionInfo.k0rdentName }}} Service Manager (KSM) uses Service Templates to lifecycle manage services and applications installed on clusters. These, too, are represented as declarative templates, instantiated as `ServiceTemplate` objects. Check that default `ServiceTemplate` objects have been created and validated:
+{{{ docsVersionInfo.k0rdentName }}} State Manager (KSM) uses Service Templates to lifecycle manage services and applications installed on clusters. These, too, are represented as declarative templates, instantiated as `ServiceTemplate` objects. Check that default `ServiceTemplate` objects have been created and validated:
 
 ```shell
 kubectl get servicetemplate -n kcm-system   # list servicetemplate objects in the kcm-system namespace
