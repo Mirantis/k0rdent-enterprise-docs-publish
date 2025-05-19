@@ -1,10 +1,10 @@
 # Configuration
 
-This section describes how to fine-tune {{{ docsVersionInfo.k0rdentName }}} Virtualization by modifying the HyperConverged (HCO) custom resource, which is the central configuration point for KubeVirt and its related components. By updating this resource, administrators can adjust certificate management, live migration behavior, resource allocation, and various operational strategies.
+This section describes how to fine-tune Mirantis k0rdent Virtualization by modifying the HyperConverged (HCO) custom resource, which is the central configuration point for Mirantis k0rdent Virtualization (KubeVirt) and its related components. By updating this resource, administrators can adjust certificate management, live migration behavior, resource allocation, and various operational strategies.
 
 ## HCO Custom Resource
 
-Administrators can adjust the configuration of {{{ docsVersionInfo.k0rdentName }}} virtualization by updating the HyperConverged custom resource. The default configuration includes:
+Administrators can adjust the configuration of Mirantis k0rdent Virtualization by updating the HyperConverged custom resource. The default configuration includes:
 
 - `CertConfig`:  Rotation policy for internal, self-signed certificates, including duration and renewBefore settings. It includes:
     - `Ca`:

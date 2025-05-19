@@ -1,6 +1,6 @@
 # Virtualization Best Practices
 
-This document outlines best practices to ensure stable performance and effective management of virtual machines running on {{{ docsVersionInfo.k0rdentName }}} Virtualization. Here, “VM” refers to Virtual Machines and also covers VMIs and VMI ReplicaSets. The guidelines provided help ensure that VMs remain live-migratable and recoverable, even under challenging conditions.
+This document outlines best practices to ensure stable performance and effective management of virtual machines running on Mirantis k0rdent Virtualization. Here, “VM” refers to Virtual Machines and also covers VMIs and VMI ReplicaSets. The guidelines provided help ensure that VMs remain live-migratable and recoverable, even under challenging conditions.
 
 > **Note:** All recovery procedures required for VMs to be LiveMigratable.
 
@@ -98,7 +98,7 @@ This configuration allows kubelet to evict a VM from an overloaded node (for exa
 
 ## Node Shutdown
 
-If a node shuts down or becomes unreachable/unavailable, it is possible to recover a VM that was running on that node using live migration. First, verify that there are available nodes for the VM to migrate to and that nodeSelector labels permit migration. Then, perform migration of the VM using either `virtctl` or the Kubevirt UI:
+If a node shuts down or becomes unreachable/unavailable, it is possible to recover a VM that was running on that node using live migration. First, verify that there are available nodes for the VM to migrate to and that nodeSelector labels permit migration. Then, perform migration of the VM using either `virtctl` or the Mirantis k0rdent Virtualization (Kubevirt) UI:
 
 ```bash
 virtctl migrate <VM Name>
@@ -110,7 +110,7 @@ Live migration in node shutdown scenarios helps ensure that VMs are quickly re-a
 
 ## Virtual Machine Crash
 
-If a VM shuts down unexpectedly, Kubevirt will automatically restart it. No administrator action is required.
+If a VM shuts down unexpectedly, Mirantis k0rdent Virtualization will automatically restart it. No administrator action is required.
 
 ## Detecting Broken State
 

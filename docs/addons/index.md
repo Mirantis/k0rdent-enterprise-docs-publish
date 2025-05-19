@@ -4,7 +4,7 @@
 
 Several of these AddOns are documented in this section. These include:
 
-* [**KubeVirt**](kubevirt/index.md) extends Kubernetes to run virtual machine workloads alongside containers. By introducing native resource types for virtual machines, it allows you to manage VMs using the same operational tools and workflows you already use for Kubernetes resources. Features such as live migration and flexible scheduling ensure that virtualized workloads can be maintained with minimal disruption.
+* [**Mirantis k0rdent Virtualization (kubevirt)**](mkvirt/index.md) extends Kubernetes to run virtual machine workloads alongside containers. By introducing native resource types for virtual machines, it allows you to manage VMs using the same operational tools and workflows you already use for Kubernetes resources. Features such as live migration and flexible scheduling ensure that virtualized workloads can be maintained with minimal disruption.
 
 * [**Ceph**](ceph/index.md) provides a unified storage solution that supports block, file, and object storage within a single system. It simplifies the management of persistent volumes by automating key processes like data replication and recovery, thereby reducing the manual overhead typically associated with enterprise storage.
 
