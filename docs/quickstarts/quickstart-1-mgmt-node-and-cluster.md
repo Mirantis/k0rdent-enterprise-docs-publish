@@ -196,14 +196,19 @@ You should see output similar to:
 
 ```console
 NAME                                   VALID
-cluster-api-{{{ extra.docsVersionInfo.k0rdentVersion }}}                      true
-cluster-api-provider-aws-{{{ extra.docsVersionInfo.k0rdentVersion }}}         true
-cluster-api-provider-azure-{{{ extra.docsVersionInfo.k0rdentVersion }}}       true
-cluster-api-provider-openstack-{{{ extra.docsVersionInfo.k0rdentVersion }}}   true
-cluster-api-provider-vsphere-{{{ extra.docsVersionInfo.k0rdentVersion }}}     true
-k0smotron-{{{ extra.docsVersionInfo.k0rdentVersion }}}                        true
-kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}                              true
-projectsveltos-0-45-0                  true
+cluster-api-{{{ extra.docsVersionInfo.providerVersions.dashVersions.clusterApi }}}                                 true
+cluster-api-provider-aws-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAws }}}                    true
+cluster-api-provider-azure-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderAzure }}}                  true
+cluster-api-provider-docker-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderDocker }}}                 true
+cluster-api-provider-gcp-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderGcp }}}                    true
+cluster-api-provider-infoblox-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderInfoblox }}}               true
+cluster-api-provider-ipam-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderIpam }}}                   true
+cluster-api-provider-k0sproject-k0smotron-{{{ docsVersionInfo.providerVersions.dashVersions.k0smotron }}}   true
+cluster-api-provider-openstack-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderOpenstack }}}              true
+cluster-api-provider-vsphere-{{{ docsVersionInfo.providerVersions.dashVersions.clusterApiProviderVsphere }}}                true
+k0smotron-{{{ docsVersionInfo.providerVersions.dashVersions.k0smotron }}}                                   true
+kcm-{{{ docsVersionInfo.k0rdentVersion }}}                                         true
+projectsveltos-{{{ docsVersionInfo.providerVersions.dashVersions.sveltosProvider }}}                             true
 ```
 
 ## Verify that KCM ClusterTemplate objects are available
@@ -218,14 +223,19 @@ You should see output similar to:
 
 ```console
 NAME                            VALID
-adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
 aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
 aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
 aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
 azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
 azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
 azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+docker-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.dockerHostedCpCluster }}}          true
+gcp-gke-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpGkeCluster }}}                   true
+gcp-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpHostedCpCluster }}}             true
+gcp-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpStandaloneCpCluster }}}         true
 openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.remoteCluster }}}            true
 vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
 vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
