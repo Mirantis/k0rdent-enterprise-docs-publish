@@ -149,6 +149,7 @@ nav:
       - Deploying standalone clusters: admin/clusters/deploy-cluster.md
       - Updating standalone clusters: admin/clusters/update-cluster.md
       - Adopting clusters: admin/clusters/admin-adopting-clusters.md
+      - IP Address Management (IPAM): admin/clusters/cluster-ipam.md
     - Working with services:
       - Overview: admin/services/index.md
       - Using and creating service templates: admin/services/admin-service-templates.md
@@ -184,7 +185,7 @@ nav:
         - Role Definitions: admin/access/rbac/roles-summary.md
     - Backup and Restore:
       - Overview: admin/backup/index.md
-      - Preparing for Backups: admin/backup/prepare-backups.md      
+      - Preparing for Backup: admin/backup/prepare-backups.md      
       - Scheduled Management Backups: admin/backup/scheduled-backups.md
       - Management Backup on Demand: admin/backup/ondemand-backups.md
       - What's Included in a Backup: admin/backup/whats-included.md
@@ -330,6 +331,8 @@ extra:
     k0rdentVersion: 1-0-0-rc1
     k0rdentDotVersion: 1.0.0-rc1
     ociRegistry: oci://registry.mirantis.com/k0rdent-enterprise/kcm
+    k0rdentDigestValue: sha256:3645c61d59e88143e58a7050ca5b2601f5f5810f1eff163ddba74d1477cdc08c
+    k0rdentDigestDate: Fri May  2 08:42:36 2025    
     kofVersions:
       kofVersion: 0.3.0
       kofDotVersion: 0.3.0
