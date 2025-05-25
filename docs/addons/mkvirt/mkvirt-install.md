@@ -8,79 +8,121 @@ The first step in this process is to deploy the Hyperconverged Cluster Operator 
 
 Before proceeding, ensure you have the following in place:
 
-- A deployed k0rdent child cluster.
+- A deployed k0rdent child cluster with CRDs enabled.
 - The `kubectl` utility installed and configured.
 - kubeconfig files for both the KCM (k0rdent Control Manager) and the child clusters.
 
+## cert-manager
+
+In order for the HCP webhook service to function properly, you need to have `cert-manager` deployed and enabled on the child clusters.
+
+To determine whether `cert-manager` is deployed, `describe` the `ClusterDeployment`, as in:
+
+```shell
+kubectl describe ClusterDeployment <CLUSTER-NAME> -n <CLUSTER-NAMESPACE> 
+```
+
+For example, if you've created a `ClusterDeployment` named `ksi-managed-cluster` in the `kcm-system` namespace, you'd use:
+
+```shell
+kubectl describe ClusterDeployment ksi-managed-cluster -n kcm-system
+```
+```console
+...
+      - name: cert-manager
+        namespace: cert-manager
+        template: cert-manager-{{{ docsVersionInfo.servicesVersions.dashVersions.certManager}}}
+        values: |
+          cert-manager:
+            crds:
+              enabled: true
+...
+```
+
+If you don't see the `cert-manager` service, you can go ahead and add it.  Start by adding the new
+spec in a file called `clusterdeployment-patch.yaml`:
+
+```yaml
+spec:
+  serviceSpec:
+    services:
+      - name: cert-manager
+        namespace: cert-manager
+        template: cert-manager-{{{ docsVersionInfo.servicesVersions.dashVersions.certManager }}}
+        values: |
+          cert-manager:
+            crds:
+              enabled: true
+    # continueOnError: true  # uncomment for troubleshooting
+```
+
+Then, with the `KUBECONFIG` pointing at the **management** cluster, apply the patch to the cluster to
+tell it to add this service to the `ClusterDeployment`:
+
+```shell
+kubectl patch clusterdeployment ksi-managed-cluster -n kcm-system --type=merge --patch-file clusterdeployment-patch.yaml
+```
+
+Wait for the `ClusterDeployment` to be ready:
+
+```shell
+kubectl get clusterdeployments -A
+```
+
 ## Manifests
 
-Deploying HCO in a {{{ docsVersionInfo.k0rdentName }}} child environment relies on two key manifests, which need to be added to the **management** cluster. The first defines the Helm repository, and the second specifies the `ServiceTemplate` used to deploy HCO.
+Deploying HCO in a {{{ docsVersionInfo.k0rdentName }}} child environment relies on the HCO `ServiceTemplate`, which you can 
+install from the {{{ docsVersionInfo.k0rdentName }}} Catalog:
 
-1. Helm Repository Manifest
+```shell
+helm install hco-service-template oci://registry.mirantis.com/k0rdent-enterprise/hco-service-template --version {{{ docsVersionInfo.addonVersions.dashVersions.hco }}} -n kcm-system
+```
 
-      This manifest sets up the Helm repository from which the HCO chart will be pulled:
+Verify that the HCO `ServiceTemplate` has been added and is `VALID`:
 
-      ```yaml
-      apiVersion: source.toolkit.fluxcd.io/v1
-      kind: HelmRepository
-      metadata:
-        labels:
-          k0rdent.mirantis.com/managed: 'true'
+```shell
+kubectl -n kcm-system get servicetemplate
+```
+```console
+NAME                      VALID
+cert-manager-{{{ docsVersionInfo.servicesVersions.dashVersions.certManager }}}       true
+dex-{{{ docsVersionInfo.addonVersions.dashVersions.dex }}}                true
+external-secrets-{{{ docsVersionInfo.servicesVersions.dashVersions.externalSecrets }}}   true
+hco-{{{ docsVersionInfo.addonVersions.dashVersions.hco }}}           true
+ingress-nginx-4-11-0      true
+ingress-nginx-{{{ docsVersionInfo.servicesVersions.dashVersions.ingressNginx }}}      true
+kyverno-{{{ docsVersionInfo.servicesVersions.dashVersions.kyverno }}}             true
+velero-{{{ docsVersionInfo.servicesVersions.dashVersions.velero }}}              true
+```
+
+The `ServiceTemplate` manifest directs the deployment of HCO using the Helm chart:
+
+```yaml
+apiVersion: k0rdent.mirantis.com/v1alpha1
+kind: ServiceTemplate
+metadata:
+  name: hco-{{{ docsVersionInfo.addonVersions.dashVersions.hco }}}
+  namespace: kcm-system
+spec:
+  helm:
+    chartSpec:
+      chart: hco
+      interval: 10m0s
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
         name: kubevirt-repo
-        namespace: kcm-system
-      spec:
-        interval: 10m0s
-        url: https://binary.mirantis.com/kubevirt/helm/
-      ```
+      version: {{{ docsVersionInfo.addonVersions.dotVersions.hco }}}
+```
 
-      Defining the Helm repository ensures that you always pull the correct version of the HCO chart, and the label indicates that this resource is managed by the k0rdent system.
-
-2. `ServiceTemplate` Manifest
-
-      The `ServiceTemplate` manifest directs the deployment of HCO using the Helm chart:
-
-      ```yaml
-      apiVersion: k0rdent.mirantis.com/v1alpha1
-      kind: ServiceTemplate
-      metadata:
-        name: hco-{{{ docsVersionInfo.addonVersions.dashVersions.hco }}}
-        namespace: kcm-system
-      spec:
-        helm:
-          chartSpec:
-            chart: hco
-            interval: 10m0s
-            reconcileStrategy: ChartVersion
-            sourceRef:
-              kind: HelmRepository
-              name: kubevirt-repo
-            version: {{{ docsVersionInfo.addonVersions.dotVersions.hco }}}
-      ```
-
-      By specifying the chart version and the reconcile strategy, this template ensures that HCO remains up to date with minimal manual intervention.
+By specifying the chart version and the reconcile strategy, this template ensures that HCO remains up to date with minimal manual intervention.
 
 ## Steps
 
 To deploy HCO, you will add the relevant templates and changes to the management cluster. These
 changes will then affect the relevant child cluster. To install and verify HCO, follow these steps:
 
-1. Apply Manifests on the KCM Cluster
-
-    Apply the pre-created manifests (see [Manifests](#manifests), above) to the `kcm-system` namespace on the management cluster. Then verify that the HCO `ServiceTemplate` has been added and is in a `VALID` state by listing the servicetemplate objects, as in:
-
-    ```bash
-    $ kubectl -n kcm-system get servicetemplate
-    NAME                     VALID
-    cert-manager-{{{ docsVersionInfo.servicesVersions.dashVersions.certManager }}}      true
-    external-secrets-{{{ docsVersionInfo.servicesVersions.dashVersions.externalSecrets }}}  true
-    hco-{{{ docsVersionInfo.addonVersions.dashVersions.hco}}}          true
-    ingress-nginx-4-11-0     true
-    ingress-nginx-{{{ docsVersionInfo.servicesVersions.dashVersions.ingressNginx }}}     true
-    kyverno-{{{ docsVersionInfo.servicesVersions.dashVersions.kyverno }}}            true
-    velero-{{{ docsVersionInfo.servicesVersions.dashVersions.velero }}}             true
-    ```
-
-2. Add HCO Service Definitions to the `Clusterdeployment`
+1. Add HCO Service Definitions to the `Clusterdeployment`
 
     Integrate HCO into your existing {{{ docsVersionInfo.k0rdentName}}} child cluster or include it when creating a new `Clusterdeployment` object by updating the `spec.serviceSpec.services` array with the following definition:
 

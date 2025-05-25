@@ -399,7 +399,7 @@ extra:
         sveltosProvider: 0.54.4
     servicesVersions:
       dashVersions:
-        certManager: 1-16-2  
+        certManager: 1-17-1  
         externalSecrets: 0-11-0
         ingressNginx: 4-11-3   
         kyverno: 3-2-6       
@@ -413,12 +413,14 @@ extra:
     addonVersions:
       dashVersions:
         ceph: 1-0-3
-        hco: 1-14-1-mira  
+        dex: 0-19-1
+        hco: 1-14-5-mira  
         stacklightOperator: 0-1-0
         stacklightChart: 0-1-0-mcp-16
       dotVersions:
         ceph: 1.0.3
-        hco: 1.14.1-mira    
+        dex: 0.19.1
+        hco: 1.14.5-mira    
         stacklightOperator: 0.1.0  
         stacklightChart: 0.1.0-mcp-16
 
