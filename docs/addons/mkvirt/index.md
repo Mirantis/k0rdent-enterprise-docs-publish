@@ -1,20 +1,20 @@
-# {{{ docsVersionInfo.k0rdentName }}} Virtualization
+# Mirantis k0rdent Virtualization
 
-{{{ docsVersionInfo.k0rdentName }}} Virtualization is a complete solution for users looking to run virtual machine–based workloads on top of Kubernetes. The central technology is [KubeVirt](https://kubernetes.io/), a virtual machine management add-on for Kubernetes. KubeVirt extends Kubernetes by adding additional virtualization resource types (especially the `VirtualMachine` type) through Kubernetes’s Custom Resource Definitions (CRDs) API. This mechanism enables you to manage VirtualMachine resources alongside all other Kubernetes resources.
+Mirantis k0rdent Virtualization (KubeVirt) is a complete solution for users looking to run virtual machine–based workloads on top of Kubernetes. The central technology is [KubeVirt](https://kubernetes.io/), a virtual machine management add-on for Kubernetes. Mirantis k0rdent Virtualization extends Kubernetes by adding additional virtualization resource types (especially the `VirtualMachine` type) through Kubernetes’s Custom Resource Definitions (CRDs) API. This mechanism enables you to manage VirtualMachine resources alongside all other Kubernetes resources.
 
 ## Concepts
 
-At the heart of this approach is the **Hyperconverged Cluster Operator (HCO)**. The HCO streamlines deployment by unifying the configuration and management of multiple operators, including KubeVirt, Containerized Data Importer (CDI), networking components, and kubevirt-manager, via a single entry point. This cohesive setup, delivered through the HCO `ServiceTemplate` for a {{{ docsVersionInfo.k0rdentName }}} `ClusterDeployment`, helps maintain consistency and reduces the administrative burden.
+At the heart of this approach is the **Hyperconverged Cluster Operator (HCO)**. The HCO streamlines deployment by unifying the configuration and management of multiple operators, including KubeVirt, Containerized Data Importer (CDI), networking components, and `kubevirt-manager`, via a single entry point. This cohesive setup, delivered through the HCO `ServiceTemplate` for a {{{ docsVersionInfo.k0rdentName }}} `ClusterDeployment`, helps maintain consistency and reduces the administrative burden.
 
 ## Architecture
 
-The architecture of {{{ docsVersionInfo.k0rdentName }}} Virtualization is designed to leverage Kubernetes-native patterns for effective virtual machine management.
+The architecture of Mirantis k0rdent Virtualization is designed to leverage Kubernetes-native patterns for effective virtual machine management.
 
 ### Hyperconverged Cluster Operator
 
 The **Hyperconverged Cluster Operator** aggregates a suite of components into a single management layer, following the operator pattern for managing multi-operator products. The default HCO `ServiceTemplate` installs the following components:
 
-- **KubeVirt:** Provides the foundational virtualization capabilities.
+- **Mirantis k0rdent Virtualization:** Provides the foundational virtualization capabilities.
 - **Containerized Data Importer (CDI):** Manages persistent storage by constructing virtual machine disks on PVCs.
 - **Cluster Network Addons (CNA):** Enhances networking functionality, typically through Multus.
 - **Kubevirt-manager:** Supplies a Web UI for easier virtual machine management.
@@ -25,7 +25,7 @@ This consolidation reduces operational overhead and contributes to a more mainta
 
 ### KubeVirt
 
-[KubeVirt](https://kubevirt.io/) is the core engine for virtualization within {{{ docsVersionInfo.k0rdentName}}}. It manages the `VirtualMachine` custom resource via dedicated controllers:
+[KubeVirt](https://kubevirt.io/) is the core engine for virtualization within Mirantis k0rdent Virtualization. It manages the `VirtualMachine` custom resource via dedicated controllers:
 
 #### Cluster Level Controllers
 

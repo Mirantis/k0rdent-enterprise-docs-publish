@@ -1,6 +1,6 @@
 # Ceph User Scenarios
 
-This section outlines common scenarios for using Ceph as a storage backend for Kubernetes workloads and in KubeVirt environments. It demonstrates how Ceph, when integrated with {{{ docsVersionInfo.k0rdentName}}} via `MiraCeph`, simplifies storage provisioning by automatically generating the necessary StorageClasses and PVs.
+This section outlines common scenarios for using Ceph as a storage backend for Kubernetes workloads and in Mirantis k0rdent Virtualization (Kubevirt) environments. It demonstrates how Ceph, when integrated with {{{ docsVersionInfo.k0rdentName}}} via `MiraCeph`, simplifies storage provisioning by automatically generating the necessary StorageClasses and PVs.
 
 ## Ceph Block PVC Creation
 
@@ -110,18 +110,18 @@ Then a corresponding `StorageClass` will be created along with the pool’s crea
 
 To create a Ceph-based Filesystem PV, define a PVC manifest using the appropriate StorageClass.
 
-## Ceph Usage in KubeVirt VMs
+## Ceph Usage in Mirantis k0rdent Virtualization VMs
 
-KubeVirt leverages Ceph-based `StorageClass` objects to provide persistent storage for Virtual Machines (VMs). Ceph's ability to support both block and filesystem volumes makes it a versatile backend for diverse workloads.
+Mirantis k0rdent Virtualization leverages Ceph-based `StorageClass` objects to provide persistent storage for Virtual Machines (VMs). Ceph's ability to support both block and filesystem volumes makes it a versatile backend for diverse workloads.
 
-> **Note:** It is recommended to enable the `device_ownership_from_security_context` feature in the container runtime (CRI) for proper handling of block volumes by KubeVirt. More details are available at:  
+> **Note:** It is recommended to enable the `device_ownership_from_security_context` feature in the container runtime (CRI) for proper handling of block volumes by Mirantis k0rdent Virtualization. More details are available at:  
 > [Block CRI Ownership Configuration](https://github.com/kubevirt/containerized-data-importer/blob/main/doc/block_cri_ownership_config.md).
 
 - **Dual Mode Support:** This example illustrates the use of both a filesystem (RWX) and a block (RWO) volume in the same VM, demonstrating Ceph's flexibility in supporting diverse storage requirements.  
 - **Unified Storage for VMs and Containers:** Using Ceph as the underlying storage system allows for consistent management of storage resources, whether they are being used for traditional container workloads or virtual machine environments.  
 - **Simplified VM Provisioning:** With pre-configured `StorageClass` objects, creating and attaching persistent volumes to VMs becomes a seamless process, reducing manual intervention and potential configuration errors.
 
-Ceph-based persistent volumes are defined within a KubeVirt VirtualMachine manifest. Consider the following example:
+Ceph-based persistent volumes are defined within a Mirantis k0rdent Virtualization VirtualMachine manifest. Consider the following example:
 
 ```yaml
 apiVersion: kubevirt.io/v1

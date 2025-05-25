@@ -15,7 +15,7 @@ overall system reliability and simplifies the complexities of cloud management.
 
 In {{{ docsVersionInfo.k0rdentName }}}, StackLight is distributed as Kubernetes Operator--a `CustomResourceDefinition` 
 (`stacklights.monitoring.mirantis.com`) and corresponding controller--and is installed as a Helm chart. 
-For KubeVirt as part of {{{ docsVersionInfo.k0rdentName }}}, StackLight is distributed as a `ServiceTemplate` object. 
+For Mirantis k0rdent Virtualzation (KubeVirt) as part of {{{ docsVersionInfo.k0rdentName }}}, StackLight is distributed as a `ServiceTemplate` object. 
 
 StackLight consists of the following components:
 

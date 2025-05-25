@@ -1,8 +1,8 @@
-# How-To Deploy HCO on k0rdent Environment
+# How-To Deploy HCO on a {{{ docsVersionInfo.k0rdentName }}} Environment
 
 This guide outlines the step-by-step process for using {{{ docsVersionInfo.k0rdentName}}} to deploy the components of {{{ docsVersionInfo.k0rdentName}}} Virtualization on child clusters.
 
-The first step in this process is to deploy the Hyperconverged Cluster Operator (HCO) on the target cluster. The HCO simplifies deployment of additional {{{ docsVersionInfo.k0rdentName}}} Virtualization components such as KubeVirt, CDI, networking, and kubevirt-manager, providing a unified method to manage virtual machine workloads on that child cluster.
+The first step in this process is to deploy the Hyperconverged Cluster Operator (HCO) on the target cluster. The HCO simplifies deployment of additional Mirantis k0rdent Virtualization components such as KubeVirt, CDI, networking, and `kubevirt-manager`, providing a unified method to manage virtual machine workloads on that child cluster.
 
 ## Prerequisites
 
@@ -114,7 +114,7 @@ changes will then affect the relevant child cluster. To install and verify HCO, 
 
 4. Apply the HCO Custom Resource (CR)
 
-    Once the HCO operator is ready, apply the HCO `CustomResource` to the child cluster to activate KubeVirt and its subcomponents (such as network and storage plugins):
+    Once the HCO operator is ready, apply the HCO `CustomResource` to the child cluster to activate Mirantis k0rdent Virtualization and its subcomponents (such as network and storage plugins):
 
     ```yaml
     apiVersion: hco.kubevirt.io/v1beta1
@@ -133,6 +133,6 @@ changes will then affect the relevant child cluster. To install and verify HCO, 
     ```
 
     > NOTE: 
-    > Currently, you must specify `platform: mke4` in the HCO CR to properly set up the KubeVirt component on a k0rdent environment. This option's value may be renamed in the future.
+    > Currently, you must specify `platform: mke4` in the HCO CR to properly set up the Mirantis k0rdent Virtualization component on a {{{ docsVersionInfo.k0rdentName }}} environment. This option's value may be renamed in the future.
 
     Applying the HCO CR is the final step that triggers the deployment of all virtualization components, ensuring that your cluster is fully equipped to handle VM workloads.

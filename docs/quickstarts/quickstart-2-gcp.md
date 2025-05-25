@@ -1,12 +1,9 @@
 # QuickStart 2 - GCP target environment
 
-> NOTE:
-> GCP cluster deployment is supported in K0rdent 0.2.0 and above.
-
 In this QuickStart unit, we'll be gathering information and performing preparatory steps to enable
 {{{ docsVersionInfo.k0rdentName }}} (running on your management node) to manage clusters on GCP and deploying a child cluster.
 
-Note that if you have already done our AWS or Azure QuickStart ([QuickStart 2 - AWS target environment](./quickstart-2-aws.md)), Azure QuickStart ([QuickStart 2 - Azure target environment](./quickstart-2-azure.md)), or 
+Note that if you have already done one of the other quickstarts, such as our AWS or Azure QuickStart ([QuickStart 2 - AWS target environment](./quickstart-2-aws.md)) or Azure QuickStart ([QuickStart 2 - Azure target environment](./quickstart-2-azure.md)),  or 
 you can use the same management cluster, continuing here with steps to add the ability to manage clusters on GCP. The 
 {{{ docsVersionInfo.k0rdentName }}} management cluster can accommodate multiple provider and credential setups, enabling
 management of multiple infrastructures. And even if your management node is external to GCP (for example, it could be on 
@@ -14,9 +11,8 @@ an AWS EC2 virtual machine), as long as you permit outbound traffic to all IP ad
 work fine. A big benefit of {{{ docsVersionInfo.k0rdentName }}} is that it provides a single point of control and visibility
 across multiple clusters on multiple clouds and infrastructures.
 
-GCP provider is available from K0rdent the 0.2.0 release only, and it's not enabled by default.
-To enable GCP provider in K0rdent, edit the `Management` object and add `cluster-api-provider-gcp` to the list of `spec.providers`
-and wait for a couple of minutes for GCP components to start.
+The GCP provider is available starting with the {{{ docsVersionInfo.k0rdentName }}} 0.2.0 release, but it's not enabled by default.
+To enable the GCP provider in {{{ docsVersionInfo.k0rdentName }}}, edit the `Management` object and add `cluster-api-provider-gcp` to the list of `spec.providers`, and the GCP components will start within a few minutes.
 
 ## Install Gcloud CLI
 
@@ -254,18 +250,21 @@ You'll see output resembling what's below. Grab the name of the GCP standalone c
 
 ```console
 NAMESPACE    NAME                            VALID
-kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.k0rdentVersion }}}           true
+kcm-system   adopted-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.adoptedCluster }}}           true
 kcm-system   aws-eks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsEksCluster }}}                   true
 kcm-system   aws-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsHostedCpCluster }}}             true
 kcm-system   aws-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.awsStandaloneCpCluster }}}         true
 kcm-system   azure-aks-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureAksCluster }}}                 true
 kcm-system   azure-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureHostedCpCluster }}}           true
 kcm-system   azure-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.azureStandaloneCpCluster }}}       true
+kcm-system   docker-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.dockerHostedCpCluster }}}          true
+kcm-system   gcp-gke-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpGkeCluster }}}                   true
+kcm-system   gcp-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpHostedCpCluster }}}             true
+kcm-system   gcp-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpStandaloneCpCluster }}}         true
 kcm-system   openstack-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}   true
+kcm-system   remote-cluster-{{{ extra.docsVersionInfo.providerVersions.dashVersions.openstackStandaloneCpCluster }}}            true
 kcm-system   vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereHostedCpCluster }}}         true
 kcm-system   vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
-kcm-system   gcp-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpStandaloneCpCluster }}}     true
-kcm-system   gcp-gke-{{{ extra.docsVersionInfo.providerVersions.dashVersions.gcpGkeCpCluster }}}     true
 ```
 
 ## Create your ClusterDeployment
