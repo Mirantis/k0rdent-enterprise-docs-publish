@@ -1,6 +1,6 @@
 # How-To Deploy HCO on a {{{ docsVersionInfo.k0rdentName }}} Environment
 
-This guide outlines the step-by-step process for using {{{ docsVersionInfo.k0rdentName}}} to deploy the components of {{{ docsVersionInfo.k0rdentName}}} Virtualization on child clusters.
+This guide outlines the step-by-step process for using {{{ docsVersionInfo.k0rdentName}}} to deploy the components of Mirantis k0rdent Virtualization on child clusters.
 
 The first step in this process is to deploy the Hyperconverged Cluster Operator (HCO) on the target cluster. The HCO simplifies deployment of additional Mirantis k0rdent Virtualization components such as KubeVirt, CDI, networking, and `kubevirt-manager`, providing a unified method to manage virtual machine workloads on that child cluster.
 
