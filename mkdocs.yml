@@ -333,12 +333,11 @@ extra:
             using our <a href="https://github.com/Mirantis/k0rdent-enterprise-docs/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
     k0rdentName: Mirantis k0rdent Enterprise
-    k0rdentVersion: 1-0-0-rc1
-    k0rdentDotVersion: 1.0.0-rc1
-    ociRegistry: oci://registry.mirantis.com/k0rdent-enterprise/kcm
+    k0rdentVersion: 1-0-0-rc4
+    k0rdentDotVersion: 1.0.0-rc4
+    ociRegistry: oci://registry.mirantis.com/k0rdent-enterprise/charts/k0rdent-enterprise
     k0rdentDigestValue: sha256:3645c61d59e88143e58a7050ca5b2601f5f5810f1eff163ddba74d1477cdc08c
     k0rdentDigestDate: Fri May  2 08:42:36 2025   
-    k0rdentTagList: https://github.com/k0rdent/k0rdent-enterprise/tags 
     kofVersions:
       kofVersion: 0.3.0
       kofDotVersion: 0.3.0
