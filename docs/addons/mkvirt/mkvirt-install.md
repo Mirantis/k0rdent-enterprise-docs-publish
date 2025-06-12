@@ -98,7 +98,7 @@ velero-{{{ docsVersionInfo.servicesVersions.dashVersions.velero }}}             
 The `ServiceTemplate` manifest directs the deployment of HCO using the Helm chart:
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ServiceTemplate
 metadata:
   name: hco-{{{ docsVersionInfo.addonVersions.dashVersions.hco }}}

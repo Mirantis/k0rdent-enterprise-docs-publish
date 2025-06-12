@@ -14,7 +14,7 @@ To enable, set the `.spec.performOnManagementUpgrade` to `true`.
 For example, a `ManagementBackup` object with enabled auto-backup before the `kcm` version upgrade looks like this:
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ManagementBackup
 metadata:
   name: example-backup

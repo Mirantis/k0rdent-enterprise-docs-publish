@@ -75,7 +75,7 @@ Configurations for control plane and worker nodes are specified separately under
 ### Example ClusterDeployment
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ClusterDeployment
 metadata:
   name: my-openstack-cluster-deployment

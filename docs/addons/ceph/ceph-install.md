@@ -60,7 +60,7 @@ Deploying Ceph on k0rdent follows these steps:
     Deploy the Ceph ServiceTemplate using the appropriate Ceph chart version:
 
     ```yaml
-    apiVersion: k0rdent.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ServiceTemplate
     metadata:
       name: ceph-{{{ docsVersionInfo.addonVersions.dashVersions.ceph }}}

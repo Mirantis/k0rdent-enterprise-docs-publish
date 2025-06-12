@@ -2,10 +2,10 @@
 
 Packages:
 
-- [k0rdent.mirantis.com/v1alpha1](#k0rdentmirantiscomv1alpha1)
+- [k0rdent.mirantis.com/v1beta1](#k0rdentmirantiscomv1alpha1)
 - [k0rdent.mirantis.com/v1beta1](#k0rdentmirantiscomv1beta1)
 
-# k0rdent.mirantis.com/v1alpha1
+# k0rdent.mirantis.com/v1beta1
 
 Resource Types:
 
@@ -60,7 +60,7 @@ AccessManagement is the Schema for the AccessManagements API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -550,7 +550,7 @@ ClusterDeployment is the Schema for the ClusterDeployments API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -1570,7 +1570,7 @@ ClusterTemplateChain is the Schema for the clustertemplatechains API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -1748,7 +1748,7 @@ ClusterTemplate is the Schema for the clustertemplates API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -3751,7 +3751,7 @@ Credential is the Schema for the credentials API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -4031,7 +4031,7 @@ ManagementBackup is the Schema for the managementbackups API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -4447,7 +4447,7 @@ Management is the Schema for the managements API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -4896,7 +4896,7 @@ MultiClusterService is the Schema for the multiclusterservices API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -5948,7 +5948,7 @@ ProviderInterface is the Schema for the ProviderInterface API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -6112,7 +6112,7 @@ ProviderTemplate is the Schema for the providertemplates API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -8101,7 +8101,7 @@ Release is the Schema for the releases API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -8410,7 +8410,7 @@ ServiceTemplateChain is the Schema for the servicetemplatechains API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
@@ -8588,7 +8588,7 @@ ServiceTemplate is the Schema for the servicetemplates API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1alpha1</td>
+      <td>k0rdent.mirantis.com/v1beta1</td>
       <td>true</td>
       </tr>
       <tr>
