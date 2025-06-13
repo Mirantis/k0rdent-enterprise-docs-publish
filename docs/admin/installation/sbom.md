@@ -88,20 +88,19 @@ authenticity (attestation) of the attached SPDX.
 
 ## CVE Reports
 
-In the same as SBOM results of CVE scans are attached to the OCI artifacts as a
-form of attestation. CVE reports are generated using `trivy` scanner and
-provided as a
+CVE scans are also attached to the OCI artifacts as a
+form of attestation. CVE reports are generated using the `trivy` scanner and are
+provided in the
 [Cosign Vulnerability Scan Record format](https://github.com/sigstore/cosign/blob/95b74db89941e8ec85e768f639efd4d948db06cd/specs/COSIGN_VULN_ATTESTATION_SPEC.md).
 
-To get the CVE report for specific artifact `cosign` can be used.
+You can use `cosign` to get the CVE report for a specific artifact.
 
-For example to get CVE vulnerability scan for
-`kcm-controller:{{{extra.docsVersionInfo.k0rdentDotVersion }}}` you can use
-the following command:
+For example, to get CVE vulnerability scan for
+`kcm-controller:{{{extra.docsVersionInfo.k0rdentDotVersion }}}` you can use:
 
 ```bash
 cosign verify-attestation --key https://get.mirantis.com/k0rdent-enterprise/cosign.pub --type vuln registry.mirantis.com/k0rdent-enterprise/kcm-controller:{{{ extra.docsVersionInfo.k0rdentDotVersion }}} | jq '.payload | @base64d | fromjson | .' -r
 ```
 
-This will return JSON with cosign vulnerability scan record attestation and also
-will verify the authenticity of the data.
+This command returns JSON with the cosign vulnerability scan record attestation. It also
+verifies the authenticity of the data.
