@@ -67,14 +67,14 @@ understand software dependencies.
 
 ### Getting SBOMs
 
-Each OCI artifact contains an SBOM attached to it in SPDX format. To get the SBOM
+Each OCI artifact contains an SBOM attached to it in the SPDX format. To get the SBOM
 you can use `cosign`.
 
 > NOTE:
 > Since `cosign` returns predicates in json format `jq` must be used to query
-> specific fields, like contents of SPDX.
+> specific fields, like contents of the SPDX.
 
-For example to get SPDX for
+For example to get the SPDX for
 `kcm-controller:{{{extra.docsVersionInfo.k0rdentDotVersion }}}` you can use
 the following command:
 
