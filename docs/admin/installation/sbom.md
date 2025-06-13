@@ -65,9 +65,9 @@ components. SBOMs offer a detailed inventory of software ingredients, making
 it possible to manage vulnerabilities, perform license compliance checks, and
 understand software dependencies.
 
-### Getting SBOM
+### Getting SBOMs
 
-Each OCI artifact contains SBOM attached to it in SPDX format. To get the SBOM
+Each OCI artifact contains an SBOM attached to it in SPDX format. To get the SBOM
 you can use `cosign`.
 
 > NOTE:
