@@ -122,7 +122,24 @@ jobs:
               git commit -m "Ensure 404.html is present"
               git push origin gh-pages
 
-              echo "RELEASE_LATEST_HANDLING=true" >> "$GITHUB_ENV"
+              # Replace 'latest' alias file with folder redirect for Netlify
+              git checkout gh-pages
+              rm -f latest
+              mkdir -p latest
+              echo "<!DOCTYPE html>" > latest/index.html
+              echo "<html>" >> latest/index.html
+              echo "<head>" >> latest/index.html
+              echo "  <meta http-equiv=\"refresh\" content=\"0; url=../v1.0.0/\" />" >> latest/index.html
+              echo "  <title>Redirecting to latest docs</title>" >> latest/index.html
+              echo "</head>" >> latest/index.html
+              echo "<body>" >> latest/index.html
+              echo "  <p>Redirecting to the latest version of the docs…</p>" >> latest/index.html
+              echo "</body>" >> latest/index.html
+              echo "</html>" >> latest/index.html
+
+              git add latest/index.html
+              git commit -m "Replace 'latest' alias file with folder-based redirect for Netlify"
+              git push origin gh-pages
 
             else
               version="${BRANCH#release-}"
@@ -139,29 +156,3 @@ jobs:
           done
 
           echo "All branches processed."
-
-      - name: Replace latest alias with folder redirect (Netlify compatibility)
-        if: env.RELEASE_LATEST_HANDLING == 'true'
-        run: |
-          git clone https://github.com/${{ github.repository }} repo
-          cd repo
-          git checkout gh-pages
-
-          rm -f latest
-          mkdir -p latest
-          cat > latest/index.html <<EOF
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="refresh" content="0; url=../v1.0.0/" />
-  <title>Redirecting to latest docs</title>
-</head>
-<body>
-  <p>Redirecting to the latest version of the docs…</p>
-</body>
-</html>
-EOF
-
-          git add latest/index.html
-          git commit -m "Replace 'latest' alias file with folder-based redirect for Netlify"
-          git push origin gh-pages
