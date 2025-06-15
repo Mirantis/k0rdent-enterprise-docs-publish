@@ -36,7 +36,7 @@ theme:
     - toc.follow            # Sidebar is automatically scrolled so that the active anchor is always visible
     - search.suggest        # Search suggestions
     - search.highlight      # Search highlights all occurrences after following the link
-    - content.action.edit
+    # - content.action.edit
     - content.action.view
     - navigation.path       # Not working, for sponsors only
     - navigation.indexes
