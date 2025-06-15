@@ -26,37 +26,60 @@ jobs:
           ref: workflow-queue
           fetch-depth: 0
 
+      # === NEW STEP TO AUTHENTICATE CLONE IN PRIVATE REPOS ===
+      - name: Configure authenticated GitHub URL for future clones
+        run: |
+          echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com" > ~/.git-credentials
+          git config --global credential.helper store
+      # === END NEW STEP ===
+
       - name: Grab queue, clear, and process all branches (or exit if queue.txt is empty)
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
-          # Ensure queue.txt exists even if missing
+          # Ensure queue.txt exists locally (even empty)
           touch queue.txt
           
-          # Exit early if queue.txt is empty or contains only whitespace
-          if ! grep -q '[^[:space:]]' queue.txt; then
+          # Exit if queue.txt is empty 
+          QUEUE_LENGTH=$(grep -c -v '^\s*$' queue.txt || true)
+          if [[ "$QUEUE_LENGTH" == "0" ]]; then
             echo "Queue is empty. Nothing to process."
             exit 0
           fi
-
-          # Normalize queue entries
-          mapfile -t QUEUE < <(grep -v '^\s*$' queue.txt | tr -d '[:space:]')
-
-          # Clear and push the now-empty queue.txt
+    
+          # Read the current queue
+          mapfile -t QUEUE < queue.txt
+          
+          # Clean the QUEUE array
+          for i in "${!QUEUE[@]}"; do
+            QUEUE[$i]=$(echo "${QUEUE[$i]}" | tr -d '[:space:]')
+          done
+          
+          # Remove empty elements
+          CLEAN_QUEUE=()
+          for item in "${QUEUE[@]}"; do
+            if [[ -n "$item" ]]; then
+              CLEAN_QUEUE+=("$item")
+            fi
+          done
+          QUEUE=("${CLEAN_QUEUE[@]}")
+          
+          # Immediately clear and push back
           > queue.txt
           git add queue.txt
           git commit -m "Cleared queue for processing"
           git push origin workflow-queue
-
-          # Create temp dir and clone the repo using token auth (required for private repo)
+          
+          # Now process each branch
           TMPDIR=$(mktemp -d)
           echo "Working in $TMPDIR"
 
-          # Authenticated clone of this repo using GH token
-          git clone https://x-access-token:$GH_TOKEN@github.com/${{ github.repository }} "$TMPDIR"
+          # Clone directly into TMPDIR - it becomes the repo root
+          git clone https://github.com/${{ github.repository }} "$TMPDIR"
           cd "$TMPDIR"
+
+          # Set git authentication to remote
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
           for BRANCH in "${QUEUE[@]}"; do
             if ! echo "$BRANCH" | grep -Eq '^main$|^release-v[0-9]+(\.[0-9]+)*$'; then
@@ -71,35 +94,43 @@ jobs:
               continue
             fi
 
-            # Nuke and recreate virtual environment
+            # Nuke any existing venv and create fresh
             rm -rf .venv
             python3 -m venv .venv
             source .venv/bin/activate
 
-            # Install requirements if available
+            # Install requirements (if exists)
             if [ -f requirements.txt ]; then
+              echo "Installing requirements for $BRANCH"
               pip install -r requirements.txt
             else
               echo "No requirements.txt in $BRANCH — skipping pip install"
             fi
 
-            # Prepare gh-pages tracking
+            echo "Deploying docs for branch: $BRANCH"
+
+            # Make sure gh-pages is up to date
             git fetch origin gh-pages || echo "gh-pages does not exist remotely"
+
             if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
               git branch -f gh-pages origin/gh-pages
+            else
+              echo "No origin/gh-pages ref — skipping branch sync"
             fi
 
-            # Use mike to deploy the appropriate doc version
             if [[ "$BRANCH" == "main" ]]; then
               mike deploy -t "next" --update-aliases --push next head
+
             elif [[ "$BRANCH" == "release-v1.0.0" ]]; then
               mike deploy -t "v1.0.0 (latest)" --update-aliases --push v1.0.0 latest stable
               mike set-default --push latest
+
             else
               version="${BRANCH#release-}"
               mike deploy -t "$version" --update-aliases --push "$version"
             fi
 
+            # Clean up
             deactivate
           done
 
