@@ -3,9 +3,9 @@ site_description: Documentation for Mirantis k0rdent Enterprise.
 site_author: Mirantis, Inc.
 
 docs_dir: docs/
-repo_name: Mirantis/k0rdent-enterprise-docs
-repo_url: https://github.com/mirantis-docs/k0rdent-enterprise-docs/
-repo_branch: main
+repo_name: k0rdent/kcm
+repo_url: https://github.com/k0rdent/kcm
+edit_uri: https://github.com/Mirantis/k0rdent-enterprise-docs/edit/main/docs/
 
 copyright:
   Copyright &copy; 2025 Mirantis | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>.
@@ -302,18 +302,6 @@ extra:
   version:
     provider: mike
     default: stable
-  consent:
-    title: Cookie consent
-    description: >-
-      By clicking "Accept All Cookies", you agree to the storing of cookies on your device to
-      enhance site navigation, analyze site usage, and assist in our marketing efforts. You can
-      manage your preferences or opt-out at any time by clicking "Cookie Settings". For more
-      information see our <a href="https://www.mirantis.com/cookie-policy-us/">Cookie Policy</a> and
-      <a href="https://legal.mirantis.com/#privacy-notice">Privacy Notice</a>.
-    actions:
-      - accept
-      - reject
-      - manage
   analytics:
 #    provider: google
 #    property: #id goes here
