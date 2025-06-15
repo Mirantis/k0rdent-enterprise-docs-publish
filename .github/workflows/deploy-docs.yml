@@ -1,4 +1,4 @@
-name: Deploy Docs Consumer (Runs manually or on cron)
+name: Deploy Docs Consumer (Runs manually or on cron, adjusted for Netlify staging)
 
 on:
   schedule:
@@ -107,6 +107,11 @@ jobs:
               echo "No requirements.txt in $BRANCH — skipping pip install"
             fi
 
+            # === NEW: Build site to generate 404.html ===
+            mkdocs build
+            cp site/404.html .
+            # === END NEW ===
+
             echo "Deploying docs for branch: $BRANCH"
 
             # Make sure gh-pages is up to date
@@ -121,13 +126,58 @@ jobs:
             if [[ "$BRANCH" == "main" ]]; then
               mike deploy -t "next" --update-aliases --push next head
 
+              # === NEW: Ensure 404.html present ===
+              git checkout gh-pages
+              cp ../404.html .
+              git add 404.html
+              git commit -m "Ensure 404.html is present"
+              git push origin gh-pages
+              # === END NEW ===
+
             elif [[ "$BRANCH" == "release-v1.0.0" ]]; then
               mike deploy -t "v1.0.0 (latest)" --update-aliases --push v1.0.0 latest stable
               mike set-default --push latest
 
+              # === NEW: Ensure 404.html present ===
+              git checkout gh-pages
+              cp ../404.html .
+              git add 404.html
+              git commit -m "Ensure 404.html is present"
+              git push origin gh-pages
+              # === END NEW ===
+
+              # === NEW: Replace 'latest' alias file with real redirect folder ===
+              git checkout gh-pages
+              rm -f latest
+              mkdir -p latest
+              cat > latest/index.html <<EOF
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="refresh" content="0; url=../v1.0.0/" />
+  <title>Redirecting to latest docs</title>
+</head>
+<body>
+  <p>Redirecting to the latest version of the docs…</p>
+</body>
+</html>
+EOF
+              git add latest/index.html
+              git commit -m "Replace 'latest' alias file with folder-based redirect for Netlify"
+              git push origin gh-pages
+              # === END NEW ===
+
             else
               version="${BRANCH#release-}"
               mike deploy -t "$version" --update-aliases --push "$version"
+
+              # === NEW: Ensure 404.html present ===
+              git checkout gh-pages
+              cp ../404.html .
+              git add 404.html
+              git commit -m "Ensure 404.html is present"
+              git push origin gh-pages
+              # === END NEW ===
             fi
 
             # Clean up
