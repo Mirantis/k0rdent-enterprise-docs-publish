@@ -72,6 +72,7 @@ in the works.
 
 * [AWS](admin/installation/prepare-mgmt-cluster/aws.md)
 * [Azure](admin/installation/prepare-mgmt-cluster/azure.md)
+* [Bare Metal](admin/installation/prepare-mgmt-cluster/bare-metal.md)
 * [vSphere](admin/installation/prepare-mgmt-cluster/vmware.md)
 * [OpenStack](admin/installation/prepare-mgmt-cluster/openstack.md)
 * [GCP](admin/installation/prepare-mgmt-cluster/gcp.md)
