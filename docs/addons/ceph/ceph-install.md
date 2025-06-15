@@ -166,12 +166,16 @@ Deploying Ceph on k0rdent follows these steps:
           nodes:
           - name: pr-k0rdent-env-cp-0
             roles: [ "mon", "mgr", "mds" ]
+            monitorIP: <IP address of ceph public iface from the node>
           - name: pr-k0rdent-env-cp-1
             roles: [ "mon", "mgr", "mds" ]
+            monitorIP: <IP address of ceph public iface from the node>
           - name: pr-k0rdent-env-cp-2
             roles: [ "mon", "mgr", "mds" ]
+            monitorIP: <IP address of ceph public iface from the node>
           - name: pr-k0rdent-env-md-8b7t7-2tnxw
             roles: []
+            monitorIP: <IP address of ceph public iface from the node>
             devices:
             - name: vdb
               config:
@@ -179,11 +183,13 @@ Deploying Ceph on k0rdent follows these steps:
           - name: pr-k0rdent-env-md-8b7t7-nml9d
             roles: []
             devices:
+            monitorIP: <IP address of ceph public iface from the node>
             - name: vdb
               config:
                 deviceClass: hdd
           - name: pr-k0rdent-env-md-8b7t7-pz46v
             roles: []
+            monitorIP: <IP address of ceph public iface from the node>
             devices:
             - name: vdb
               config:
