@@ -91,65 +91,29 @@ jobs:
               echo "No requirements.txt in $BRANCH — skipping pip install"
             fi
 
-            mkdocs build
-            cp site/404.html .
-
             echo "Deploying docs for branch: $BRANCH"
 
-            git fetch origin gh-pages || echo "gh-pages does not exist remotely"
-            if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
-              git branch -f gh-pages origin/gh-pages
+            if ! git ls-remote --exit-code origin gh-pages; then
+              echo "gh-pages does not exist. Initializing with mkdocs..."
+              mkdocs gh-deploy
             else
-              echo "No origin/gh-pages ref — skipping branch sync"
+              echo "gh-pages exists remotely. Syncing..."
             fi
+
+            git fetch origin gh-pages
+            git branch -f gh-pages origin/gh-pages
 
             if [[ "$BRANCH" == "main" ]]; then
               mike deploy -t "next" --update-aliases --push next head
-
-              git checkout gh-pages
-              cp ../404.html .
-              git add 404.html
-              git commit -m "Ensure 404.html is present"
-              git push origin gh-pages
 
             elif [[ "$BRANCH" == "release-v1.0.0" ]]; then
               mike deploy -t "v1.0.0 (latest)" --update-aliases --push v1.0.0 latest stable
               mike set-default --push latest
 
-              git checkout gh-pages
-              cp ../404.html .
-              git add 404.html
-              git commit -m "Ensure 404.html is present"
-              git push origin gh-pages
-
-              # Replace 'latest' alias file with folder redirect for Netlify
-              git checkout gh-pages
-              rm -f latest
-              mkdir -p latest
-              echo "<!DOCTYPE html>" > latest/index.html
-              echo "<html>" >> latest/index.html
-              echo "<head>" >> latest/index.html
-              echo "  <meta http-equiv=\"refresh\" content=\"0; url=../v1.0.0/\" />" >> latest/index.html
-              echo "  <title>Redirecting to latest docs</title>" >> latest/index.html
-              echo "</head>" >> latest/index.html
-              echo "<body>" >> latest/index.html
-              echo "  <p>Redirecting to the latest version of the docs…</p>" >> latest/index.html
-              echo "</body>" >> latest/index.html
-              echo "</html>" >> latest/index.html
-
-              git add latest/index.html
-              git commit -m "Replace 'latest' alias file with folder-based redirect for Netlify"
-              git push origin gh-pages
-
             else
               version="${BRANCH#release-}"
               mike deploy -t "$version" --update-aliases --push "$version"
 
-              git checkout gh-pages
-              cp ../404.html .
-              git add 404.html
-              git commit -m "Ensure 404.html is present"
-              git push origin gh-pages
             fi
 
             deactivate
