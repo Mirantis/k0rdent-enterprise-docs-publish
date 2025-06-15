@@ -31,7 +31,7 @@ jobs:
           echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com" > ~/.git-credentials
           git config --global credential.helper store
 
-      - name: Grab queue, clear, and process all branches (or exit if queue.txt is empty)
+      - name: Grab queue, clear, and process all branches
         run: |
           set -euo pipefail
 
@@ -122,22 +122,7 @@ jobs:
               git commit -m "Ensure 404.html is present"
               git push origin gh-pages
 
-              git checkout gh-pages
-              rm -f latest
-              mkdir -p latest
-              echo '<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="refresh" content="0; url=../v1.0.0/" />
-  <title>Redirecting to latest docs</title>
-</head>
-<body>
-  <p>Redirecting to the latest version of the docs…</p>
-</body>
-</html>' > latest/index.html
-              git add latest/index.html
-              git commit -m "Replace 'latest' alias file with folder-based redirect for Netlify"
-              git push origin gh-pages
+              echo "RELEASE_LATEST_HANDLING=true" >> "$GITHUB_ENV"
 
             else
               version="${BRANCH#release-}"
@@ -154,3 +139,29 @@ jobs:
           done
 
           echo "All branches processed."
+
+      - name: Replace latest alias with folder redirect (Netlify compatibility)
+        if: env.RELEASE_LATEST_HANDLING == 'true'
+        run: |
+          git clone https://github.com/${{ github.repository }} repo
+          cd repo
+          git checkout gh-pages
+
+          rm -f latest
+          mkdir -p latest
+          cat > latest/index.html <<EOF
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="refresh" content="0; url=../v1.0.0/" />
+  <title>Redirecting to latest docs</title>
+</head>
+<body>
+  <p>Redirecting to the latest version of the docs…</p>
+</body>
+</html>
+EOF
+
+          git add latest/index.html
+          git commit -m "Replace 'latest' alias file with folder-based redirect for Netlify"
+          git push origin gh-pages
