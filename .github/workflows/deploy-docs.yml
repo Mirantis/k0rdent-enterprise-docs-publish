@@ -1,4 +1,4 @@
-name: Deploy Docs Consumer (Runs manually or on cron, adjusted for Netlify staging)
+name: Deploy Docs Consumer (Runs manually or on cron)
 
 on:
   schedule:
@@ -26,36 +26,27 @@ jobs:
           ref: workflow-queue
           fetch-depth: 0
 
-      # === NEW STEP TO AUTHENTICATE CLONE IN PRIVATE REPOS ===
       - name: Configure authenticated GitHub URL for future clones
         run: |
           echo "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com" > ~/.git-credentials
           git config --global credential.helper store
-      # === END NEW STEP ===
 
       - name: Grab queue, clear, and process all branches (or exit if queue.txt is empty)
         run: |
           set -euo pipefail
 
-          # Ensure queue.txt exists locally (even empty)
           touch queue.txt
-          
-          # Exit if queue.txt is empty 
           QUEUE_LENGTH=$(grep -c -v '^\s*$' queue.txt || true)
           if [[ "$QUEUE_LENGTH" == "0" ]]; then
             echo "Queue is empty. Nothing to process."
             exit 0
           fi
-    
-          # Read the current queue
+
           mapfile -t QUEUE < queue.txt
-          
-          # Clean the QUEUE array
           for i in "${!QUEUE[@]}"; do
             QUEUE[$i]=$(echo "${QUEUE[$i]}" | tr -d '[:space:]')
           done
-          
-          # Remove empty elements
+
           CLEAN_QUEUE=()
           for item in "${QUEUE[@]}"; do
             if [[ -n "$item" ]]; then
@@ -63,22 +54,17 @@ jobs:
             fi
           done
           QUEUE=("${CLEAN_QUEUE[@]}")
-          
-          # Immediately clear and push back
+
           > queue.txt
           git add queue.txt
           git commit -m "Cleared queue for processing"
           git push origin workflow-queue
-          
-          # Now process each branch
+
           TMPDIR=$(mktemp -d)
           echo "Working in $TMPDIR"
 
-          # Clone directly into TMPDIR - it becomes the repo root
           git clone https://github.com/${{ github.repository }} "$TMPDIR"
           cd "$TMPDIR"
-
-          # Set git authentication to remote
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
           for BRANCH in "${QUEUE[@]}"; do
@@ -94,12 +80,10 @@ jobs:
               continue
             fi
 
-            # Nuke any existing venv and create fresh
             rm -rf .venv
             python3 -m venv .venv
             source .venv/bin/activate
 
-            # Install requirements (if exists)
             if [ -f requirements.txt ]; then
               echo "Installing requirements for $BRANCH"
               pip install -r requirements.txt
@@ -107,16 +91,12 @@ jobs:
               echo "No requirements.txt in $BRANCH — skipping pip install"
             fi
 
-            # === NEW: Build site to generate 404.html ===
             mkdocs build
             cp site/404.html .
-            # === END NEW ===
 
             echo "Deploying docs for branch: $BRANCH"
 
-            # Make sure gh-pages is up to date
             git fetch origin gh-pages || echo "gh-pages does not exist remotely"
-
             if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
               git branch -f gh-pages origin/gh-pages
             else
@@ -126,32 +106,26 @@ jobs:
             if [[ "$BRANCH" == "main" ]]; then
               mike deploy -t "next" --update-aliases --push next head
 
-              # === NEW: Ensure 404.html present ===
               git checkout gh-pages
               cp ../404.html .
               git add 404.html
               git commit -m "Ensure 404.html is present"
               git push origin gh-pages
-              # === END NEW ===
 
             elif [[ "$BRANCH" == "release-v1.0.0" ]]; then
               mike deploy -t "v1.0.0 (latest)" --update-aliases --push v1.0.0 latest stable
               mike set-default --push latest
 
-              # === NEW: Ensure 404.html present ===
               git checkout gh-pages
               cp ../404.html .
               git add 404.html
               git commit -m "Ensure 404.html is present"
               git push origin gh-pages
-              # === END NEW ===
 
-              # === NEW: Replace 'latest' alias file with real redirect folder ===
               git checkout gh-pages
               rm -f latest
               mkdir -p latest
-              cat > latest/index.html <<EOF
-<!DOCTYPE html>
+              echo '<!DOCTYPE html>
 <html>
 <head>
   <meta http-equiv="refresh" content="0; url=../v1.0.0/" />
@@ -160,27 +134,22 @@ jobs:
 <body>
   <p>Redirecting to the latest version of the docs…</p>
 </body>
-</html>
-EOF
+</html>' > latest/index.html
               git add latest/index.html
               git commit -m "Replace 'latest' alias file with folder-based redirect for Netlify"
               git push origin gh-pages
-              # === END NEW ===
 
             else
               version="${BRANCH#release-}"
               mike deploy -t "$version" --update-aliases --push "$version"
 
-              # === NEW: Ensure 404.html present ===
               git checkout gh-pages
               cp ../404.html .
               git add 404.html
               git commit -m "Ensure 404.html is present"
               git push origin gh-pages
-              # === END NEW ===
             fi
 
-            # Clean up
             deactivate
           done
 
