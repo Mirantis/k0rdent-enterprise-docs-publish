@@ -93,21 +93,18 @@ jobs:
 
             echo "Deploying docs for branch: $BRANCH"
 
-            if ! git ls-remote --exit-code origin gh-pages; then
-              echo "gh-pages does not exist. Initializing with mkdocs..."
-              mkdocs gh-deploy
+            git fetch origin gh-pages || echo "gh-pages does not exist remotely"
+            if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+              git branch -f gh-pages origin/gh-pages
             else
-              echo "gh-pages exists remotely. Syncing..."
+              echo "No origin/gh-pages ref — skipping branch sync"
             fi
 
-            git fetch origin gh-pages
-            git branch -f gh-pages origin/gh-pages
-
             if [[ "$BRANCH" == "main" ]]; then
-              mike deploy -t "next" --update-aliases --push next head
+              mike deploy -t "next" --update-aliases --push --alias-type=copy next head
 
             elif [[ "$BRANCH" == "release-v1.0.0" ]]; then
-              mike deploy -t "v1.0.0 (latest)" --update-aliases --push v1.0.0 latest stable
+              mike deploy -t "v1.0.0 (latest)" --update-aliases --push --alias-type=copy v1.0.0 latest stable
               mike set-default --push latest
 
             else
