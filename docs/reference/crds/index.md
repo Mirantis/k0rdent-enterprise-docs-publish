@@ -8101,7 +8101,7 @@ Release is the Schema for the releases API
     <tbody><tr>
       <td><b>apiVersion</b></td>
       <td>string</td>
-      <td>k0rdent.mirantis.com/v1beta1</td>
+      <td>k0rdent.mirantis.com/v1alpha1</td>
       <td>true</td>
       </tr>
       <tr>
