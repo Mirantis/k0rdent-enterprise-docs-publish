@@ -68,7 +68,7 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
           for BRANCH in "${QUEUE[@]}"; do
-            if ! echo "$BRANCH" | grep -Eq '^main$|^release-v[0-9]+(\.[0-9]+)*$'; then
+            if ! echo "$BRANCH" | grep -Eq '^release-v[0-9]+(\.[0-9]+)*$'; then
               echo "Skipping invalid branch: $BRANCH"
               continue
             fi
@@ -100,10 +100,10 @@ jobs:
               echo "No origin/gh-pages ref — skipping branch sync"
             fi
 
-            if [[ "$BRANCH" == "main" ]]; then
-              mike deploy -t "next" --update-aliases --push --alias-type=copy next head
+            # if [[ "$BRANCH" == "main" ]]; then
+            #  mike deploy -t "next" --update-aliases --push --alias-type=copy next head
 
-            elif [[ "$BRANCH" == "release-v1.0.0" ]]; then
+            if [[ "$BRANCH" == "release-v1.0.0" ]]; then
               mike deploy -t "v1.0.0 (latest)" --update-aliases --push --alias-type=copy v1.0.0 latest stable
               mike set-default --push latest
 
