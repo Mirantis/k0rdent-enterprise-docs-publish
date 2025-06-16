@@ -48,14 +48,14 @@ installing {{{ docsVersionInfo.k0rdentName }}}:
 To download airgap bundle and it's signature the following commands may be used:
 
 ```bash
-wget https://get.mirantis.com/k0rdent-enterprise/1.0.0/airgap-bundle-1.0.0.tar.gz
-wget https://get.mirantis.com/k0rdent-enterprise/1.0.0/airgap-bundle-1.0.0.tar.gz.sig
+wget https://get.mirantis.com/k0rdent-enterprise/{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/airgap-bundle-{{{ extra.docsVersionInfo.k0rdentDotVersion }}}.tar.gz
+wget https://get.mirantis.com/k0rdent-enterprise/{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/airgap-bundle-{{{ extra.docsVersionInfo.k0rdentDotVersion }}}.tar.gz.sig
 ```
 
 To verify the downloaded file `cosign` must be used:
 
 ```bash
-cosign verify-blob --key https://get.mirantis.com/k0rdent-enterprise/cosign.pub --signature airgap-bundle-1.0.0.tar.gz.sig airgap-bundle-1.0.0.tar.gz
+cosign verify-blob --key https://get.mirantis.com/k0rdent-enterprise/cosign.pub --signature airgap-bundle-{{{ extra.docsVersionInfo.k0rdentDotVersion }}}.tar.gz.sig airgap-bundle-{{{ extra.docsVersionInfo.k0rdentDotVersion }}}.tar.gz
 ```
 
 > NOTE:
@@ -66,10 +66,10 @@ cosign verify-blob --key https://get.mirantis.com/k0rdent-enterprise/cosign.pub 
 binary artifact:
 
 ```bash
-wget https://get.mirantis.com/k0rdent-enterprise/1.0.0/k0s-v1.32.5+k0s.1-amd64
-wget https://get.mirantis.com/k0rdent-enterprise/1.0.0/k0s-v1.32.5+k0s.1-amd64.sig
-wget https://get.mirantis.com/k0rdent-enterprise/1.0.0/k0s-v1.32.1+k0s.0-amd64
-wget https://get.mirantis.com/k0rdent-enterprise/1.0.0/k0s-v1.32.1+k0s.0-amd64.sig
+wget https://get.mirantis.com/k0rdent-enterprise/{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/k0s-v1.32.5+k0s.1-amd64
+wget https://get.mirantis.com/k0rdent-enterprise/{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/k0s-v1.32.5+k0s.1-amd64.sig
+wget https://get.mirantis.com/k0rdent-enterprise/{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/k0s-v1.32.1+k0s.0-amd64
+wget https://get.mirantis.com/k0rdent-enterprise/{{{ extra.docsVersionInfo.k0rdentDotVersion }}}/k0s-v1.32.1+k0s.0-amd64.sig
 ```
 
 The signature may be verified in the same way as with airgap bundle:
@@ -87,7 +87,7 @@ First bundle should be unpacked to the temporary directory:
 
 ```bash
 mkdir airgap-bundle
-tar -xf airgap-bundle-1.0.0.tar.gz -C airgap-bundle
+tar -xf airgap-bundle-{{{ extra.docsVersionInfo.k0rdentDotVersion }}}.tar.gz -C airgap-bundle
 ```
 
 Then it could be uploaded to the desired registry using `skopeo`.
@@ -126,7 +126,7 @@ The following is an example of the `values.yaml` file:
 
 ```yaml
 controller:
-  templatesRepoURL: "oci://registry.local/k0rdent-enterprise"
+  templatesRepoURL: "oci://registry.local/k0rdent-enterprise/charts"
   globalRegistry: "registry.local/k0rdent-enterprise"
   globalK0sURL: "http://binary.local/k0rdent-enterprise"
 
@@ -167,5 +167,5 @@ velero:
 The installation itself then can be started with the following command:
 
 ```bash
-helm install kcm oci://registry.local/k0rdent-enterprise/k0rdent-enterprise --version 1.0.0 -n kcm-system --create-namespace -f kcm-values.yaml
+helm install kcm oci://registry.local/k0rdent-enterprise/k0rdent-enterprise --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace -f kcm-values.yaml
 ```
