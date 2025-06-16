@@ -175,7 +175,6 @@ nav:
       - Version Compatibility: admin/kof/kof-version-compat.md
     - Upgrading k0rdent: 
       - Overview: admin/upgrade/index.md
-      - Upgrade to v0.2.0: admin/upgrade/upgrade-to-0-2-0.md
     - Access Management:
       - Overview: admin/access/index.md
       - k0rdent Credentials Management: 

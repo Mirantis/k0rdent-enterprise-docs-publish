@@ -75,7 +75,7 @@ these steps to upgrade {{{ docsVersionInfo.k0rdentName }}}:
     NAME        AGE
     kcm-0-0-6   71m
     kcm-0-0-7   65m
-    kcm-0-2-0   6d9h
+    kcm-0-1-0   6d9h
     k0rdent-enterprise-{{{ extra.docsVersionInfo.k0rdentVersion }}}   12m
     ```
 
