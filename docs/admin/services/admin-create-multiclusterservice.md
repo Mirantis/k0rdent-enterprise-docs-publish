@@ -7,7 +7,7 @@ The `MultiClusterService` object is used to deploy services on multiple matching
 You can create the `MultiClusterService` object with the following YAML:
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: MultiClusterService
 metadata:
   name: <name>
@@ -52,7 +52,7 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 
 The `dev-cluster-1` `ClusterDeployment` services are specified as:
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ClusterDeployment
 metadata:
   name: dev-cluster-1
@@ -73,7 +73,7 @@ spec:
 
 The `dev-cluster-2` `ClusterDeployment` beach-head services are specified as:
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ClusterDeployment
 metadata:
   name: dev-cluster-2
@@ -94,7 +94,7 @@ spec:
 
 Now create the following `global-ingress` `MultiClusterService` object:
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: MultiClusterService
 metadata:
   name: global-ingress
@@ -147,7 +147,7 @@ by it on each of the CAPI target clusters that it matches. Consider the same exa
 and 1 MultiClusterService is deployed. The status for the `global-ingress` `MultiClusterService` appears as:
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: MultiClusterService
 metadata:
   . . .
@@ -213,7 +213,7 @@ The status under `.status.services` shows a conflict for `dev-cluster-2` as expe
 On the other hand, it shows provisioned for `dev-cluster-1` because the `MultiClusterService` has a higher priority.
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ClusterDeployment
 metadata:
   . . . 
@@ -262,7 +262,7 @@ The status under `.status.services` for the `ClusterDeployment` `dev-cluster-1` 
 
 On the otherhand, the `dev-cluster-2` `ClusterDeployment` has a higher priority:
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ClusterDeployment
 metadata:
   . . .

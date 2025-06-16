@@ -125,7 +125,7 @@ A `SourceSpec` includes:
 > Fields `.spec.*.remoteSourceSpec.git`, `.spec.*.remoteSource.Spec.bucket` and `.spec.*.remoteSourceSpec.oci` are mutually exclusive.
 Example using `.spec.kustomize`:
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ServiceTemplate
 metadata:
    name: example-kustomization
@@ -143,7 +143,7 @@ spec:
 
 Example using `.spec.resources`:
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ServiceTemplate
 metadata:
    name: example-resources
@@ -210,7 +210,7 @@ For the core `CAPI` Template values should be empty.
     Example with the `.spec`:
 
     ```yaml
-    apiVersion: k0rdent.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ProviderTemplate
     # ...
     spec:
@@ -247,7 +247,7 @@ and the value is the provider contract version required to be supported by the p
     Example with the `.spec`:
 
     ```yaml
-    apiVersion: k0rdent.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ClusterTemplate
     # ...
     spec:
@@ -280,7 +280,7 @@ Given compatibility values will be then set accordingly in the `.status` field.
     Example with the `.spec`:
 
     ```yaml
-    apiVersion: k0rdent.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ServiceTemplate
     # ...
     spec:

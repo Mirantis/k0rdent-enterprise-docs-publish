@@ -56,7 +56,7 @@ Follow these steps to install Stacklight on the management cluster:
 3.  Create a `ServiceTemplate` object by starting with a YAML file called `stacklight-operator-template.yaml`:
       
     ```yaml
-    apiVersion: k0rdent.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ServiceTemplate
     metadata:
       name: stacklight-operator-{{{ docsVersionInfo.addonVersions.dashVersions.stacklightOperator}}}
@@ -96,7 +96,7 @@ Follow these steps to install Stacklight on the management cluster:
 5.  Finally, add the `stacklight-operator` `Service` to the `.spec.serviceSpec.services` list of the targeted `ClusterDeployment` object. You can do this on the initial `ClusterDeployment` creation or by modifying the existing `ClusterDeployment` object, as in:  
       
     ```yaml
-    apiVersion: k0rdent.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ClusterDeployment
     ...
     spec:

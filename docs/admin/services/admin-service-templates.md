@@ -43,7 +43,7 @@ A template can either define a Helm chart directly using the template's `spec.he
 For example:
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ServiceTemplate
 metadata:
   name: project-ingress-nginx-4.11.3
@@ -71,7 +71,7 @@ have the label `k0rdent.mirantis.com/managed: "true"`.
 Source object can be already created. In this case `.spec.kustomization.localSourceRef` should be used:
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ServiceTemplate
 metadata:
   name: kustomization-app
@@ -96,7 +96,7 @@ kubectl create configmap kustomization-source --from-file=/path/to/kustomization
 Another option is to let the controller to create the remote source object. In this case `.spec.kustomization.remoteSourceSpec` should be used:
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ServiceTemplate
 metadata:
   name: kustomization-app
@@ -144,7 +144,7 @@ kubectl --namespace project-x create configmap project-cm --from-file=/path/to/n
 ```
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ServiceTemplate
 metadata:
   name: managed-ns
@@ -161,7 +161,7 @@ spec:
 Using the remote source for `ServiceTemplate` based on raw resources is similar to the kustomization-based template:
 
 ```yaml
-apiVersion: k0rdent.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1beta1
 kind: ServiceTemplate
 metadata:
   name: kustomization-app
@@ -185,7 +185,7 @@ spec:
 To let {{{ docsVersionInfo.k0rdentName }}} know where this `ServiceTemplate` can and can't be used, create a `ServiceTemplateChain` object, as in:
 
  ```yaml
- apiVersion: k0rdent.mirantis.com/v1alpha1
+ apiVersion: k0rdent.mirantis.com/v1beta1
  kind: ServiceTemplateChain
  metadata:
    name: project-ingress-nginx-4.11.3
@@ -215,7 +215,7 @@ To add the service defined by this template to a cluster, you would simply add i
 when you create it, as in:
 
  ```yaml
- apiVersion: k0rdent.mirantis.com/v1alpha1
+ apiVersion: k0rdent.mirantis.com/v1beta1
  kind: ClusterDeployment
  metadata:
    name: my-cluster-deployment
