@@ -2,7 +2,7 @@
 
 Packages:
 
-- [k0rdent.mirantis.com/v1beta1](#k0rdentmirantiscomv1alpha1)
+- [k0rdent.mirantis.com/v1alpha](#k0rdentmirantiscomv1alpha1)
 - [k0rdent.mirantis.com/v1beta1](#k0rdentmirantiscomv1beta1)
 
 # k0rdent.mirantis.com/v1beta1
