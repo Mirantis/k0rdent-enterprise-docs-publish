@@ -85,7 +85,7 @@ these steps to upgrade {{{ docsVersionInfo.k0rdentName }}}:
     new release. Replace `<release-name>` with the name of your desired release:
 
     ```shell
-    RELEASE_NAME=kcm-{{{ extra.docsVersionInfo.k0rdentVersion }}}
+    RELEASE_NAME=k0rdent-enterprise-{{{ extra.docsVersionInfo.k0rdentVersion }}}
     kubectl patch managements.k0rdent.mirantis.com kcm --patch "{\"spec\":{\"release\":\"${RELEASE_NAME}\"}}" --type=merge
     ```
 
