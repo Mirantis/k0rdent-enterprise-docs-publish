@@ -35,8 +35,11 @@ kubectl delete --wait grafanadatasource \
 To remove KOF from the management cluster:
 
 ```shell
+helm uninstall --wait --cascade foreground -n istio-system kof-istio
 helm uninstall --wait --cascade foreground -n kof kof-child
 helm uninstall --wait --cascade foreground -n kof kof-regional
+helm uninstall --wait --cascade foreground -n kof kof-collectors
+helm uninstall --wait --cascade foreground -n kof kof-storage
 helm uninstall --wait --cascade foreground -n kof kof-mothership
 helm uninstall --wait --cascade foreground -n kof kof-operators
 kubectl delete namespace kof --wait --cascade=foreground

@@ -12,8 +12,7 @@ components of the Kubernetes ecosystem. This helps in troubleshooting and unders
 KOF can evaluate **alerting** rules and send notifications based on these collected metrics and logs helping to identify and respond to issues before they impact users.
 
 * **FinOps**: KOF helps with **cost management** by tracking and managing the costs associated with running applications on Kubernetes. 
-It provides insights into resource utilization and helps in optimizing costs by identifying underutilized or over-provisioned resources.
-With this information, you can **set budgets and forecast future costs** based on historical data and current 
+It provides insights into resource utilization and helps in optimizing costs by identifying underutilized or over-provisioned resources. With this information, you can **set budgets and forecast future costs** based on historical data and current 
 usage patterns. KOF enables **chargeback and showback** mechanisms, enabling organizations to attribute costs to 
 specific teams, departments, or projects, and promotes accountability and transparency in resource usage.
 
@@ -43,8 +42,8 @@ ensuring resources are used efficiently and costs are optimized.
 ## More Resources
 
 Once you've applied this guide and you have KOF up and running, check 
-[k0rdent/kof/docs](https://github.com/k0rdent/kof/tree/main/docs) for advanced guides
-such as [configuring alerts](https://github.com/k0rdent/kof/blob/main/docs/alerts.md),
+[k0rdent/kof/docs](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs) for advanced guides
+such as [configuring alerts](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs/alerts.md),
 or get started with the basic documentation:
 
 - [Architecture](kof-architecture.md)
@@ -55,4 +54,3 @@ or get started with the basic documentation:
 - [Maintaining KOF](kof-maintainence.md)
 - [Resource Limits](kof-limits.md)
 - [Version Compatibility](kof-version-compat.md)
-
