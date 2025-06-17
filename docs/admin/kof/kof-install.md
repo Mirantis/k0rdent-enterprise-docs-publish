@@ -61,6 +61,11 @@ opentelemetry-operator:
   kubeRBACProxy:
     image:
       repository: registry.mirantis.com/k0rdent-enterprise/brancz/kube-rbac-proxy
+kcm:
+  kof:
+    operator:
+      image:
+        repository: kof/kof-operator-controller
 ```
 
 This file will be used in the next sections.
