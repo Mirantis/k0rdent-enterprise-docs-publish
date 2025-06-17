@@ -276,7 +276,7 @@ and apply this example, or use it as a reference:
 
         ```yaml
         cert-manager:
-          template: cert-manager-1-17-2
+          template: cert-manager-v1-17-2
         ```
 
     * You may want to [customize collectors](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs/collectors.md#example)
