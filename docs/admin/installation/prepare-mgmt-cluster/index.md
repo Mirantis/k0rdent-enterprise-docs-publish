@@ -4,5 +4,6 @@ Managed clusters can be hosted on a number of different platforms. At the time o
 
 - [AWS](aws.md)
 - [Azure](azure.md)
+- [Bare Metal](bare-metal.md)
 - [OpenStack](openstack.md)
 - [VMware](vmware.md)

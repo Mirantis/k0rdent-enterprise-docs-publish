@@ -33,62 +33,50 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
     apiVersion: source.toolkit.fluxcd.io/v1
     kind: HelmRepository
     metadata:
-    name: oot-capm3-repo
-    namespace: kcm-system
-    labels:
-      k0rdent.mirantis.com/managed: "true"
+      name: oot-capm3-repo
+      namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/managed: "true"
     spec:
-    type: oci
-    url: 'oci://registry.ci.mirantis.com/k0rdent-bm/releases/charts/'
-    interval: 10m0s
-    secretRef:
-      name: oci-creds
-    ---
-    apiVersion: v1
-    kind: Secret
-    metadata:
-    name: oci-creds
-    namespace: kcm-system
-    stringData:
-    username: "<GITHUB_USERNAME>" # Should be able to access oci://registry.mirantis.com/k0rdent-bm/charts/
-    password: "<GITHUB_TOKEN>" 
+      type: oci
+      url: 'oci://registry.mirantis.com/k0rdent-bm/charts/'
+      interval: 10m0s
     ---
     apiVersion: k0rdent.mirantis.com/v1alpha1
     kind: ProviderTemplate
     metadata:
-        clusterApiProviderCapm3: {{{ docsVersionInfo.addonVersions.dashVersions.clusterApiProviderCapm3 }}}
-    name: cluster-api-provider-metal3-{{{ docsVersionInfo.addonVersions.dashVersions.clusterApiProviderCapm3 }}}
-    annotations:
-      helm.sh/resource-policy: keep
+      name: cluster-api-provider-metal3-{{{ docsVersionInfo.addonVersions.dashVersions.clusterApiProviderCapm3 }}}
+      annotations:
+        helm.sh/resource-policy: keep
     spec:
-    helm:
-      chartSpec:
-        chart: cluster-api-provider-metal3
-        version: {{{ docsVersionInfo.addonVersions.dotVersions.clusterApiProviderCapm3 }}}
-        interval: 10m0s
-        sourceRef:
-          kind: HelmRepository
-          name: oot-capm3-repo
+      helm:
+        chartSpec:
+          chart: cluster-api-provider-metal3
+          version: {{{ docsVersionInfo.addonVersions.dotVersions.clusterApiProviderCapm3 }}}
+          interval: 10m0s
+          sourceRef:
+            kind: HelmRepository
+            name: oot-capm3-repo
     ---
     apiVersion: k0rdent.mirantis.com/v1alpha1
     kind: ClusterTemplate
     metadata:
-    annotations:
-      helm.sh/resource-policy: keep
-    labels:
-      k0rdent.mirantis.com/component: kcm
-    name: capm3-standalone-cp-{{{ docsVersionInfo.addonVersions.dashVersions.capm3StandaloneCpCluster }}}
-    namespace: kcm-system
+      annotations:
+        helm.sh/resource-policy: keep
+      labels:
+        k0rdent.mirantis.com/component: kcm
+      name: capm3-standalone-cp-{{{ docsVersionInfo.addonVersions.dashVersions.capm3StandaloneCpCluster }}}
+      namespace: kcm-system
     spec:
-    helm:
-      chartSpec:
-        chart: capm3-standalone-cp
-        interval: 10m0s
-        reconcileStrategy: ChartVersion
-        sourceRef:
-          kind: HelmRepository
-          name: oot-capm3-repo
-        version: {{{ docsVersionInfo.addonVersions.dotVersions.capm3StandaloneCpCluster }}}
+      helm:
+        chartSpec:
+          chart: capm3-standalone-cp
+          version: {{{ docsVersionInfo.addonVersions.dotVersions.capm3StandaloneCpCluster }}}
+          interval: 10m0s
+          reconcileStrategy: ChartVersion
+          sourceRef:
+            kind: HelmRepository
+            name: oot-capm3-repo
     EOF
     ```
 
@@ -198,6 +186,7 @@ The next step is to create `BareMetalHost` objects go represent your bare metal 
       bmc:
         address: <BMC_ADDRESS>  # e.g., ipmi://192.168.1.100:6230
         credentialsName: <BMH_NAME>-bmc-secret
+        #disableCertificateVerification: true # only needed when using redfish protocol
       bootMACAddress: <MAC_ADDRESS>
     ```
 
@@ -270,7 +259,7 @@ You need to create several objects befor {{{ docsVersionInfo.k0rdentName }}} can
     Create a `ClusterDeployment` to test your bare metal configuration. Start with a `capm3-example.yaml` file. This one creates a cluster with 1 control node and 2 workers:
 
     ```yaml
-    apiVersion: {{{ docsVersionInfo.k0rdentName }}}.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1alpha1
     kind: ClusterDeployment
     metadata:
       name: capm3-example
@@ -290,16 +279,20 @@ You need to create several objects befor {{{ docsVersionInfo.k0rdentName }}} can
             cidrBlocks:
               - 10.95.0.0/16
         controlPlane:
+          # the image that was uploaded by default
           checksum: http://<IRONIC_HTTP_ENDPOINT>:6180/images/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2.sha256sum
           image: http://<IRONIC_HTTP_ENDPOINT>:6180/images/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
           keepalived:
-            authPass: "keepal"
+            authPass: <VRRP_PASSWORD> # optional, from 4 to 8 letters
             enabled: true
-            virtualIP: <KEEPALIVED_VIP>/24  # e.g., 10.0.1.70/24
+            virtualIP: <CLUSTER_API_VIP>/24  # e.g., 10.0.1.70/24
           preStartCommands:
-            - sudo useradd -G sudo -s /bin/bash -d /home/user1 -p $(openssl passwd -1 myuserpass) user1
-            - sudo apt update
-            - sudo apt install jq -y
+            - sudo useradd -G sudo -s /bin/bash -d /home/user1 -p $(openssl passwd -1 myuserpass) user1 # define your user here. it can be used e.g. for debugging.
+            - sudo apt update # for Ubuntu
+            - sudo apt install jq -y # for Ubuntu
+            #- sudo dnf makecache # for RedHat
+            #- sudo dnf install jq -y # for RedHat
+            # jq is used in K0sControlPlane object to parse cloud-init data that is required for Metal3 provider
           files:
             - path: /home/user1/.ssh/authorized_keys
               permissions: "0644"
@@ -349,17 +342,21 @@ You need to create several objects befor {{{ docsVersionInfo.k0rdentName }}} can
                 start: <IP_POOL_START>  # e.g., 10.0.1.61
         k0s:
           api:
-            externalAddress: <KEEPALIVED_VIP>  # e.g., 10.0.1.70
+            externalAddress: <CLUSTER_API_VIP>  # e.g., 10.0.1.70
           telemetry:
             enabled: false
           version: v1.32.3+k0s.0
         worker:
+          # the image that was uploaded by default
           checksum: http://<IRONIC_HTTP_ENDPOINT>:6180/images/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2.sha256sum
           image: http://<IRONIC_HTTP_ENDPOINT>:6180/images/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
           preStartCommands:
-            - sudo useradd -G sudo -s /bin/bash -d /home/user1 -p $(openssl passwd -1 myuserpass) user1
-            - sudo apt update
-            - sudo apt install jq -y
+            - sudo useradd -G sudo -s /bin/bash -d /home/user1 -p $(openssl passwd -1 myuserpass) user1 # define your user here. it can be used e.g. for debugging.
+            - sudo apt update # for Ubuntu
+            - sudo apt install jq -y # for Ubuntu
+            #- sudo dnf makecache # for RedHat
+            #- sudo dnf install jq -y # for RedHat
+            # jq is used in K0sControlPlane object to parse cloud-init data that is required for Metal3 provider
           files:
             - path: /home/user1/.ssh/authorized_keys
               permissions: "0644"
@@ -434,6 +431,30 @@ You need to create several objects befor {{{ docsVersionInfo.k0rdentName }}} can
     ```console
     clusterdeployment.k0rdent.mirantis.com "capm3-example" deleted
     ```
+
+    Cluster deletion may take several minutes.
+    
+    Watch the `BareMetalHost` objects as they transition through provisioning states:
+    
+    ```shell
+    kubectl -n <NAMESPACE> get bmh -w
+    ```
+
+    You should see the hosts transition from `provisioned` to `available`:
+
+    ```console
+    NAME      STATE          CONSUMER                     ONLINE   ERROR   AGE
+    child-1   deprovisioning capm3-example-md-txr9f-k8z9d true             31m
+    child-2   provisioned    capm3-example-cp-templ-0     true             31m
+    child-3   deprovisioning capm3-example-md-txr9f-lkc5c true             31m
+    child-1   available                                   true             36m
+    child-3   available                                   true             37m
+    child-2   deprovisioning capm3-example-cp-templ-0     true             37m
+    child-2   available                                   true             43m
+    ```
+
+    Then, the available hosts can be used to deploy another cluster,
+    using the same `BareMetalHost` objects.
 
 ## Troubleshooting
 
