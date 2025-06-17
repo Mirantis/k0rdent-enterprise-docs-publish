@@ -10,7 +10,7 @@ Mirantis k0rdent Enterprise is the enterprise-grade, commercially supported vers
     Manages provisioning, upgrade, scaling, and lifecycle of Kubernetes clusters via Cluster API with enhanced bare metal and airgapped support.
     
 -   **KSM (k0rdent State Management)**
-    Uses declarative, templated `ServiceTemplate` objects to manage consistent deployment of services like Istio, Flux, cert-manager, Ceph, and Mirantis k0rdent Virtualization across clusters.
+    Uses declarative, templated `ServiceTemplate` objects to manage consistent deployment of services like Istio, Flux, and cert-manager.
     
 -   **KOF (k0rdent Observability & FinOps)**
     Provides comprehensive metrics, logs, dashboards, and cost visibility using VictoriaMetrics, OpenCost integration.
@@ -19,12 +19,11 @@ Mirantis k0rdent Enterprise is the enterprise-grade, commercially supported vers
 
 This initial release of Mirantis k0rdent Enterprise includes:
 
--   Fully stabilized v1beta1 APIs across all components
+-   Fully stabilized v1beta1 APIs across components
 -   Production-grade multi-cluster support
 -   Bare metal deployment capabilities
 -   Enterprise-ready service templating and orchestration
 -   Integrated observability stack with AI/ML workload support
--   Comprehensive virtualization platform with Mirantis k0rdent Virtualization
 -   Airgapped installation and deployment capabilities
 -   Commercial support and enterprise-grade security features
 
@@ -84,16 +83,6 @@ This initial release of Mirantis k0rdent Enterprise includes:
 -   **Network Policy Management**
     Centralized network security policy enforcement across clusters
 
-### Virtualization Platform
-
--   **Mirantis k0rdent Virtualization**
-    A commercially supported virtualization platform based on KubeVirt that enables running virtual machines alongside containers in Kubernetes clusters. Provides VM lifecycle management, live migration, storage integration, and enterprise-grade support for hybrid workloads.
-
-### Storage Solutions
-
--   **Ceph Integration**
-    Automated deployment and management of Ceph distributed storage clusters on k0rdent child clusters using `ServiceTemplate` objects. Provides scalable, reliable storage for both block and object storage needs with enterprise-grade data protection and performance optimization.
-
 ### Observability & Monitoring (KOF)
 
 -   **NVIDIA GPU Monitoring**
@@ -105,14 +94,27 @@ This initial release of Mirantis k0rdent Enterprise includes:
 -   **VictoriaMetrics Log Cluster**
     Scalable logging stack with high-retention support, improved storage efficiency and performance
 
--   **Mirantis StackLight LMA**
-    Comprehensive Logging, Monitoring, and Alerting software suite providing enterprise-grade observability with advanced analytics, custom dashboards, and intelligent alerting capabilities. Includes log aggregation, metric collection, distributed tracing, and anomaly detection.
-
 -   **Cluster Annotation Support for Promxy/Datasource Config**
     Allows per-cluster HTTP configuration customization
 
 -   **Custom Resource Limits for Observability Stack**
     Fine-tune Grafana and VictoriaMetrics components to optimize memory and CPU usage across environments
+
+## Enterprise Solutions
+
+Mirantis provides validated and fully-supported solutions for Mirantis k0rdent Enterprise, addressing a range of use cases. Mirantis k0rdent Enterprise v1.0.0 introduces three integrated solutions designed to work together:
+
+- **Mirantis k0rdent Virtualization**
+
+    A commercially supported virtualization platform based on KubeVirt that enable you to run virtual machines alongside containers in Kubernetes clusters. It provides VM lifecycle management, live migration, storage integration with Ceph, and enterprise-grade support for hybrid workloads.
+
+- **Ceph Storage**
+
+    Automated deployment and management of Ceph distributed storage clusters on k0rdent child clusters using `ServiceTemplate` objects. Ceph povides scalable, reliable storage that is ideal for the virtual machine workloads in Mirantis k0rdent Virtualization, with support for both block and object storage needs, enterprise-grade data protection, and performance optimization.
+
+- **Mirantis StackLight LMA**
+
+    Comprehensive monitoring solution originally designed for Kubernetes clusters running on bare metal or VMs, now distributed as a Kubernetes Operator and installed as a Helm chart. Provides enterprise-grade observability with prebuilt dashboards, advanced analytics, and intelligent alerting capabilities specifically optimized for Mirantis k0rdent Virtualization environments. Includes log aggregation, metric collection, distributed tracing, and anomaly detection.
 
 ## Component & Provider Versions
 
