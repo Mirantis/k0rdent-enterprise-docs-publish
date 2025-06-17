@@ -22,8 +22,9 @@ You may want to replace `registry.mirantis.com/k0rdent-enterprise` below
 with your own registry.
 
 > NOTICE:
-> Currently Grafana and ingress-nginx will not work in an air-gapped environment.
+> Currently Grafana and `ingress-nginx` will not work in an air-gapped environment.
 > We plan to fix it in the patch release.
+> The workaround for `cert-manager` is documented in the [Management Cluster](#management-cluster) section.
 
 Create the `global-values.yaml` file:
 
@@ -180,6 +181,23 @@ and apply this example, or use it as a reference:
     This enables installation of `ServiceTemplates` such as `cert-manager` and `kof-storage`,
     making it possible to reference them from the regional and child `MultiClusterService` objects.
 
+    > NOTICE:
+    > If you use an air-gapped environment,
+    > add the next lines to the `mothership-values.yaml` file:
+
+    ```yaml
+    cert-manager-service-template:
+      helm:
+        repository:
+          name: cert-manager
+          url: oci://registry.local/k0rdent-enterprise/charts
+          type: oci
+        charts:
+          - name: cert-manager
+            version: v1.17.2
+      namespace: kcm-system
+    ```
+
 3. If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
     but `kubectl get sc` shows no `(default)`, create it.
     Otherwise you can use a non-default storage class in the `mothership-values.yaml` file:
@@ -253,6 +271,14 @@ and apply this example, or use it as a reference:
     * If your regional clusters already have `ingress-nginx` and `cert-manager` services,
         you can ask the `kof-regional` chart to not install them by setting Helm values
         `ingress-nginx.enabled` and `cert-manager.enabled` to `false`.
+    * If you use an air-gapped environment,
+        add the next lines to the `global-values.yaml` file:
+
+        ```yaml
+        cert-manager:
+          template: cert-manager-1-17-2
+        ```
+
     * You may want to [customize collectors](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs/collectors.md#example)
         for all child clusters at once now, or for each child cluster later, or just use the default values.
     * Install these charts into the management cluster with default or custom values:
