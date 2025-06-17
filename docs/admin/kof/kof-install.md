@@ -194,7 +194,7 @@ and apply this example, or use it as a reference:
           type: oci
         charts:
           - name: cert-manager
-            version: 1.17.2
+            version: v1.17.2
       namespace: kcm-system
     ```
 
