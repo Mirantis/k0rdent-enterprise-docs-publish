@@ -415,7 +415,7 @@ extra:
         hco: 1-14-5-mira  
         stacklightOperator: 0-1-0
         stacklightChart: 0-1-0-mcp-16
-        clusterApiProviderCapm3: 0-1-0
+        clusterApiProviderCapm3: 0-1-1
         capm3StandaloneCpCluster: 0-1-0
       dotVersions:
         ceph: 1.0.3
@@ -423,6 +423,6 @@ extra:
         hco: 1.14.5-mira    
         stacklightOperator: 0.1.0  
         stacklightChart: 0.1.0-mcp-16
-        clusterApiProviderCapm3: 0.1.0
+        clusterApiProviderCapm3: 0.1.1
         capm3StandaloneCpCluster: 0.1.0
 
