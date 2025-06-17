@@ -15,6 +15,55 @@ Before beginning KOF installation, you should have the following components in p
       This is the only option which does not need access to create external DNS records
       for service endpoints such as `kof.example.com`.
 
+### Image Registry
+
+Let's configure the registry where the Docker images will be pulled from.
+You may want to replace `registry.mirantis.com/k0rdent-enterprise` below
+with your own registry.
+
+> NOTICE:
+> Currently Grafana and ingress-nginx will not work in an air-gapped environment.
+> We plan to fix it in the patch release.
+
+Create the `global-values.yaml` file:
+
+```yaml
+global:
+  registry: registry.mirantis.com/k0rdent-enterprise
+  imageRegistry: registry.mirantis.com/k0rdent-enterprise
+  image:
+    registry: registry.mirantis.com/k0rdent-enterprise
+  hub: registry.mirantis.com/k0rdent-enterprise/istio
+grafana-operator:
+  image:
+    repository: registry.mirantis.com/k0rdent-enterprise/grafana/grafana-operator
+external-dns:
+  image:
+    repository: registry.mirantis.com/k0rdent-enterprise/external-dns/external-dns
+jaeger-operator:
+  image:
+    repository: registry.mirantis.com/k0rdent-enterprise/jaegertracing/jaeger-operator
+opencost:
+  opencost:
+    exporter:
+      image:
+        registry: registry.mirantis.com/k0rdent-enterprise
+    ui:
+      image:
+        registry: registry.mirantis.com/k0rdent-enterprise
+opentelemetry-operator:
+  manager:
+    image:
+      repository: registry.mirantis.com/k0rdent-enterprise/opentelemetry-operator/opentelemetry-operator
+    collectorImage:
+      repository: registry.mirantis.com/k0rdent-enterprise/otel/opentelemetry-collector-contrib
+  kubeRBACProxy:
+    image:
+      repository: registry.mirantis.com/k0rdent-enterprise/brancz/kube-rbac-proxy
+```
+
+This file will be used in the next sections.
+
 ### DNS auto-config
 
 To avoid [manual configuration of DNS records](./kof-verification.md#manual-dns-config) for service endpoints later,
@@ -91,6 +140,7 @@ apply these steps to enable the [Istio](https://istio.io/) service mesh:
     ```shell
     helm upgrade -i --reset-values --wait \
       --create-namespace -n istio-system kof-istio \
+      -f global-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-istio --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
     You may want to [customize the collectors](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs/collectors.md#example)
@@ -118,6 +168,7 @@ and apply this example, or use it as a reference:
     ```shell
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof-operators \
+      -f global-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-operators --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
@@ -176,6 +227,7 @@ and apply this example, or use it as a reference:
 6. Install `kof-mothership`:
     ```shell
     helm upgrade -i --reset-values --wait -n kof kof-mothership \
+      -f global-values.yaml \
       -f mothership-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
@@ -206,9 +258,11 @@ and apply this example, or use it as a reference:
     * Install these charts into the management cluster with default or custom values:
         ```shell
         helm upgrade -i --reset-values --wait -n kof kof-regional \
+          -f global-values.yaml \
           oci://ghcr.io/k0rdent/kof/charts/kof-regional --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
 
         helm upgrade -i --reset-values --wait -n kof kof-child \
+          -f global-values.yaml \
           oci://ghcr.io/k0rdent/kof/charts/kof-child --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
         ```
 
