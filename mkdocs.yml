@@ -246,7 +246,7 @@ nav:
   - Release Notes:
     - Overview: release-notes/index.md
     - v1.0.0: release-notes/release-notes-v1.0.0.md
-  - Catalog:
+  - k0rdent Catalog: catalog/index.md
     - Ceph:
       - Overview: addons/ceph/index.md
       - Installing Ceph: addons/ceph/ceph-install.md
