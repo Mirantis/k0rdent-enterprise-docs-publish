@@ -214,16 +214,16 @@ nav:
         - ServiceTemplate Parameters: user/services/servicetemplate-parameters.md
         - Upgrading Deployed Services: user/services/service-upgrade.md
       - Enabling drift detection: user/user-enable-drift-detection.md
-    - Solutions:
-      - Overview: addons/index.md
-      - Mirantis k0rdent AI: k0rdent_ai.md
-      - Mirantis k0rdent Virtualization:
-        - Overview: addons/mkvirt/index.md
-        - Install Mirantis k0rdent Virtualization and HCO: addons/mkvirt/mkvirt-install.md
-        - Virtualization Configuration: addons/mkvirt/configuration.md
-        - Getting Started: addons/mkvirt/getting-started.md
-        - Windows on Mirantis k0rdent Virtualization: addons/mkvirt/mkvirt-windows.md
-        - Virtualization Best Practices: addons/mkvirt/best-practices.md
+  - Solutions:
+    - Overview: addons/index.md
+    - Mirantis k0rdent AI: k0rdent_ai.md
+    - Mirantis k0rdent Virtualization:
+      - Overview: addons/mkvirt/index.md
+      - Install Mirantis k0rdent Virtualization and HCO: addons/mkvirt/mkvirt-install.md
+      - Virtualization Configuration: addons/mkvirt/configuration.md
+      - Getting Started: addons/mkvirt/getting-started.md
+      - Windows on Mirantis k0rdent Virtualization: addons/mkvirt/mkvirt-windows.md
+      - Virtualization Best Practices: addons/mkvirt/best-practices.md
   - Reference:
     - Overview: reference/index.md
     - k0rdent CRDs: reference/crds/index.md    
