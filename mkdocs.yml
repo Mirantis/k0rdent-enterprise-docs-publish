@@ -110,7 +110,6 @@ plugins:
  
 nav:
   - Welcome to the docs: index.md
-  - Mirantis k0rdent AI: k0rdent_ai.md
   - k0rdent concepts:
     - Overview: concepts/index.md
     - Why k0rdent?: concepts/why-k0rdent.md
@@ -197,19 +196,34 @@ nav:
       - Upgrades and Rollbacks: admin/backup/upgrades-rollbacks.md
       - Caveats: admin/backup/caveats.md
       - Customization: admin/backup/customization.md
-  - User Guide:
-    - Overview: user/index.md
-    - Creating clusters: user/user-create-cluster.md
-    - Adding services: 
-      - Overview: user/services/index.md
-      - Understanding ServiceTemplates: user/services/understanding-servicetemplates.md
-      - Adding a Service to a ClusterDeployment: user/services/add-service-to-clusterdeployment.md
-      - Beach Head Services: user/services/beach-head.md
-      - Checking Status: user/services/checking-status.md
-      - Remove Beach Head Services: user/services/remove-beach-head.md
-      - ServiceTemplate Parameters: user/services/servicetemplate-parameters.md
-      - Upgrading Deployed Services: user/services/service-upgrade.md
-    - Enabling drift detection: user/user-enable-drift-detection.md
+    - Troubleshooting: 
+      - Overview: troubleshooting/index.md
+      - Events: troubleshooting/events.md
+      - AWS VPCs: troubleshooting/admin-troubleshooting-aws-vpcs.md
+      - EKS: troubleshooting/known-issues-eks.md
+    - User Guide:
+      - Overview: user/index.md
+      - Creating clusters: user/user-create-cluster.md
+      - Adding services: 
+        - Overview: user/services/index.md
+        - Understanding ServiceTemplates: user/services/understanding-servicetemplates.md
+        - Adding a Service to a ClusterDeployment: user/services/add-service-to-clusterdeployment.md
+        - Beach Head Services: user/services/beach-head.md
+        - Checking Status: user/services/checking-status.md
+        - Remove Beach Head Services: user/services/remove-beach-head.md
+        - ServiceTemplate Parameters: user/services/servicetemplate-parameters.md
+        - Upgrading Deployed Services: user/services/service-upgrade.md
+      - Enabling drift detection: user/user-enable-drift-detection.md
+  - Solutions:
+    - Overview: addons/index.md
+    - Mirantis k0rdent AI: k0rdent_ai.md
+    - Mirantis k0rdent Virtualization:
+      - Overview: addons/mkvirt/index.md
+      - Install Mirantis k0rdent Virtualization and HCO: addons/mkvirt/mkvirt-install.md
+      - Virtualization Configuration: addons/mkvirt/configuration.md
+      - Getting Started: addons/mkvirt/getting-started.md
+      - Windows on Mirantis k0rdent Virtualization: addons/mkvirt/mkvirt-windows.md
+      - Virtualization Best Practices: addons/mkvirt/best-practices.md
   - Reference:
     - Overview: reference/index.md
     - k0rdent CRDs: reference/crds/index.md    
@@ -223,11 +237,6 @@ nav:
       - Templates for OpenStack: reference/template/template-openstack.md
       - Templates for vSphere: reference/template/template-vsphere.md
       - Templates for Remote SSH: reference/template/template-remote.md
-  - Troubleshooting: 
-    - Overview: troubleshooting/index.md
-    - Events: troubleshooting/events.md
-    - AWS VPCs: troubleshooting/admin-troubleshooting-aws-vpcs.md
-    - EKS: troubleshooting/known-issues-eks.md
   - Appendix:
     - Overview: appendix/index.md
     - Glossary: appendix/glossary.md
@@ -237,15 +246,8 @@ nav:
   - Release Notes:
     - Overview: release-notes/index.md
     - v1.0.0: release-notes/release-notes-v1.0.0.md
-  - ➤ Solutions:
-    - Overview: addons/index.md
-    - Mirantis k0rdent Virtualization:
-      - Overview: addons/mkvirt/index.md
-      - Install Mirantis k0rdent Virtualization and HCO: addons/mkvirt/mkvirt-install.md
-      - Virtualization Configuration: addons/mkvirt/configuration.md
-      - Getting Started: addons/mkvirt/getting-started.md
-      - Windows on Mirantis k0rdent Virtualization: addons/mkvirt/mkvirt-windows.md
-      - Virtualization Best Practices: addons/mkvirt/best-practices.md
+  - k0rdent Catalog:
+    - Overview: catalog/index.md
     - Ceph:
       - Overview: addons/ceph/index.md
       - Installing Ceph: addons/ceph/ceph-install.md
@@ -259,12 +261,7 @@ nav:
       - Using MiraCeph Instead of KaasCephCluster: addons/ceph/replace-kaascephcluster.md
       - Operating Ceph: addons/ceph/ceph-operating.md
       - Ceph Examples: addons/ceph/ceph-user-scenarios.md
-    - StackLight:
-      - Overview: addons/stacklight/index.md
-      - Installation: addons/stacklight/install.md
-      - API Documentation: addons/stacklight/api.md
-      - Operations: addons/stacklight/operations.md
-  - ➤ Support, Services, Contact:
+  - Support, Services, Contact:
     - Overview: support/index.md
     - Get support: https://www.mirantis.com/support/enterprise-support-services/
     - Mirantis CloudCare Portal: https://support.mirantis.com/s/login/
