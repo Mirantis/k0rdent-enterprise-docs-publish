@@ -6,18 +6,29 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout source branch
+      - name: Checkout release branch
         uses: actions/checkout@v4
         with:
           ref: release-v1.0.0
           fetch-depth: 0
 
-      - name: Configure Git
+      - name: Configure Git identity
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      - name: Force push to publish repo using PAT
+      - name: Confirm token is populated
         run: |
+          if [ -z "${{ secrets.PUBLISH_TOKEN }}" ]; then
+            echo "❌ PUBLISH_TOKEN is not set or empty"
+            exit 1
+          else
+            echo "✅ PUBLISH_TOKEN is set (value is masked)"
+          fi
+
+      - name: Force push to publish repo
+        run: |
+          echo "🔄 Pushing to: https://x-access-token:[MASKED]@github.com/Mirantis/k0rdent-enterprise-docs-publish.git"
           git push https://x-access-token:${{ secrets.PUBLISH_TOKEN }}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git HEAD:release-v1.0.0 --force
