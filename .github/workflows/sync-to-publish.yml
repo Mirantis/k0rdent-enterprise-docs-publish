@@ -3,6 +3,9 @@ name: Sync to Publish Repo
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write  # ensure permission to push
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -13,6 +16,7 @@ jobs:
         with:
           ref: release-v1.0.0
           fetch-depth: 0
+          persist-credentials: false  # important!
 
       - name: Configure Git identity
         run: |
@@ -25,10 +29,13 @@ jobs:
             echo "❌ PUBLISH_TOKEN is not set or empty"
             exit 1
           else
-            echo "✅ PUBLISH_TOKEN is set (value is masked)"
+            echo "✅ PUBLISH_TOKEN is set"
           fi
 
       - name: Force push to publish repo
+        env:
+          TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         run: |
-          echo "🔄 Pushing to: https://x-access-token:[MASKED]@github.com/Mirantis/k0rdent-enterprise-docs-publish.git"
-          git push https://x-access-token:${{ secrets.PUBLISH_TOKEN }}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git HEAD:release-v1.0.0 --force
+          git remote add publish \
+            https://x-access-token:${TOKEN}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git
+          git push publish HEAD:release-v1.0.0 --force
