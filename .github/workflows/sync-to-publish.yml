@@ -7,7 +7,7 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source repo
+      - name: Checkout source branch
         uses: actions/checkout@v4
         with:
           ref: release-v1.0.0
@@ -20,4 +20,4 @@ jobs:
 
       - name: Force push to publish repo using PAT
         run: |
-          git push https://x-access-token:${{ secrets.PUBLISH_TOKEN }}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git release-v1.0.0 --force
+          git push https://x-access-token:${{ secrets.PUBLISH_TOKEN }}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git HEAD:release-v1.0.0 --force
