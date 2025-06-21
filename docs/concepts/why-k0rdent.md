@@ -33,3 +33,15 @@ The open source ecosystem, and especially Kubernetes, is mature and offers an in
 * Prevents lock-in and supports architectural self determination
 * Solutions allow for solving of problems in unique ways
 * Can help solve the problem of managing the complexity of modern infrastructure
+
+## Only in {{{ docsVersionInfo.k0rdentName }}}
+
+{{{ docsVersionInfo.k0rdentName }}} builds on this strong open source foundation to deliver additional capabilities that address the most demanding enterprise requirements. These exclusive components extend the platform's reach into environments and use cases that require specialized tooling and support. They include:
+
+* **Bare Metal Cloud Deployment:** Deploy complete cloud infrastructures directly to bare metal servers, providing maximum performance and control over the underlying hardware while maintaining cloud-native operational models
+* **Airgapped Environment Support:** Enable cloud deployment and management in completely isolated networks, meeting the strictest security and compliance requirements without sacrificing functionality or operational efficiency
+* **Ceph Storage Provider Integration:** Leverage Ceph as a native storage backend, providing distributed, scalable storage solutions that integrate seamlessly with the platform's lifecycle management capabilities
+* **Mirantis k0rdent Virtualization:** Deliver enterprise-grade virtualization capabilities, enabling organizations to run virtual machines alongside containerized workloads within the same Kubernetes infrastructure
+* **Software Bills of Materials (SBOM):** Provide comprehensive supply chain transparency through detailed software composition analysis, enabling users to verify the integrity and composition of all software components for enhanced security and compliance
+
+These enterprise capabilities ensure that organizations can adopt cloud-native infrastructure patterns regardless of their specific operational constraints, security requirements, or performance needs. {{{ docsVersionInfo.k0rdentName }}} maintains the architectural flexibility and vendor neutrality that platform engineers value while providing the specialized tooling that enterprise environments demand.
