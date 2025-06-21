@@ -1,0 +1,26 @@
+name: Sync to Publish Repo
+
+on:
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+        with:
+          ref: release-v1.0.0
+          fetch-depth: 0  # Necessary for full clone including tags
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Force push to publish repo
+        env:
+          TARGET_REPO: https://x-access-token:${{ secrets.PUBLISH_TOKEN }}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git
+        run: |
+          git remote add publish $TARGET_REPO
+          git push publish release-v1.0.0 --force
