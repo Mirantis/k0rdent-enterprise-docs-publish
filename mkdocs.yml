@@ -131,7 +131,12 @@ nav:
         - Create a multi-node k0s cluster: admin/installation/create-mgmt-clusters/mgmt-create-k0s-multi.md
         - Create a multinode EKS cluster: admin/installation/create-mgmt-clusters/mgmt-create-eks-multi.md
       - Install k0rdent: admin/installation/install-k0rdent.md
-      - Install k0rdent in airgapped environment: admin/installation/airgap/index.md
+      - Install k0rdent in airgapped environment: 
+        - Overview: admin/installation/airgap/index.md
+        - Prerequisites: admin/installation/airgap/airgap-prereq.md
+        - Install an HTTP server: admin/installation/airgap/airgap-http.md
+        - Get the airgap bundles: admin/installation/airgap/airgap-bundles.md
+        - Install k0rdent: admin/installation/airgap/airgap-install.md
       - Verifying Artifacts and Security: admin/installation/sbom.md
       - Verify the k0rdent installation: admin/installation/verify-install.md
       - Prepare k0rdent to create child clusters:
