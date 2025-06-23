@@ -844,16 +844,146 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../../admin/installation/airgap/" class="md-nav__link">
+    
+    
+      
         
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../admin/installation/airgap/" class="md-nav__link ">
+              
   
   <span class="md-ellipsis">
     Install k0rdent in airgapped environment
   </span>
   
 
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_4" id="__nav_4_2_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Install k0rdent in airgapped environment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/installation/airgap/airgap-prereq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prerequisites
+  </span>
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/installation/airgap/airgap-http/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install an HTTP server
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/installation/airgap/airgap-bundles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Get the airgap bundles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/installation/airgap/airgap-install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install k0rdent
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -2138,6 +2268,8 @@
       
         
       
+        
+      
     
     
     
@@ -2209,6 +2341,27 @@
   
   <span class="md-ellipsis">
     Role Definitions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/access/rbac/limiting-access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Limiting Access
   </span>
   
 
@@ -2496,6 +2649,8 @@
       
         
       
+        
+      
     
     
     
@@ -2588,6 +2743,27 @@
   
   <span class="md-ellipsis">
     EKS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/known-issues-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCP
   </span>
   
 
@@ -3500,6 +3676,15 @@
   <a href="#eks-templates" class="md-nav__link">
     <span class="md-ellipsis">
       EKS templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-root-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-root volumes
     </span>
   </a>
   
@@ -4471,6 +4656,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#non-root-volumes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-root volumes
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4540,7 +4734,7 @@ the <code>ClusterDeployment</code> object. The name of the key should then be pl
 <p>The same SSH key will be used for all machines and a bastion host, or jump box. The bastion host is used as a single entry point that provides access to the rest of the cluster, enabling you to more tightly control access.</p>
 <p>To enable the bastion, set the <code>.spec.config.bastion.enabled</code> option in the
 <code>ClusterDeployment</code> object to <code>true</code>.</p>
-<p>You can get a full list of the bastion configuration options in the <a href="https://cluster-api-aws.sigs.k8s.io/crd/#infrastructure.cluster.x-k8s.io/v1beta1.Bastion">CAPA docs</a>.</p>
+<p>You can get a full list of the bastion configuration options in the <a href="https://cluster-api-aws.sigs.k8s.io/crd/#infrastructure.cluster.x-k8s.io/v1beta2.Bastion">CAPA docs</a>.</p>
 <p>The resulting <code>ClusterDeployment</code> might look something like this:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
@@ -4587,134 +4781,32 @@ to apply the workaround.</p>
 <span class="w">    </span><span class="nt">workersNumber</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="nn">...</span>
 </code></pre></div>
-<h1 id="aws-hosted-control-plane-deployment">AWS Hosted control plane deployment<a class="headerlink" href="#aws-hosted-control-plane-deployment" title="Permanent link">#</a></h1>
-<p>This section covers setting up for a k0smotron hosted control plane on AWS.</p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
-<p>Before starting you must have:</p>
-<ul>
-<li>A management Kubernetes cluster (v1.28+) deployed on AWS with kcm installed on it</li>
-<li>A default default storage class configured on the management cluster</li>
-<li>A VPC ID for the worker nodes</li>
-<li>A Subnet ID which will be used along with AZ information</li>
-<li>An AMI ID which will be used to deploy worker nodes</li>
-</ul>
-<p>Keep in mind that all control plane components for all cluster deployments will
-reside in the management cluster.</p>
-<h2 id="networking">Networking<a class="headerlink" href="#networking" title="Permanent link">#</a></h2>
-<p>The networking resources needed for a cluster deployment in AWS can be
-reused with a management cluster.</p>
-<p>If you deployed your AWS Kubernetes cluster using Cluster API Provider AWS (CAPA)
-you can get all the necessary data with the commands below, or use the
-template found below in the
-<a href="#kcm-clusterdeployment-manifest-generation">kcm ClusterDeployment manifest generation</a>
-section.</p>
-<p><strong>VPC ID</strong></p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.spec.network.vpc.id}}&#39;</span>
-</code></pre></div>
-<p><strong>Subnet ID</strong></p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{(index .spec.network.subnets 0).resourceID}}&#39;</span>
-</code></pre></div>
-<p><strong>Availability zone</strong></p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{(index .spec.network.subnets 0).availabilityZone}}&#39;</span>
-</code></pre></div>
-<p><strong>Security group</strong>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.status.networkStatus.securityGroups.node.id}}&#39;</span>
-</code></pre></div></p>
-<p><strong>AMI id</strong></p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span>kubectl<span class="w"> </span>get<span class="w"> </span>awsmachinetemplate<span class="w"> </span>&lt;cluster-name&gt;-worker-mt<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s1">&#39;{{.spec.template.spec.ami.id}}&#39;</span>
-</code></pre></div>
-<p>If you want to use different VPCs/regions for your management or managed
-clusters you should setup additional connectivity rules like
-<a href="https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/vpc-peering.html">VPC peering</a>.</p>
-<p>If using the <code>aws-standalone-cp</code> template to deploy a hosted cluster, 
-a <code>t3.large</code> or larger instance type is recommended, as the <code>kcm-controller</code>
-and other provider controllers will need a large amount of resources to run.</p>
-<h2 id="kcm-clusterdeployment-manifest">kcm ClusterDeployment manifest<a class="headerlink" href="#kcm-clusterdeployment-manifest" title="Permanent link">#</a></h2>
-<p>With all the collected data your <code>ClusterDeployment</code> manifest will look similar to:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-hosted-cp</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-hosted-cp-1-0-2</span>
-<span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-credential</span>
-<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<span class="w">    </span><span class="nt">vpcID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vpc-0a000000000000000</span>
-<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-west-1</span>
-<span class="w">    </span><span class="nt">publicIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">subnets</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">subnet-0aaaaaaaaaaaaaaaa</span>
-<span class="w">        </span><span class="nt">availabilityZone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-west-1b</span>
-<span class="w">        </span><span class="nt">isPublic</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">        </span><span class="nt">natGatewayID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xxxxxx</span>
-<span class="w">        </span><span class="nt">routeTableId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xxxxxx</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">subnet-1aaaaaaaaaaaaaaaa</span>
-<span class="w">        </span><span class="nt">availabilityZone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">us-west-1b</span>
-<span class="w">        </span><span class="nt">isPublic</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">        </span><span class="nt">routeTableId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xxxxxx</span>
-<span class="w">    </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">t3.large</span>
-<span class="w">    </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
-<span class="w">    </span><span class="nt">securityGroupIDs</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sg-0e000000000000000</span>
-</code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>
-In this example we're using the <code>us-west-1</code> region, but you should use the
-region of your VPC.</p>
-</div>
-<h2 id="kcm-clusterdeployment-manifest-generation">kcm ClusterDeployment manifest generation<a class="headerlink" href="#kcm-clusterdeployment-manifest-generation" title="Permanent link">#</a></h2>
-<p>Grab the following <code>ClusterDeployment</code> manifest template and save it to a file
-named <code>clusterdeployment.yaml.tpl</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-hosted</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-hosted-cp-1-0-2</span>
-<span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-credential</span>
-<span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">clusterLabels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
-<span class="w">    </span><span class="nt">vpcID</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.network.vpc.id}}&quot;</span>
-<span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{.spec.region}}&quot;</span>
-<span class="w">    </span><span class="nt">subnets</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">{{</span><span class="nv">- range $subnet</span><span class="w"> </span><span class="p p-Indicator">:</span><span class="nv">= .spec.network.subnets</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.resourceID</span><span class="nv"> </span><span class="s">}}&quot;</span>
-<span class="w">        </span><span class="nt">availabilityZone</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.availabilityZone</span><span class="nv"> </span><span class="s">}}&quot;</span>
-<span class="w">        </span><span class="nt">isPublic</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{{</span><span class="w"> </span><span class="nv">$subnet.isPublic</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">        </span><span class="p p-Indicator">{{</span><span class="nv">- if $subnet.isPublic</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">        </span><span class="nt">natGatewayId</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.natGatewayId</span><span class="nv"> </span><span class="s">}}&quot;</span>
-<span class="w">        </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">        </span><span class="nt">routeTableId</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.routeTableId</span><span class="nv"> </span><span class="s">}}&quot;</span>
-<span class="w">        </span><span class="nt">zoneType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">$subnet.zoneType</span><span class="nv"> </span><span class="s">}}&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">{{</span><span class="nv">- end</span><span class="w"> </span><span class="p p-Indicator">}}</span>
-<span class="w">    </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">t3.large</span>
-<span class="w">    </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span>
-<span class="w">    </span><span class="nt">securityGroupIDs</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{{.status.networkStatus.securityGroups.node.id}}&quot;</span>
-</code></pre></div>
-<p>Then run the following command to create the <code>clusterdeployment.yaml</code>:</p>
-<div class="highlight"><pre><span></span><code>kubectl get awscluster cluster -o go-template=&quot;$(cat clusterdeployment.yaml.tpl)&quot; &gt; clusterdeployment.yaml
-</code></pre></div>
-<h2 id="deployment-tips">Deployment Tips<a class="headerlink" href="#deployment-tips" title="Permanent link">#</a></h2>
-<ul>
-<li>Ensure kcm templates and the controller image are somewhere public and
-  fetchable.</li>
-<li>For installing the kcm charts and templates from a custom repository, load
-  the <code>kubeconfig</code> from the cluster and run the commands:</li>
-</ul>
-<div class="highlight"><pre><span></span><code>KUBECONFIG=kubeconfig IMG=&quot;ghcr.io/k0rdent/kcm/controller-ci:v0.0.1-179-ga5bdf29&quot; REGISTRY_REPO=&quot;oci://ghcr.io/k0rdent/kcm/charts-ci&quot; make dev-apply
-KUBECONFIG=kubeconfig make dev-templates
-</code></pre></div>
-<ul>
-<li>The infrastructure will need to manually be marked <code>Ready</code> to get the
-  <code>MachineDeployment</code> to scale up.  You can patch the <code>AWSCluster</code> kind using
-  the command:</li>
-</ul>
-<div class="highlight"><pre><span></span><code>KUBECONFIG=kubeconfig kubectl patch AWSCluster &lt;hosted-cluster-name&gt; --type=merge --subresource status --patch &#39;status: {ready: true}&#39; -n kcm-system
-</code></pre></div>
-<p>For additional information on why this is required <a href="https://docs.k0smotron.io/stable/capi-aws/#:~:text=As%20we%20are%20using%20self%2Dmanaged%20infrastructure%20we%20need%20to%20manually%20mark%20the%20infrastructure%20ready.%20This%20can%20be%20accomplished%20using%20the%20following%20command">click here</a>.</p>
+<h2 id="non-root-volumes">Non-root volumes<a class="headerlink" href="#non-root-volumes" title="Permanent link">#</a></h2>
+<p>To configure options for non-root storage volumes, set the corresponding
+fields in the <code>ClusterDeployment</code> responsible for these settings, which depend on the template in use:</p>
+<table>
+<thead>
+<tr>
+<th>Template</th>
+<th>Section(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aws-standalone-cp-1-0-2</code></td>
+<td><code>.spec.controlPlane.nonRootVolumes</code>,<code>.spec.worker.nonRootVolumes</code></td>
+</tr>
+<tr>
+<td><code>aws-hosted-cp-1-0-2</code></td>
+<td><code>.spec.nonRootVolumes</code></td>
+</tr>
+<tr>
+<td><code>aws-eks-1-0-0</code></td>
+<td><code>.spec.worker.nonRootVolumes</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <code>nonRootVolumes</code> field is <strong>a list</strong> of <a href="https://cluster-api-aws.sigs.k8s.io/crd/#infrastructure.cluster.x-k8s.io/v1beta2.Volume">Volumes</a>.</p>
 
 
 
