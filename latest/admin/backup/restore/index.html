@@ -2595,6 +2595,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#if-the-restore-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      If the Restore fails
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#caveats" class="md-nav__link">
     <span class="md-ellipsis">
       Caveats
@@ -4549,6 +4558,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#if-the-restore-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      If the Restore fails
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#caveats" class="md-nav__link">
     <span class="md-ellipsis">
       Caveats
@@ -4637,30 +4655,6 @@ to familiarize yourself with potential limitations of the Velero backup system.<
 </code></pre></div>
 </li>
 <li>
-<p>At the time of this writing, an upstream Velero bug means that you will need to create a <code>ConfigMap</code> adding labels to the Velero image so it can be referenced properly. First determine the image in use:</p>
-<p><div class="highlight"><pre><span></span><code>kubect<span class="w"> </span>get<span class="w"> </span>deploy<span class="w"> </span>-lcomponent<span class="o">=</span>velero<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span>.spec.template.spec.containers<span class="o">[</span><span class="m">0</span><span class="o">]</span>.image
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="go">registry.mirantis.com/k0rdent-enterprise/velero/velero:v1.16.0</span>
-</code></pre></div></p>
-</li>
-<li>
-<p>Next create the <code>ConfigMap</code>. For example, add the following to a file called <code>velero-configmap.yaml</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">data</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;image-from-above&gt;</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">velero.io/plugin-config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">velero.io/pod-volume-restore</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RestoreItemAction</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero-config</span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
-</code></pre></div>
-<p>Add it to the management cluster:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>-f<span class="w"> </span>velero-configmap.yaml
-</code></pre></div>
-</li>
-<li>
 <p>Create the <code>BackupStorageLocation</code>/<code>Secret</code> objects that were created during the <a href="../prepare-backups/">preparation stage</a>
    of creating a backup (preferably the same depending on a plugin).</p>
 </li>
@@ -4681,6 +4675,47 @@ to familiarize yourself with potential limitations of the Velero backup system.<
 </li>
 <li>
 <p>Wait until the <code>Restore</code> status is <code>Completed</code> and all <code>kcm</code> components are up and running.</p>
+</li>
+</ol>
+<h2 id="if-the-restore-fails">If the Restore fails<a class="headerlink" href="#if-the-restore-fails" title="Permanent link">#</a></h2>
+<p>At the time of this writing, there is a mis-match between what Mirantis k0rdent Enterprise expects 
+   and the objects <code>velero</code> provides, which may result in a <code>PartiallyFailed</code> result. A fix for this problem 
+   is coming soon, but in the meantime, you will need to rename the <code>kcm-velero</code> <code>Deployment</code> to <code>velero</code>.  </p>
+<p>Follow these steps:</p>
+<ol>
+<li>
+<p>Export the YAML for the object, then delete it:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>deployment<span class="w"> </span>kcm-velero<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span>&gt;<span class="w"> </span>velero-deployment.yaml
+kubectl<span class="w"> </span>delete<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>deployment<span class="w"> </span>kcm-velero
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">deployment.apps &quot;kcm-velero&quot; deleted</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Edit the <code>velero-deployment.yaml</code> file to change <code>metadata.name</code> from <code>kcm-velero</code> to <code>velero</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nn">...</span>
+<span class="w">    </span><span class="nt">component</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero</span>
+<span class="w">    </span><span class="nt">helm.sh/chart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero-9.1.2</span>
+<span class="w"> </span><span class="w w-Error"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w">  </span><span class="nt">resourceVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1653&quot;</span>
+<span class="nn">...</span>
+</code></pre></div>
+</li>
+<li>
+<p>Recreate the <code>Deployment</code> with the new name:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>-f<span class="w"> </span>velero-deployment.yaml
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">deployment.apps/velero created</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Delete the failed <code>Restore</code>:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>restore<span class="w"> </span>-n<span class="w"> </span>&lt;your-namespace&gt;<span class="w"> </span>&lt;restore-name&gt;
+</code></pre></div>
+</li>
+<li>
+<p>Recreate the <code>Restore</code> object as before. It should now complete successfully.</p>
 </li>
 </ol>
 <h2 id="caveats">Caveats<a class="headerlink" href="#caveats" title="Permanent link">#</a></h2>
