@@ -258,6 +258,7 @@ nav:
     - Ceph:
       - Overview: addons/ceph/index.md
       - Installing Ceph: addons/ceph/ceph-install.md
+      - Installing Ceph in an airgapped environment: addons/ceph/ceph-airgap.md
       - Configuring Ceph: 
         - Overview:  addons/ceph/configuration/index.md
         - MiraCeph: addons/ceph/configuration/MiraCeph.md
