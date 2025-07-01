@@ -3327,9 +3327,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#manifests" class="md-nav__link">
+  <a href="#install-hco" class="md-nav__link">
     <span class="md-ellipsis">
-      Manifests
+      Install HCO
     </span>
   </a>
   
@@ -4087,6 +4087,8 @@
       
         
       
+        
+      
     
     
     
@@ -4152,6 +4154,27 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../ceph/ceph-airgap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing Ceph in an airgapped environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -4176,7 +4199,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_2_4" >
         
           
           
@@ -4192,14 +4215,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_9_2_3" id="__nav_9_2_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_9_2_4" id="__nav_9_2_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_9_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_9_2_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_9_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9_2_4">
             <span class="md-nav__icon md-icon"></span>
             Configuring Ceph
           </label>
@@ -4570,9 +4593,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#manifests" class="md-nav__link">
+  <a href="#install-hco" class="md-nav__link">
     <span class="md-ellipsis">
-      Manifests
+      Install HCO
     </span>
   </a>
   
@@ -4606,7 +4629,7 @@
     
       
     
-    <a href="https://github.com/Mirantis/k0rdent-enterprise-docs-publish/raw/main/docs/addons/mkvirt/mkvirt-install.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/Mirantis/k0rdent-enterprise-docs/raw/release-v1.0.0/docs/addons/mkvirt/mkvirt-install.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
@@ -4619,12 +4642,12 @@
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
 <p>Before proceeding, ensure you have the following in place:</p>
 <ul>
-<li>A deployed k0rdent child cluster with CRDs enabled.</li>
+<li>A deployed k0rdent child cluster with <code>cert-manager</code> installed.</li>
 <li>The <code>kubectl</code> utility installed and configured.</li>
 <li>kubeconfig files for both the KCM (k0rdent Control Manager) and the child clusters.</li>
 </ul>
 <h2 id="cert-manager">cert-manager<a class="headerlink" href="#cert-manager" title="Permanent link">#</a></h2>
-<p>In order for the HCP webhook service to function properly, you need to have <code>cert-manager</code> deployed and enabled on the target child cluster.</p>
+<p>In order for the HCO webhook service to function properly, you need to have <code>cert-manager</code> deployed and enabled on the target child cluster.</p>
 <p>To determine whether <code>cert-manager</code> is deployed, <code>describe</code> the <code>ClusterDeployment</code>, as in:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>ClusterDeployment<span class="w"> </span>&lt;CLUSTER-NAME&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;CLUSTER-NAMESPACE&gt;<span class="w"> </span>
 </code></pre></div>
@@ -4662,10 +4685,10 @@ tell it to add this service to the <code>ClusterDeployment</code>:</p>
 <p>Wait for the <code>ClusterDeployment</code> to be ready:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>clusterdeployments<span class="w"> </span>-A
 </code></pre></div>
-<h2 id="manifests">Manifests<a class="headerlink" href="#manifests" title="Permanent link">#</a></h2>
+<h2 id="install-hco">Install HCO<a class="headerlink" href="#install-hco" title="Permanent link">#</a></h2>
 <p>Deploying HCO in a Mirantis k0rdent Enterprise child environment relies on the HCO <code>ServiceTemplate</code>, which you can 
 install from the Mirantis k0rdent Enterprise Catalog:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>hco-1-14-5-mira<span class="w"> </span>oci://registry.mirantis.com/k0rdent-enterprise/hco-service-template<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.14.5-mira<span class="w"> </span>-n<span class="w"> </span>kcm-system
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>hco-1-15-0-mira<span class="w"> </span>oci://registry.mirantis.com/k0rdent-enterprise/hco-service-template<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.15.0-mira<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <p>Verify that the HCO <code>ServiceTemplate</code> has been added and is <code>VALID</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>servicetemplate
@@ -4674,7 +4697,7 @@ install from the Mirantis k0rdent Enterprise Catalog:</p>
 <span class="go">cert-manager-1-17-1       true</span>
 <span class="go">dex-0-19-1                true</span>
 <span class="go">external-secrets-0-11-0   true</span>
-<span class="go">hco-1-14-5-mira           true</span>
+<span class="go">hco-1-15-0-mira           true</span>
 <span class="go">ingress-nginx-4-11-0      true</span>
 <span class="go">ingress-nginx-4-11-3      true</span>
 <span class="go">kyverno-3-2-6             true</span>
@@ -4684,7 +4707,7 @@ install from the Mirantis k0rdent Enterprise Catalog:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hco-1-14-5-mira</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hco-1-15-0-mira</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
@@ -4695,7 +4718,7 @@ install from the Mirantis k0rdent Enterprise Catalog:</p>
 <span class="w">      </span><span class="nt">sourceRef</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmRepository</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubevirt-repo</span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.14.5-mira</span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.15.0-mira</span>
 </code></pre></div>
 <p>By specifying the chart version and the reconcile strategy, this template ensures that HCO remains up to date with minimal manual intervention.</p>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">#</a></h2>
@@ -4711,10 +4734,7 @@ changes will then affect the relevant child cluster. To install and verify HCO, 
 <span class="w">    </span><span class="nt">services</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hco</span>
 <span class="w">      </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubevirt</span>
-<span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hco-1-14-5-mira</span>
-<span class="w">      </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">        </span><span class="no">admission:</span>
-<span class="w">          </span><span class="no">enabled: false</span>
+<span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hco-1-15-0-mira</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
 <p>This step links the HCO service definition to the Mirantis k0rdent Enterprise cluster, instructing it to deploy the HCO operator in the <code>kubevirt</code> namespace on the child cluster represented by the <code>ClusterDeployment</code>.</p>
@@ -4742,12 +4762,8 @@ changes will then affect the relevant child cluster. To install and verify HCO, 
 <span class="w">    </span><span class="nt">nodePlacement</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">nodeSelector</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">kubernetes.io/os</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">linux</span>
-<span class="w">  </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mke4</span>
+<span class="w">  </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0s</span>
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Currently, you must specify <code>platform: mke4</code> in the HCO CR to properly set up the Mirantis k0rdent Virtualization component on a Mirantis k0rdent Enterprise environment. This option's value may be renamed in the future.</p>
-</div>
 <p>Applying the HCO CR is the final step that triggers the deployment of all virtualization components, ensuring that your cluster is fully equipped to handle VM workloads.</p>
 </li>
 </ol>
