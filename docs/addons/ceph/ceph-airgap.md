@@ -80,11 +80,8 @@ Follow these steps to prepare for Ceph installation.
     # Extract the bundle
     mkdir -p ./bundle
     tar -xzf "$BUNDLE_NAME" -C ./bundle
-    ```
-
-5. Iterate over bundle artifacts and upload each one using skopeo
-
-    ```shell
+    
+    # Iterate over bundle artifacts and upload each one using skopeo
     for archive in $(find ./bundle -print | grep ".tar"); do
         # Form the image name from the archive name
         img=$(basename "$archive" | sed 's~\.tar~~' | tr '&' '/' | tr '@' ':'| cut -d "/" -f 3-);
@@ -116,6 +113,8 @@ Follow these steps to prepare for Ceph installation.
         template: ceph-controller-1-0-11
         values: |
             ceph-operator:
+                global:
+                    dockerBaseUrl: ${REGISTRY_ADDRESS}
                 rookExtraConfig:
                     csiKubeletPath: /var/lib/k0s/kubelet
                 controllers:

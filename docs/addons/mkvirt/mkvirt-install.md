@@ -8,13 +8,13 @@ The first step in this process is to deploy the Hyperconverged Cluster Operator 
 
 Before proceeding, ensure you have the following in place:
 
-- A deployed k0rdent child cluster with CRDs enabled.
+- A deployed k0rdent child cluster with `cert-manager` installed.
 - The `kubectl` utility installed and configured.
 - kubeconfig files for both the KCM (k0rdent Control Manager) and the child clusters.
 
 ## cert-manager
 
-In order for the HCP webhook service to function properly, you need to have `cert-manager` deployed and enabled on the target child cluster.
+In order for the HCO webhook service to function properly, you need to have `cert-manager` deployed and enabled on the target child cluster.
 
 To determine whether `cert-manager` is deployed, `describe` the `ClusterDeployment`, as in:
 
