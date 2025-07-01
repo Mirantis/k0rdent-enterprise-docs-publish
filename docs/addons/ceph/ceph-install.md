@@ -1,6 +1,6 @@
 # Ceph Install
 
-This document describes the Ceph storage reference architecture for Kubernetes clusters and details how to deploy and manage Ceph on clusters deployed and managed with Mirantis k0rdent Enterprise. Ceph is a distributed storage system that can be deployed on a Kubernetes cluster using OSS Rook. Deploying Ceph with Mirantis k0rdent Enterprise enables its delivery as a ServiceTemplate. Although Ceph is primarily targeted at supporting [Mirantis k0rdent Virtualization (Kubevirt)](../mkvirt/index.md) (i.e., providing storage for virtual machines), it is also well suited for providing persistent block and filesystem storage for any Kubernetes workload. Rook Ceph integrates with Kubernetes as a CSI driver and supports the deployment of StorageClasses based on Ceph RBD (block volumes) and CephFS (filesystem volumes) in both Read-Write-Once and Read-Write-Many modes.
+This document describes the Ceph storage reference architecture for Kubernetes clusters and details how to deploy and manage Ceph on clusters deployed and managed with {{{ docsVersionInfo.k0rdentName }}}. Ceph is a distributed storage system that can be deployed on a Kubernetes cluster using OSS Rook. Deploying Ceph with {{{ docsVersionInfo.k0rdentName }}} enables its delivery as a `ServiceTemplate`. Although Ceph is primarily targeted at supporting [Mirantis k0rdent Virtualization (Kubevirt)](../mkvirt/index.md) (i.e., providing storage for virtual machines), it is also well suited for providing persistent block and filesystem storage for any Kubernetes workload. Rook Ceph integrates with Kubernetes as a CSI driver and supports the deployment of StorageClasses based on Ceph RBD (block volumes) and CephFS (filesystem volumes) in both Read-Write-Once and Read-Write-Many modes.
 
 ## Prerequisites and Requirements
 
@@ -38,49 +38,11 @@ This document describes the Ceph storage reference architecture for Kubernetes c
 
 Deploying Ceph on k0rdent follows these steps:
 
-1. Create the Ceph Charts HelmRepository Resource
+1. Ceph is installed from the [Ceph docpage](https://catalog.k0rdent.io/v1.0.0/apps/ceph/#install) on k0rdent Enterprise Catalog. Once it's installed, you can add it to child clusters.
 
-    Create a HelmRepository resource for Ceph charts by applying the following YAML to the target cluster:
+3. Edit the `ClusterDeployment` to Enable Ceph.
 
-    ```yaml
-    apiVersion: source.toolkit.fluxcd.io/v1
-    kind: HelmRepository
-    metadata:
-      labels:
-        k0rdent.mirantis.com/managed: "true"
-      name: ceph-templates
-      namespace: kcm-system
-    spec:
-      interval: 10m0s
-      url: https://binary.mirantis.com/ceph/helm/
-    ```
-
-2. Apply the Ceph ServiceTemplate
-
-    Deploy the Ceph ServiceTemplate using the appropriate Ceph chart version:
-
-    ```yaml
-    apiVersion: k0rdent.mirantis.com/v1beta1
-    kind: ServiceTemplate
-    metadata:
-      name: ceph-{{{ docsVersionInfo.addonVersions.dashVersions.ceph }}}
-      namespace: kcm-system
-    spec:
-      helm:
-        chartSpec:
-          chart: ceph-operator
-          interval: 10m0s
-          reconcileStrategy: ChartVersion
-          sourceRef:
-            kind: HelmRepository
-            name: ceph-templates
-          version: {{{ docsVersionInfo.addonVersions.dotVersions.ceph }}}
-    ```
-    This makes Ceph available to deployments.
-
-3. Edit ClusterDeployment to Enable Ceph
-
-    Modify the ClusterDeployment to enable Ceph as a service:
+    Modify the `ClusterDeployment` to enable Ceph as a service:
 
     ```yaml
     ...
@@ -92,14 +54,13 @@ Deploying Ceph on k0rdent follows these steps:
           namespace: ceph-lcm-mirantis
           template: ceph-{{{ docsVersionInfo.addonVersions.dashVersions.ceph }}}
           values: |
-            global:
-              dockerBaseUrl: docker-dev-kaas-local.docker.mirantis.net
-            rookExtraConfig:
-              csiKubeletPath: /var/lib/k0s/kubelet
-            controllers:
-              cephMaintenance:
-                enabled: false
-            installNamespaces: false
+            ceph-operator:
+              rookExtraConfig:
+                csiKubeletPath: /var/lib/k0s/kubelet
+              controllers:
+                cephMaintenance:
+                  enabled: false
+              installNamespaces: false
     ```
 
 4. Post-Deployment Steps
