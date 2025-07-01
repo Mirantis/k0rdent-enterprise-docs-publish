@@ -69,7 +69,7 @@ Wait for the `ClusterDeployment` to be ready:
 kubectl get clusterdeployments -A
 ```
 
-## Manifests
+## Install HCO
 
 Deploying HCO in a {{{ docsVersionInfo.k0rdentName }}} child environment relies on the HCO `ServiceTemplate`, which you can 
 install from the {{{ docsVersionInfo.k0rdentName }}} Catalog:
@@ -134,9 +134,6 @@ changes will then affect the relevant child cluster. To install and verify HCO, 
         - name: hco
           namespace: kubevirt
           template: hco-{{{ docsVersionInfo.addonVersions.dashVersions.hco}}}
-          values: |
-            admission:
-              enabled: false
       ...
     ```
 
@@ -171,10 +168,7 @@ changes will then affect the relevant child cluster. To install and verify HCO, 
         nodePlacement:
           nodeSelector:
             kubernetes.io/os: linux
-      platform: mke4
+      platform: k0s
     ```
-
-    > NOTE: 
-    > Currently, you must specify `platform: mke4` in the HCO CR to properly set up the Mirantis k0rdent Virtualization component on a {{{ docsVersionInfo.k0rdentName }}} environment. This option's value may be renamed in the future.
 
     Applying the HCO CR is the final step that triggers the deployment of all virtualization components, ensuring that your cluster is fully equipped to handle VM workloads.
