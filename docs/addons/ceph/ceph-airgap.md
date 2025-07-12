@@ -16,7 +16,7 @@ Follow these steps to prepare for Ceph installation.
 1. From a non-airgapped system, download the offline Ceph bundle:
 
     ```shell
-    curl -L https://binary-mirantis-com.s3.amazonaws.com/ceph/bundles/airgap-bundle-ceph-1.0.11.tar.gz -o airgap-bundle-ceph-1.0.11.tar.gz
+    curl -L https://binary-mirantis-com.s3.amazonaws.com/ceph/bundles/airgap-bundle-ceph-1.0.11.tar.gz -o airgap-bundle-ceph-1.0.12.tar.gz
     ```
 
 2. Copy the downloaded file to the airgapped environment
@@ -38,7 +38,7 @@ Follow these steps to prepare for Ceph installation.
     export REGISTRY_ADDRESS='10.98.15.193:5000'
     export REGISTRY_USERNAME='user'
     export REGISTRY_PASSWORD='pass'
-    export BUNDLE_NAME='airgap-bundle-ceph-1.0.11.tar.gz'
+    export BUNDLE_NAME='airgap-bundle-ceph-1.0.12.tar.gz'
     ```
 
 4. Execute the following script:
@@ -98,7 +98,8 @@ Follow these steps to prepare for Ceph installation.
 1. Setup the Ceph `ServiceTemplate` from the registry:
 
     ```shell
-    helm install ceph-controller-1-0-11 oci://${REGISTRY_ADDRESS}/k0rdent-enterprise-catalog/ceph-controller-service-template --version 1.0.11 -n kcm-system –-set helmRepository.url=oci://${REGISTRY_ADDRESS}/ceph
+    helm install ceph-controller-1-0-12 oci://${REGISTRY_ADDRESS}/k0rdent-enterprise-catalog/ceph-controller-service-template --version 1.0.12 -n kcm-system –-set helmRepository.url=oci://${REGISTRY_ADDRESS}/ceph
+    ```
 
 2. Edit the `ClusterDeployment` to enable Ceph as usual, but but add the docker images repository value:
 
@@ -110,7 +111,7 @@ Follow these steps to prepare for Ceph installation.
         ...
         - name: ceph
         namespace: ceph-lcm-mirantis
-        template: ceph-controller-1-0-11
+        template: ceph-controller-1-0-12
         values: |
             ceph-operator:
                 global:
