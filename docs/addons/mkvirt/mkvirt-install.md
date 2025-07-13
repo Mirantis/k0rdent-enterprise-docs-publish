@@ -75,7 +75,7 @@ Deploying HCO in a {{{ docsVersionInfo.k0rdentName }}} child environment relies 
 install from the {{{ docsVersionInfo.k0rdentName }}} Catalog:
 
 ```shell
-helm install hco-{{{ docsVersionInfo.addonVersions.dashVersions.hco }}} oci://registry.mirantis.com/k0rdent-enterprise/hco-service-template --version {{{ docsVersionInfo.addonVersions.dotVersions.hco }}} -n kcm-system
+helm install  hco-service-template oci://registry.mirantis.com/k0rdent-enterprise/hco-service-template --version {{{ docsVersionInfo.addonVersions.dotVersions.hco }}} -n kcm-system
 ```
 
 Verify that the HCO `ServiceTemplate` has been added and is `VALID`:
