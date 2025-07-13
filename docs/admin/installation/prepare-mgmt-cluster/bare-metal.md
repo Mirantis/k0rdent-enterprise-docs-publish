@@ -504,7 +504,7 @@ NAME                          AGE    READY   STATUS
 cluster-api-provider-metal3   164m   False   Helm install failed for release kcm-system/cluster-api-provider-metal3 with chart cluster-api-provider-metal3@0.1.0-9d6d9c8: context deadline exceeded
 ```
 
-If you see this error, it may be part of a [known issue](https://github.com/k0rdent/kcm/issues/1643). To solve this problem, delete the `HelmRelease`:
+If you see this error, delete the `HelmRelease`:
 
 ```shell
 kubectl -n kcm-system delete helmrelease cluster-api-provider-metal3
