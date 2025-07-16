@@ -412,7 +412,7 @@ extra:
       dashVersions:
         ceph: 1-0-3
         dex: 0-19-1
-        hco: 1-15-0-mira  
+        hco: 1-15-1-mira  
         stacklightOperator: 0-1-0
         stacklightChart: 0-1-0-mcp-16
         clusterApiProviderCapm3: 0-1-1
@@ -420,7 +420,7 @@ extra:
       dotVersions:
         ceph: 1.0.3
         dex: 0.19.1
-        hco: 1.15.0-mira    
+        hco: 1.15.1-mira    
         stacklightOperator: 0.1.0  
         stacklightChart: 0.1.0-mcp-16
         clusterApiProviderCapm3: 0.1.1
