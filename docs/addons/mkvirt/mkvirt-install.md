@@ -172,3 +172,15 @@ changes will then affect the relevant child cluster. To install and verify HCO, 
     ```
 
     Applying the HCO CR is the final step that triggers the deployment of all virtualization components, ensuring that your cluster is fully equipped to handle VM workloads.
+
+## Known Issue
+
+# Create DataVolume Error
+
+You may experience a problem in which the DataVolume cannot be created with the specified data source. If so, the cause is a failure in the importer image, due to the following error:
+
+```console
+blockdev: cannot open /dev/cdi-block-volume: Permission denied
+```
+
+For more information on this problem, see the [CDI project documentation](https://github.com/kubevirt/containerized-data-importer/blob/main/doc/block_cri_ownership_config.md).
