@@ -3344,6 +3344,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#known-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Known Issue
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4610,6 +4619,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#known-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Known Issue
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4688,7 +4706,7 @@ tell it to add this service to the <code>ClusterDeployment</code>:</p>
 <h2 id="install-hco">Install HCO<a class="headerlink" href="#install-hco" title="Permanent link">#</a></h2>
 <p>Deploying HCO in a Mirantis k0rdent Enterprise child environment relies on the HCO <code>ServiceTemplate</code>, which you can 
 install from the Mirantis k0rdent Enterprise Catalog:</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>hco-1-15-0-mira<span class="w"> </span>oci://registry.mirantis.com/k0rdent-enterprise/hco-service-template<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.15.0-mira<span class="w"> </span>-n<span class="w"> </span>kcm-system
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w">  </span>hco-service-template<span class="w"> </span>oci://registry.mirantis.com/k0rdent-enterprise/hco-service-template<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.15.1-mira<span class="w"> </span>-n<span class="w"> </span>kcm-system
 </code></pre></div>
 <p>Verify that the HCO <code>ServiceTemplate</code> has been added and is <code>VALID</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>servicetemplate
@@ -4697,7 +4715,7 @@ install from the Mirantis k0rdent Enterprise Catalog:</p>
 <span class="go">cert-manager-1-17-1       true</span>
 <span class="go">dex-0-19-1                true</span>
 <span class="go">external-secrets-0-11-0   true</span>
-<span class="go">hco-1-15-0-mira           true</span>
+<span class="go">hco-1-15-1-mira           true</span>
 <span class="go">ingress-nginx-4-11-0      true</span>
 <span class="go">ingress-nginx-4-11-3      true</span>
 <span class="go">kyverno-3-2-6             true</span>
@@ -4707,7 +4725,7 @@ install from the Mirantis k0rdent Enterprise Catalog:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceTemplate</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hco-1-15-0-mira</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hco-1-15-1-mira</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
@@ -4718,7 +4736,7 @@ install from the Mirantis k0rdent Enterprise Catalog:</p>
 <span class="w">      </span><span class="nt">sourceRef</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HelmRepository</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubevirt-repo</span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.15.0-mira</span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.15.1-mira</span>
 </code></pre></div>
 <p>By specifying the chart version and the reconcile strategy, this template ensures that HCO remains up to date with minimal manual intervention.</p>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">#</a></h2>
@@ -4734,7 +4752,7 @@ changes will then affect the relevant child cluster. To install and verify HCO, 
 <span class="w">    </span><span class="nt">services</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hco</span>
 <span class="w">      </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kubevirt</span>
-<span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hco-1-15-0-mira</span>
+<span class="w">      </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hco-1-15-1-mira</span>
 <span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
 <p>This step links the HCO service definition to the Mirantis k0rdent Enterprise cluster, instructing it to deploy the HCO operator in the <code>kubevirt</code> namespace on the child cluster represented by the <code>ClusterDeployment</code>.</p>
@@ -4767,6 +4785,12 @@ changes will then affect the relevant child cluster. To install and verify HCO, 
 <p>Applying the HCO CR is the final step that triggers the deployment of all virtualization components, ensuring that your cluster is fully equipped to handle VM workloads.</p>
 </li>
 </ol>
+<h2 id="known-issue">Known Issue<a class="headerlink" href="#known-issue" title="Permanent link">#</a></h2>
+<h1 id="create-datavolume-error">Create DataVolume Error<a class="headerlink" href="#create-datavolume-error" title="Permanent link">#</a></h1>
+<p>You may experience a problem in which the DataVolume cannot be created with the specified data source. If so, the cause is a failure in the importer image, due to the following error:</p>
+<div class="highlight"><pre><span></span><code><span class="go">blockdev: cannot open /dev/cdi-block-volume: Permission denied</span>
+</code></pre></div>
+<p>For more information on this problem, see the <a href="https://github.com/kubevirt/containerized-data-importer/blob/main/doc/block_cri_ownership_config.md">CDI project documentation</a>.</p>
 
 
 

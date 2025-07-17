@@ -4631,7 +4631,7 @@
 <ol>
 <li>
 <p>From a non-airgapped system, download the offline Ceph bundle:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-L<span class="w"> </span>https://binary-mirantis-com.s3.amazonaws.com/ceph/bundles/airgap-bundle-ceph-1.0.11.tar.gz<span class="w"> </span>-o<span class="w"> </span>airgap-bundle-ceph-1.0.11.tar.gz
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-L<span class="w"> </span>https://binary-mirantis-com.s3.amazonaws.com/ceph/bundles/airgap-bundle-ceph-1.0.11.tar.gz<span class="w"> </span>-o<span class="w"> </span>airgap-bundle-ceph-1.0.12.tar.gz
 </code></pre></div>
 </li>
 <li>
@@ -4649,7 +4649,7 @@
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">REGISTRY_ADDRESS</span><span class="o">=</span><span class="s1">&#39;10.98.15.193:5000&#39;</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">REGISTRY_USERNAME</span><span class="o">=</span><span class="s1">&#39;user&#39;</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">REGISTRY_PASSWORD</span><span class="o">=</span><span class="s1">&#39;pass&#39;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">BUNDLE_NAME</span><span class="o">=</span><span class="s1">&#39;airgap-bundle-ceph-1.0.11.tar.gz&#39;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">BUNDLE_NAME</span><span class="o">=</span><span class="s1">&#39;airgap-bundle-ceph-1.0.12.tar.gz&#39;</span>
 </code></pre></div>
 </li>
 <li>
@@ -4708,8 +4708,8 @@ rm<span class="w"> </span>-r<span class="w"> </span>./bundle<span class="w"> </s
 <ol>
 <li>
 <p>Setup the Ceph <code>ServiceTemplate</code> from the registry:</p>
-<p>```shell
-helm install ceph-controller-1-0-11 oci://${REGISTRY_ADDRESS}/k0rdent-enterprise-catalog/ceph-controller-service-template --version 1.0.11 -n kcm-system –-set helmRepository.url=oci://${REGISTRY_ADDRESS}/ceph</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>ceph-controller-1-0-12<span class="w"> </span>oci://<span class="si">${</span><span class="nv">REGISTRY_ADDRESS</span><span class="si">}</span>/k0rdent-enterprise-catalog/ceph-controller-service-template<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.12<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>–-set<span class="w"> </span>helmRepository.url<span class="o">=</span>oci://<span class="si">${</span><span class="nv">REGISTRY_ADDRESS</span><span class="si">}</span>/ceph
+</code></pre></div>
 </li>
 <li>
 <p>Edit the <code>ClusterDeployment</code> to enable Ceph as usual, but but add the docker images repository value:</p>
@@ -4720,7 +4720,7 @@ helm install ceph-controller-1-0-11 oci://${REGISTRY_ADDRESS}/k0rdent-enterprise
 <span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ceph</span>
 <span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ceph-lcm-mirantis</span>
-<span class="w">    </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ceph-controller-1-0-11</span>
+<span class="w">    </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ceph-controller-1-0-12</span>
 <span class="w">    </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">        </span><span class="no">ceph-operator:</span>
 <span class="w">            </span><span class="no">global:</span>

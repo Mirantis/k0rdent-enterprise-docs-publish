@@ -1268,6 +1268,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#the-helmrelease-does-not-become-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      The HelmRelease does not become ready
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#useful-resources" class="md-nav__link">
     <span class="md-ellipsis">
       Useful resources
@@ -4701,6 +4710,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#the-helmrelease-does-not-become-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      The HelmRelease does not become ready
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#useful-resources" class="md-nav__link">
     <span class="md-ellipsis">
       Useful resources
@@ -4753,7 +4771,7 @@
 </ul>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
 <ul>
-<li>An installed Mirantis k0rdent Enterprise management cluster. Follow the instructions in <a href="../../install-k0rdent/">Install Mirantis k0rdent Enterprise</a> to create a management cluster with Mirantis k0rdent Enterprise running. Prepare this cluster according to the <a href="https://book.metal3.io/baremetal/guide#configure-host">Metal3 host configuration guide</a> for details.</li>
+<li>An installed Mirantis k0rdent Enterprise management cluster. Follow the instructions in <a href="../../install-k0rdent/">Install Mirantis k0rdent Enterprise</a> to create a management cluster with Mirantis k0rdent Enterprise running. Prepare this cluster according to the <a href="https://book.metal3.io/baremetal/guide#configure-host">Metal3 host configuration guide</a>.</li>
 <li>Supported hardware as documented in the <a href="https://book.metal3.io/bmo/supported_hardware">Metal3 hardware compatibility guide</a></li>
 <li>You should still have <a href="https://helm.sh/docs/intro/install/">Helm</a> installed from your installation of Mirantis k0rdent Enterprise. If not, install it again.</li>
 </ul>
@@ -4763,7 +4781,7 @@
 <li>
 <p>Create the required objects for the OOT CAPM3 provider</p>
 <p>Create the necessary Kubernetes objects to install the out-of-tree CAPM3 provider. Just as with other
-providers, these include a <code>HelmRepository</code>, <code>Secret</code>, <code>ProviderTemplate</code>, and <code>ClusterTemplate</code>.</p>
+providers, these include a <code>HelmRepository</code>, <code>ProviderTemplate</code>, and <code>ClusterTemplate</code>.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: source.toolkit.fluxcd.io/v1</span>
 <span class="s">kind: HelmRepository</span>
@@ -4800,13 +4818,13 @@ providers, these include a <code>HelmRepository</code>, <code>Secret</code>, <co
 <span class="s">    helm.sh/resource-policy: keep</span>
 <span class="s">  labels:</span>
 <span class="s">    k0rdent.mirantis.com/component: kcm</span>
-<span class="s">  name: capm3-standalone-cp-0-1-0</span>
+<span class="s">  name: capm3-standalone-cp-0-1-1</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">spec:</span>
 <span class="s">  helm:</span>
 <span class="s">    chartSpec:</span>
 <span class="s">      chart: capm3-standalone-cp</span>
-<span class="s">      version: 0.1.0</span>
+<span class="s">      version: 0.1.1</span>
 <span class="s">      interval: 10m0s</span>
 <span class="s">      reconcileStrategy: ChartVersion</span>
 <span class="s">      sourceRef:</span>
@@ -4841,9 +4859,8 @@ providers, these include a <code>HelmRepository</code>, <code>Secret</code>, <co
 <span class="w">        </span><span class="nt">dhcp</span><span class="p">:</span><span class="w"> </span><span class="c1"># used by DHCP server to assign IPs to hosts during PXE boot</span>
 <span class="w">          </span><span class="nt">rangeBegin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;DHCP_RANGE_START&gt;</span><span class="w">      </span><span class="c1"># e.g., 10.0.1.51</span>
 <span class="w">          </span><span class="nt">rangeEnd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;DHCP_RANGE_END&gt;</span><span class="w">          </span><span class="c1"># e.g., 10.0.1.55</span>
-<span class="w">        </span><span class="nt">interface</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;PROVISION_INTERFACE&gt;</span><span class="w">      </span><span class="c1"># e.g., bond0 - interface connected to BM hosts provision network</span>
-<span class="w">        </span><span class="nt">ipAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;KEEPALIVED_VIP&gt;</span><span class="w">          </span><span class="c1"># e.g., 10.0.1.50 - keepalived VIP for DHCP server and Ironic services</span>
-<span class="w">    </span><span class="c1"># By default, &quot;ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2&quot; is the only image available.</span>
+<span class="w">        </span><span class="nt">interface</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;PROVISION_INTERFACE&gt;</span><span class="w">      </span><span class="c1"># e.g., bond0 - interface of the management cluster node connected to BM hosts provision network</span>
+<span class="w">        </span><span class="nt">ipAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;KEEPALIVED_VIP&gt;</span><span class="w">          </span><span class="c1"># e.g., 10.0.1.50 - keepalived VIP for DHCP server and Ironic services. This VIP will be configured on the &lt;PROVISION_INTERFACE&gt;, it must be in the same L3 network as DHCP range if no dhcp-relay used between management cluster and child cluster hosts.        # By default, &quot;ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2&quot; is the only image available.</span>
 <span class="w">    </span><span class="c1"># You can define custom OS images here if needed bu adding new resources:</span>
 <span class="w">    </span><span class="c1"># resources:</span>
 <span class="w">    </span><span class="c1">#   static:</span>
@@ -4863,15 +4880,15 @@ providers, these include a <code>HelmRepository</code>, <code>Secret</code>, <co
 <li>
 <p>Verify the <code>ClusterTemplate</code> is valid</p>
 <p>Check that the <code>ClusterTemplate</code> has been created successfully:</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clustertemplates<span class="w"> </span>capm3-standalone-cp-0-1-0
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clustertemplates<span class="w"> </span>capm3-standalone-cp-0-1-1
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                        VALID</span>
-<span class="go">capm3-standalone-cp-0.1.0   true</span>
+<span class="go">capm3-standalone-cp-0.1.1   true</span>
 </code></pre></div></p>
 </li>
 </ol>
 <h2 id="enroll-bare-metal-machines">Enroll bare metal machines<a class="headerlink" href="#enroll-bare-metal-machines" title="Permanent link">#</a></h2>
-<p>The next step is to create <code>BareMetalHost</code> objects go represent your bare metal machines so Mirantis k0rdent Enterprise can manage them. For each bare metal machine, create two objects: a <code>Secret</code> and a <code>BareMetalHost</code>. For detailed instructions, see the <a href="https://book.metal3.io/bmo/introduction.html#enrolling-baremetalhosts">Metal3 BareMetalHost enrollment guide</a> (just <code>Enrolling</code>, not <code>Provisioning</code>), or follow these instructions.</p>
+<p>The next step is to create <code>BareMetalHost</code> objects to represent your bare metal machines so Mirantis k0rdent Enterprise can manage them. For each bare metal machine, create two objects: a <code>Secret</code> and a <code>BareMetalHost</code>. For detailed instructions, see the <a href="https://book.metal3.io/bmo/introduction.html#enrolling-baremetalhosts">Metal3 BareMetalHost enrollment guide</a> (just <code>Enrolling</code>, not <code>Provisioning</code>), or follow these instructions.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You don't need to provision bare metal hosts at this stage. Provisioning should happen later as part of this process.</p>
@@ -4902,14 +4919,14 @@ providers, these include a <code>HelmRepository</code>, <code>Secret</code>, <co
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">online</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">bmc</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;BMC_ADDRESS&gt;</span><span class="w">  </span><span class="c1"># e.g., ipmi://192.168.1.100:6230</span>
+<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;BMC_ADDRESS&gt;</span><span class="w">  </span><span class="c1"># e.g., ipmi://192.168.1.100:623</span>
 <span class="w">    </span><span class="nt">credentialsName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;BMH_NAME&gt;-bmc-secret</span>
 <span class="w">    </span><span class="c1">#disableCertificateVerification: true # only needed when using redfish protocol</span>
 <span class="w">  </span><span class="nt">bootMACAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;MAC_ADDRESS&gt;</span>
 </code></pre></div>
 </li>
 <li>
-<p>Wait for <code>BareMetalHost</code> obects to complete enrollment</p>
+<p>Wait for <code>BareMetalHost</code> objects to complete enrollment</p>
 <p>Monitor your <code>BareMetalHost</code> objects until they are <code>available</code>:</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>bmh<span class="w"> </span>-n<span class="w"> </span>&lt;NAMESPACE&gt;
 </code></pre></div>
@@ -4922,11 +4939,11 @@ providers, these include a <code>HelmRepository</code>, <code>Secret</code>, <co
 </li>
 </ol>
 <h2 id="create-the-cluster">Create the cluster<a class="headerlink" href="#create-the-cluster" title="Permanent link">#</a></h2>
-<p>You need to create several objects befor Mirantis k0rdent Enterprise can create a bare metal cluster.</p>
+<p>You need to create several objects before Mirantis k0rdent Enterprise can create a bare metal cluster.</p>
 <ol>
 <li>
 <p>Create the credential objects</p>
-<p>Since CAPM3 doesn't require cloud credentials, create dummy <code>Secret</code> and <code>Credential</code> objects to satisfy <code>Cluster</code> requirements:</p>
+<p>Since CAPM3 doesn't require cloud credentials, create dummy <code>Secret</code> and <code>Credential</code> objects to satisfy <code>ClusterDeployment</code> requirements:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4973,7 +4990,7 @@ providers, these include a <code>HelmRepository</code>, <code>Secret</code>, <co
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">capm3-example</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;NAMESPACE&gt;</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">capm3-standalone-cp-0-1-0</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">capm3-standalone-cp-0-1-1</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">capm3-stub-credential</span>
 <span class="w">  </span><span class="nt">dryRun</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
@@ -5040,7 +5057,7 @@ providers, these include a <code>HelmRepository</code>, <code>Secret</code>, <co
 <span class="w">            </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 <span class="w">        </span><span class="nt">services</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">dns</span><span class="p">:</span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8.8.8.8</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;DNS_SERVER_IP&gt;</span><span class="w">   </span><span class="c1"># e.g., 8.8.8.8</span>
 <span class="w">    </span><span class="nt">ipPools</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pool-pxe</span>
 <span class="w">        </span><span class="nt">pools</span><span class="p">:</span>
@@ -5156,6 +5173,17 @@ using the same <code>BareMetalHost</code> objects.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>ironic-bmo-config<span class="w"> </span>-oyaml
 </code></pre></div>
 <p>Ensure the configuration matches your network environment, particularly the <code>PROVISIONING_INTERFACE</code>, <code>PROVISIONING_IP</code>, and <code>DHCP_RANGE</code> settings.</p>
+<h3 id="the-helmrelease-does-not-become-ready">The <code>HelmRelease</code> does not become ready<a class="headerlink" href="#the-helmrelease-does-not-become-ready" title="Permanent link">#</a></h3>
+<p>Check to see if the <code>HelmRelease</code> object is <code>Ready</code>, and if not, why:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>helmrelease<span class="w"> </span>cluster-api-provider-metal3
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="go">NAME                          AGE    READY   STATUS</span>
+<span class="go">cluster-api-provider-metal3   164m   False   Helm install failed for release kcm-system/cluster-api-provider-metal3 with chart cluster-api-provider-metal3@0.1.0-9d6d9c8: context deadline exceeded</span>
+</code></pre></div></p>
+<p>If you see this error, delete the <code>HelmRelease</code>:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>delete<span class="w"> </span>helmrelease<span class="w"> </span>cluster-api-provider-metal3
+</code></pre></div>
+Kubernetes will automatically reinstall the <code>HelmRelease</code>.</p>
 <h3 id="useful-resources">Useful resources<a class="headerlink" href="#useful-resources" title="Permanent link">#</a></h3>
 <p>For additional troubleshooting guidance, refer to the <a href="https://book.metal3.io/troubleshooting">Metal3 troubleshooting documentation</a>.</p>
 <p>For more information about bare metal cluster configuration options, see:</p>
