@@ -15,7 +15,7 @@ The bare metal infrastructure provider is represented as a set of Helm charts. I
 
 ## Prerequisites
 
-- An installed {{{ docsVersionInfo.k0rdentName }}} management cluster. Follow the instructions in [Install {{{ docsVersionInfo.k0rdentName }}}](../install-k0rdent.md) to create a management cluster with {{{ docsVersionInfo.k0rdentName }}} running. Prepare this cluster according to the [Metal3 host configuration guide](https://book.metal3.io/baremetal/guide#configure-host) for details.
+- An installed {{{ docsVersionInfo.k0rdentName }}} management cluster. Follow the instructions in [Install {{{ docsVersionInfo.k0rdentName }}}](../install-k0rdent.md) to create a management cluster with {{{ docsVersionInfo.k0rdentName }}} running. Prepare this cluster according to the [Metal3 host configuration guide](https://book.metal3.io/baremetal/guide#configure-host).
 - Supported hardware as documented in the [Metal3 hardware compatibility guide](https://book.metal3.io/bmo/supported_hardware)
 - You should still have [Helm](https://helm.sh/docs/intro/install/) installed from your installation of {{{ docsVersionInfo.k0rdentName }}}. If not, install it again.
 
@@ -26,7 +26,7 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
 1. Create the required objects for the OOT CAPM3 provider
 
     Create the necessary Kubernetes objects to install the out-of-tree CAPM3 provider. Just as with other
-    providers, these include a `HelmRepository`, `Secret`, `ProviderTemplate`, and `ClusterTemplate`.
+    providers, these include a `HelmRepository`, `ProviderTemplate`, and `ClusterTemplate`.
 
     ```shell
     kubectl create -f - <<EOF
@@ -114,9 +114,8 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
             dhcp: # used by DHCP server to assign IPs to hosts during PXE boot
               rangeBegin: <DHCP_RANGE_START>      # e.g., 10.0.1.51
               rangeEnd: <DHCP_RANGE_END>          # e.g., 10.0.1.55
-            interface: <PROVISION_INTERFACE>      # e.g., bond0 - interface connected to BM hosts provision network
-            ipAddress: <KEEPALIVED_VIP>          # e.g., 10.0.1.50 - keepalived VIP for DHCP server and Ironic services
-        # By default, "ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2" is the only image available.
+            interface: <PROVISION_INTERFACE>      # e.g., bond0 - interface of the management cluster node connected to BM hosts provision network
+            ipAddress: <KEEPALIVED_VIP>          # e.g., 10.0.1.50 - keepalived VIP for DHCP server and Ironic services. This VIP will be configured on the <PROVISION_INTERFACE>, it must be in the same L3 network as DHCP range if no dhcp-relay used between management cluster and child cluster hosts.        # By default, "ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2" is the only image available.
         # You can define custom OS images here if needed bu adding new resources:
         # resources:
         #   static:
@@ -150,7 +149,7 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
 
 ## Enroll bare metal machines
 
-The next step is to create `BareMetalHost` objects go represent your bare metal machines so {{{ docsVersionInfo.k0rdentName }}} can manage them. For each bare metal machine, create two objects: a `Secret` and a `BareMetalHost`. For detailed instructions, see the [Metal3 BareMetalHost enrollment guide](https://book.metal3.io/bmo/introduction.html#enrolling-baremetalhosts) (just `Enrolling`, not `Provisioning`), or follow these instructions.
+The next step is to create `BareMetalHost` objects to represent your bare metal machines so {{{ docsVersionInfo.k0rdentName }}} can manage them. For each bare metal machine, create two objects: a `Secret` and a `BareMetalHost`. For detailed instructions, see the [Metal3 BareMetalHost enrollment guide](https://book.metal3.io/bmo/introduction.html#enrolling-baremetalhosts) (just `Enrolling`, not `Provisioning`), or follow these instructions.
 
 > NOTE: 
 > You don't need to provision bare metal hosts at this stage. Provisioning should happen later as part of this process.
@@ -184,13 +183,13 @@ The next step is to create `BareMetalHost` objects go represent your bare metal 
     spec:
       online: true
       bmc:
-        address: <BMC_ADDRESS>  # e.g., ipmi://192.168.1.100:6230
+        address: <BMC_ADDRESS>  # e.g., ipmi://192.168.1.100:623
         credentialsName: <BMH_NAME>-bmc-secret
         #disableCertificateVerification: true # only needed when using redfish protocol
       bootMACAddress: <MAC_ADDRESS>
     ```
 
-10. Wait for `BareMetalHost` obects to complete enrollment
+10. Wait for `BareMetalHost` objects to complete enrollment
 
     Monitor your `BareMetalHost` objects until they are `available`:
 
@@ -208,11 +207,11 @@ The next step is to create `BareMetalHost` objects go represent your bare metal 
 
 ## Create the cluster
 
-You need to create several objects befor {{{ docsVersionInfo.k0rdentName }}} can create a bare metal cluster.
+You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} can create a bare metal cluster.
 
 1. Create the credential objects
 
-    Since CAPM3 doesn't require cloud credentials, create dummy `Secret` and `Credential` objects to satisfy `Cluster` requirements:
+    Since CAPM3 doesn't require cloud credentials, create dummy `Secret` and `Credential` objects to satisfy `ClusterDeployment` requirements:
 
     ```yaml
     apiVersion: v1
@@ -332,7 +331,7 @@ You need to create several objects befor {{{ docsVersionInfo.k0rdentName }}} can
                 prefix: 0
             services:
               dns:
-                - 8.8.8.8
+                - <DNS_SERVER_IP>   # e.g., 8.8.8.8
         ipPools:
           - name: pool-pxe
             pools:
@@ -491,6 +490,25 @@ kubectl -n kcm-system get cm ironic-bmo-config -oyaml
 ```
 
 Ensure the configuration matches your network environment, particularly the `PROVISIONING_INTERFACE`, `PROVISIONING_IP`, and `DHCP_RANGE` settings.
+
+### The `HelmRelease` does not become ready
+
+Check to see if the `HelmRelease` object is `Ready`, and if not, why:
+
+```shell
+kubectl -n kcm-system get helmrelease cluster-api-provider-metal3
+```
+```console
+NAME                          AGE    READY   STATUS
+cluster-api-provider-metal3   164m   False   Helm install failed for release kcm-system/cluster-api-provider-metal3 with chart cluster-api-provider-metal3@0.1.0-9d6d9c8: context deadline exceeded
+```
+
+If you see this error, delete the `HelmRelease`:
+
+```shell
+kubectl -n kcm-system delete helmrelease cluster-api-provider-metal3
+```
+Kubernetes will automatically reinstall the `HelmRelease`.
 
 ### Useful resources
 
