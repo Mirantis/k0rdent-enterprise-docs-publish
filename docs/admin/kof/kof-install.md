@@ -35,6 +35,10 @@ global:
   image:
     registry: registry.mirantis.com/k0rdent-enterprise
   hub: registry.mirantis.com/k0rdent-enterprise/istio
+cluster-api-visualizer:
+  image:
+    repository: registry.mirantis.com/k0rdent-enterprise/k0rdent
+    tag: 1.4.1
 grafana-operator:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/grafana/grafana-operator
@@ -66,6 +70,9 @@ kcm:
     operator:
       image:
         repository: kof/kof-operator-controller
+    repo:
+      spec:
+        url: registry.mirantis.com/k0rdent-enterprise/charts
 ```
 
 This file will be used in the next sections.
