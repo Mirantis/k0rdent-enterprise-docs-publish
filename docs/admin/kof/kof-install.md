@@ -72,7 +72,7 @@ kcm:
         repository: kof/kof-operator-controller
     repo:
       spec:
-        url: registry.mirantis.com/k0rdent-enterprise/charts
+        url: oci://registry.mirantis.com/k0rdent-enterprise/charts
 ```
 
 This file will be used in the next sections.
