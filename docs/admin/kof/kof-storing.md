@@ -47,11 +47,11 @@ To apply this option:
     helm upgrade -i --reset-values --wait -n kof kof-storage \
       -f global-values.yaml \
       -f storage-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-storage --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+      oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-storage --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
 
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f global-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+      oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
 ## From Management to Regional
@@ -88,7 +88,7 @@ To apply this option:
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f global-values.yaml \
       -f collectors-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+      oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
 ## From Management to Regional with Istio
@@ -127,7 +127,7 @@ To apply this option:
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f global-values.yaml \
       -f collectors-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+      oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
 ## From Management to Third-party
@@ -215,7 +215,7 @@ For now, however, just for the sake of this demo, you can use the most straightf
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f global-values.yaml \
       -f collectors-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+      oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
 6. Configure AWS CLI with the same access key, for verification:
