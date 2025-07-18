@@ -195,7 +195,7 @@ and apply this example, or use it as a reference:
 
     > NOTICE:
     > If you use an air-gapped environment,
-    > add the next lines to the `mothership-values.yaml` file:
+    > add the next lines following to the `mothership-values.yaml` file:
 
     ```yaml
     cert-manager-service-template:
@@ -210,8 +210,7 @@ and apply this example, or use it as a reference:
       namespace: kcm-system
     ```
 
-    If you're using `registry.mirantis.com/k0rdent-enterprise` directly,
-    put it instead of `registry.local` above.
+    If you're using `registry.mirantis.com/k0rdent-enterprise` directly, replace `registry.local` with `registry.mirantis.com`.
 
 3. If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
     but `kubectl get sc` shows no `(default)`, create it.
