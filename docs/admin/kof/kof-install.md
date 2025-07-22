@@ -18,8 +18,8 @@ Before beginning KOF installation, you should have the following components in p
 ### Image Registry
 
 Let's configure the registry where the Docker images will be pulled from.
-You may want to replace `registry.mirantis.com/k0rdent-enterprise` below
-with your own registry.
+You may want to replace `registry.mirantis.com/k0rdent-enterprise` 
+with your own registry here and in the `helm upgrade` commands in the next sections.
 
 > NOTICE:
 > Currently Grafana and `ingress-nginx` will not work in an air-gapped environment.
@@ -35,6 +35,10 @@ global:
   image:
     registry: registry.mirantis.com/k0rdent-enterprise
   hub: registry.mirantis.com/k0rdent-enterprise/istio
+cluster-api-visualizer:
+  image:
+    repository: registry.mirantis.com/k0rdent-enterprise/k0rdent
+    tag: 1.4.1
 grafana-operator:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/grafana/grafana-operator
@@ -66,6 +70,9 @@ kcm:
     operator:
       image:
         repository: kof/kof-operator-controller
+    repo:
+      spec:
+        url: oci://registry.mirantis.com/k0rdent-enterprise/charts        
 ```
 
 This file will be used in the next sections.
@@ -147,7 +154,7 @@ apply these steps to enable the [Istio](https://istio.io/) service mesh:
     helm upgrade -i --reset-values --wait \
       --create-namespace -n istio-system kof-istio \
       -f global-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-istio --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+      oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-istio --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
     You may want to [customize the collectors](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs/collectors.md#example)
     by passing values to the [kof-istio-child](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-istio/templates/kof-child-cluster-profile.yaml)
@@ -175,7 +182,7 @@ and apply this example, or use it as a reference:
     helm upgrade -i --reset-values --wait \
       --create-namespace -n kof kof-operators \
       -f global-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-operators --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+      oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-operators --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
 2. Create the `mothership-values.yaml` file:
@@ -188,7 +195,7 @@ and apply this example, or use it as a reference:
 
     > NOTICE:
     > If you use an air-gapped environment,
-    > add the next lines to the `mothership-values.yaml` file:
+    > add the next lines following to the `mothership-values.yaml` file:
 
     ```yaml
     cert-manager-service-template:
@@ -202,6 +209,7 @@ and apply this example, or use it as a reference:
             version: v1.17.2
       namespace: kcm-system
     ```
+    If you're using `registry.mirantis.com/k0rdent-enterprise` directly, replace `registry.local` with `registry.mirantis.com`.
 
 3. If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
     but `kubectl get sc` shows no `(default)`, create it.
@@ -253,6 +261,7 @@ and apply this example, or use it as a reference:
       -f global-values.yaml \
       -f mothership-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+      oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
 7. Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
@@ -290,11 +299,11 @@ and apply this example, or use it as a reference:
         ```shell
         helm upgrade -i --reset-values --wait -n kof kof-regional \
           -f global-values.yaml \
-          oci://ghcr.io/k0rdent/kof/charts/kof-regional --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+          oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-regional --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
 
         helm upgrade -i --reset-values --wait -n kof kof-child \
           -f global-values.yaml \
-          oci://ghcr.io/k0rdent/kof/charts/kof-child --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
+          oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-child --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
         ```
 
 9. Wait for all pods to show that they're `Running`:
