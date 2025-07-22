@@ -4723,8 +4723,8 @@
 </ul>
 <h3 id="image-registry">Image Registry<a class="headerlink" href="#image-registry" title="Permanent link">#</a></h3>
 <p>Let's configure the registry where the Docker images will be pulled from.
-You may want to replace <code>registry.mirantis.com/k0rdent-enterprise</code> below
-with your own registry.</p>
+You may want to replace <code>registry.mirantis.com/k0rdent-enterprise</code> 
+with your own registry here and in the <code>helm upgrade</code> commands in the next sections.</p>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>
@@ -4739,6 +4739,10 @@ The workaround for <code>cert-manager</code> is documented in the <a href="#mana
 <span class="w">  </span><span class="nt">image</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">registry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.mirantis.com/k0rdent-enterprise</span>
 <span class="w">  </span><span class="nt">hub</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.mirantis.com/k0rdent-enterprise/istio</span>
+<span class="nt">cluster-api-visualizer</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.mirantis.com/k0rdent-enterprise/k0rdent</span>
+<span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.4.1</span>
 <span class="nt">grafana-operator</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">image</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.mirantis.com/k0rdent-enterprise/grafana/grafana-operator</span>
@@ -4770,6 +4774,9 @@ The workaround for <code>cert-manager</code> is documented in the <a href="#mana
 <span class="w">    </span><span class="nt">operator</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">image</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kof/kof-operator-controller</span>
+<span class="w">    </span><span class="nt">repo</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oci://registry.mirantis.com/k0rdent-enterprise/charts</span><span class="w">        </span>
 </code></pre></div>
 <p>This file will be used in the next sections.</p>
 <h3 id="dns-auto-config">DNS auto-config<a class="headerlink" href="#dns-auto-config" title="Permanent link">#</a></h3>
@@ -4844,7 +4851,7 @@ kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>kof-istio<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>global-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-istio<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
+<span class="w">  </span>oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-istio<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
 </code></pre></div>
     You may want to <a href="https://github.com/k0rdent/kof/blob/v1.0.0/docs/collectors.md#example">customize the collectors</a>
     by passing values to the <a href="https://github.com/k0rdent/kof/blob/v1.0.0/charts/kof-istio/templates/kof-child-cluster-profile.yaml">kof-istio-child</a>
@@ -4873,7 +4880,7 @@ and apply this example, or use it as a reference:</p>
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--create-namespace<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-operators<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>global-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-operators<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
+<span class="w">  </span>oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-operators<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
 </code></pre></div></p>
 </li>
 <li>
@@ -4887,9 +4894,9 @@ and apply this example, or use it as a reference:</p>
 <p class="admonition-title">Notice</p>
 <p>
 If you use an air-gapped environment,
-add the next lines to the <code>mothership-values.yaml</code> file:</p>
+add the next lines following to the <code>mothership-values.yaml</code> file:</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">cert-manager-service-template</span><span class="p">:</span>
+<p><div class="highlight"><pre><span></span><code><span class="nt">cert-manager-service-template</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">helm</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">repository</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cert-manager</span>
@@ -4900,6 +4907,7 @@ add the next lines to the <code>mothership-values.yaml</code> file:</p>
 <span class="w">        </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.17.2</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
 </code></pre></div>
+If you're using <code>registry.mirantis.com/k0rdent-enterprise</code> directly, replace <code>registry.local</code> with <code>registry.mirantis.com</code>.</p>
 </li>
 <li>
 <p>If you want to use a <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass">default storage class</a>,
@@ -4948,6 +4956,7 @@ add the next lines to the <code>mothership-values.yaml</code> file:</p>
 <span class="w">  </span>-f<span class="w"> </span>global-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>mothership-values.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-mothership<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
+<span class="w">  </span>oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-mothership<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
 </code></pre></div></p>
 </li>
 <li>
@@ -4987,11 +4996,11 @@ Otherwise use <code>kof-regional</code> with <code>kof-child</code>.  Do not use
 <li>Install these charts into the management cluster with default or custom values:
     <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-regional<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>global-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-regional<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
+<span class="w">  </span>oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-regional<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
 
 helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-child<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>global-values.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>oci://ghcr.io/k0rdent/kof/charts/kof-child<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
+<span class="w">  </span>oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-child<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
 </code></pre></div></li>
 </ul>
 </li>
