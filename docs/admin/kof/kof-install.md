@@ -261,7 +261,8 @@ and apply this example, or use it as a reference:
       -f global-values.yaml \
       -f mothership-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-
+   ```
+    
 7. Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
     ```shell
     kubectl get svctmpl -A
