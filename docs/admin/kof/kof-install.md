@@ -256,12 +256,12 @@ and apply this example, or use it as a reference:
         It is auto-created [here](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/charts/kof-mothership/templates/grafana/secret.yaml).
 
 6. Install `kof-mothership`:
-    ```shell
+```shell
     helm upgrade -i --reset-values --wait -n kof kof-mothership \
       -f global-values.yaml \
       -f mothership-values.yaml \
       oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
-   ```
+```
     
 7. Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
     ```shell
