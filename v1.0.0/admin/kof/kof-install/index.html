@@ -4952,11 +4952,11 @@ If you're using <code>registry.mirantis.com/k0rdent-enterprise</code> directly, 
 </li>
 <li>
 <p>Install <code>kof-mothership</code>:
-    ```shell
-    helm upgrade -i --reset-values --wait -n kof kof-mothership \
-      -f global-values.yaml \
-      -f mothership-values.yaml \
-      oci://ghcr.io/k0rdent/kof/charts/kof-mothership --version 1.0.0</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>helm<span class="w"> </span>upgrade<span class="w"> </span>-i<span class="w"> </span>--reset-values<span class="w"> </span>--wait<span class="w"> </span>-n<span class="w"> </span>kof<span class="w"> </span>kof-mothership<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>-f<span class="w"> </span>global-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>-f<span class="w"> </span>mothership-values.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>oci://ghcr.io/k0rdent/kof/charts/kof-mothership<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0.0
+</code></pre></div></p>
 </li>
 <li>
 <p>Wait until the value of <code>VALID</code> changes to <code>true</code> for all <code>ServiceTemplate</code> objects:
