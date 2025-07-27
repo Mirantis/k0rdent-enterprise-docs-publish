@@ -233,6 +233,11 @@ nav:
       - Getting Started: addons/mkvirt/getting-started.md
       - Windows on Mirantis k0rdent Virtualization: addons/mkvirt/mkvirt-windows.md
       - Virtualization Best Practices: addons/mkvirt/best-practices.md
+    - Mirantis k0rdent UI:
+      - Overview: addons/ui/index.md
+      - Installation: addons/ui/k0rdent-ui-install.md
+      - Configuration: addons/ui/k0rdent-ui-config.md
+      - Usage: addons/ui/k0rdent-ui-usage.md
   - Reference:
     - Overview: reference/index.md
     - k0rdent CRDs: reference/crds/index.md    
@@ -411,6 +416,9 @@ extra:
         kyverno: 3.2.6       
         velero: 8.1.0  
     addonVersions:
+      digests:
+        k0rdentUI: sha256:60ab7a9dafff9dc143a1d5d697052408f3cf8b27f53c460700d09668a5eb2c71
+        k0rdentUIDate: Sat Jul 26 14:28:03 2025
       dashVersions:
         ceph: 1-0-3
         dex: 0-19-1
@@ -419,6 +427,7 @@ extra:
         stacklightChart: 0-1-0-mcp-16
         clusterApiProviderCapm3: 0-1-1
         capm3StandaloneCpCluster: 0-1-1
+        k0rdentUI: 1-0-0-rc7
       dotVersions:
         ceph: 1.0.3
         dex: 0.19.1
@@ -427,4 +436,5 @@ extra:
         stacklightChart: 0.1.0-mcp-16
         clusterApiProviderCapm3: 0.1.1
         capm3StandaloneCpCluster: 0.1.1
+        k0rdentUI: 1.0.0-rc7
 
