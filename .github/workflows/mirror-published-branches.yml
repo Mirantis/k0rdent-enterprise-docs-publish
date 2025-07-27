@@ -1,0 +1,43 @@
+name: Sync to Publish Repo
+
+on:
+  push:
+    branches:
+      - release-v1.0.0
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout triggering branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Configure Git identity
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Confirm token is populated
+        run: |
+          if [ -z "${{ secrets.PUBLISH_TOKEN }}" ]; then
+            echo "❌ PUBLISH_TOKEN is not set or empty"
+            exit 1
+          else
+            echo "✅ PUBLISH_TOKEN is set"
+          fi
+
+      - name: Force push to publish repo
+        env:
+          TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        run: |
+          git remote add publish \
+            https://x-access-token:${TOKEN}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git
+          git push publish HEAD:${{ github.ref_name }} --force
