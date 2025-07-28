@@ -18,13 +18,10 @@ Before beginning KOF installation, you should have the following components in p
 ### Image Registry
 
 Let's configure the registry where the Docker images will be pulled from.
-You may want to replace `registry.mirantis.com/k0rdent-enterprise`
-with your own registry here and in the `helm upgrade` commands in the next sections.
 
 > NOTICE:
-> Currently Grafana and `ingress-nginx` will not work in an air-gapped environment.
-> We plan to fix it in the patch release.
-> The workaround for `cert-manager` is documented in the [Management Cluster](#management-cluster) section.
+> For an air-gapped environment you may want to replace `registry.mirantis.com/k0rdent-enterprise`
+> with your own registry (for example `registry.local`) here and below.
 
 Create the `global-values.yaml` file:
 
@@ -67,12 +64,11 @@ opentelemetry-operator:
       repository: registry.mirantis.com/k0rdent-enterprise/brancz/kube-rbac-proxy
 kcm:
   kof:
-    operator:
-      image:
-        repository: kof/kof-operator-controller
     repo:
       spec:
         url: oci://registry.mirantis.com/k0rdent-enterprise/charts
+cert-manager:
+  template: cert-manager-v1-16-4
 ```
 
 This file will be used in the next sections.
@@ -189,28 +185,22 @@ and apply this example, or use it as a reference:
     ```yaml
     kcm:
       installTemplates: true
-    ```
-    This enables installation of `ServiceTemplates` such as `cert-manager` and `kof-storage`,
-    making it possible to reference them from the regional and child `MultiClusterService` objects.
-
-    > NOTICE:
-    > If you use an air-gapped environment,
-    > add the next lines following to the `mothership-values.yaml` file:
-
-    ```yaml
     cert-manager-service-template:
       helm:
         repository:
           name: cert-manager
-          url: oci://registry.local/k0rdent-enterprise/charts
+          url: oci://registry.mirantis.com/k0rdent-enterprise/charts
           type: oci
         charts:
           - name: cert-manager
-            version: v1.17.2
+            version: v1.16.4
       namespace: kcm-system
     ```
+    This enables installation of `ServiceTemplates` such as `cert-manager` and `kof-storage`,
+    making it possible to reference them from the regional and child `MultiClusterService` objects.
 
-    If you're using `registry.mirantis.com/k0rdent-enterprise` directly, replace `registry.local` with `registry.mirantis.com`.
+    It also patches the version of `cert-manager`
+    (this workaround will be deleted in the next release).
 
 3. If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
     but `kubectl get sc` shows no `(default)`, create it.
@@ -263,7 +253,7 @@ and apply this example, or use it as a reference:
       -f mothership-values.yaml \
       oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
-
+    
 7. Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
     ```shell
     kubectl get svctmpl -A
@@ -285,14 +275,6 @@ and apply this example, or use it as a reference:
     * If your regional clusters already have `ingress-nginx` and `cert-manager` services,
         you can ask the `kof-regional` chart to not install them by setting Helm values
         `ingress-nginx.enabled` and `cert-manager.enabled` to `false`.
-    * If you use an air-gapped environment,
-        add the next lines to the `global-values.yaml` file:
-
-        ```yaml
-        cert-manager:
-          template: cert-manager-v1-17-2
-        ```
-
     * You may want to [customize collectors](https://github.com/k0rdent/kof/blob/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs/collectors.md#example)
         for all child clusters at once now, or for each child cluster later, or just use the default values.
     * Install these charts into the management cluster with default or custom values:
