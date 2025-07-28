@@ -1,4 +1,4 @@
-# Welcome to Mirantis k0rdent Enterprise X
+# Welcome to Mirantis k0rdent Enterprise
 
 ## Introduction
 
