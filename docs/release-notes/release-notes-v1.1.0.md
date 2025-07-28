@@ -1,5 +1,5 @@
 
-# {{{ docsVersionInfo.k0rdentName }}} OSS v1.1.0 Release Notes
+# {{{ docsVersionInfo.k0rdentName }}} v1.1.0 Release Notes
 
 Released: July 29, 2025
 
