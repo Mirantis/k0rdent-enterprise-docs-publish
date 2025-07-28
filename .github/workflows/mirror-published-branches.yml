@@ -34,6 +34,24 @@ jobs:
             echo "✅ PUBLISH_TOKEN is set"
           fi
 
+      - name: Update mkdocs.yml edit_uri
+        run: |
+          if [ ! -f mkdocs.yml ]; then
+            echo "❌ mkdocs.yml not found"
+            exit 1
+          fi
+
+          # Replace the existing edit_uri line with the new target
+          sed -i 's|^\(edit_uri:\s*\).*|\1https://github.com/Mirantis/k0rdent-enterprise-docs-publish/edit/main/docs/|' mkdocs.yml
+
+          echo "✅ edit_uri updated to:"
+          grep 'edit_uri' mkdocs.yml
+
+      - name: Commit mkdocs.yml change
+        run: |
+          git add mkdocs.yml
+          git commit -m "Update edit_uri to point to publish repo" || echo "No changes to commit"
+
       - name: Force push to publish repo
         env:
           TOKEN: ${{ secrets.PUBLISH_TOKEN }}
