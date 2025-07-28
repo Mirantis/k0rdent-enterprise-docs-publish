@@ -8,6 +8,7 @@ permissions:
 
 jobs:
   sync:
+    if: github.repository == 'Mirantis/k0rdent-enterprise-docs'
     runs-on: ubuntu-latest
 
     steps:
