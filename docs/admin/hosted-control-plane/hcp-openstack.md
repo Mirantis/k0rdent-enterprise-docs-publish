@@ -18,6 +18,7 @@ Follow these steps to set up a k0smotron-hosted control plane on OpenStack:
     > IMPORTANT:  
     > All control plane components for your hosted cluster will reside in the management cluster, and the management cluster
     > must have sufficient resources to handle these additional workloads.
+    
 2. Networking
 
     To deploy a hosted control plane, the necessary OpenStack networking resources must already exist or be created. If you're
