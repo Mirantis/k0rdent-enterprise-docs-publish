@@ -67,8 +67,6 @@ kcm:
     repo:
       spec:
         url: oci://registry.mirantis.com/k0rdent-enterprise/charts
-cert-manager:
-  template: cert-manager-v1-16-4
 ```
 
 This file will be used in the next sections.
@@ -185,22 +183,9 @@ and apply this example, or use it as a reference:
     ```yaml
     kcm:
       installTemplates: true
-    cert-manager-service-template:
-      helm:
-        repository:
-          name: cert-manager
-          url: oci://registry.mirantis.com/k0rdent-enterprise/charts
-          type: oci
-        charts:
-          - name: cert-manager
-            version: v1.16.4
-      namespace: kcm-system
     ```
     This enables installation of `ServiceTemplates` such as `cert-manager` and `kof-storage`,
     making it possible to reference them from the regional and child `MultiClusterService` objects.
-
-    It also patches the version of `cert-manager`
-    (this workaround will be deleted in the next release).
 
 3. If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
     but `kubectl get sc` shows no `(default)`, create it.
