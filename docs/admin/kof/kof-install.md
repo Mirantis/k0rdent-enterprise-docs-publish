@@ -32,19 +32,37 @@ global:
   image:
     registry: registry.mirantis.com/k0rdent-enterprise
   hub: registry.mirantis.com/k0rdent-enterprise/istio
+cert-manager-istio-csr:
+  image:
+    repository: registry.mirantis.com/k0rdent-enterprise/jetstack/cert-manager-istio-csr
+cert-manager-service-template:
+  helm:
+    repository:
+      type: oci
+      url: oci://registry.mirantis.com/k0rdent-enterprise/charts
 cluster-api-visualizer:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/k0rdent
     tag: 1.4.1
-grafana-operator:
-  image:
-    repository: registry.mirantis.com/k0rdent-enterprise/grafana/grafana-operator
 external-dns:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/external-dns/external-dns
+grafana-operator:
+  image:
+    repository: registry.mirantis.com/k0rdent-enterprise/grafana/grafana-operator
+ingress-nginx-service-template:
+  helm:
+    repository:
+      type: oci
+      url: oci://registry.mirantis.com/k0rdent-enterprise/charts
 jaeger-operator:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/jaegertracing/jaeger-operator
+kcm:
+  kof:
+    repo:
+      spec:
+        url: oci://registry.mirantis.com/k0rdent-enterprise/charts
 opencost:
   opencost:
     exporter:
@@ -62,11 +80,6 @@ opentelemetry-operator:
   kubeRBACProxy:
     image:
       repository: registry.mirantis.com/k0rdent-enterprise/brancz/kube-rbac-proxy
-kcm:
-  kof:
-    repo:
-      spec:
-        url: oci://registry.mirantis.com/k0rdent-enterprise/charts
 ```
 
 This file will be used in the next sections.
