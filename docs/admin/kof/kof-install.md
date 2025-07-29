@@ -32,6 +32,7 @@ global:
   image:
     registry: registry.mirantis.com/k0rdent-enterprise
   hub: registry.mirantis.com/k0rdent-enterprise/istio
+  helmChartsRepo: oci://registry.mirantis.com/k0rdent-enterprise/charts
 cert-manager-istio-csr:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/jetstack/cert-manager-istio-csr
