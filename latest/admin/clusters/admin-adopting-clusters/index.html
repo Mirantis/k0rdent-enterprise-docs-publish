@@ -4743,11 +4743,13 @@ this information to confirm that the adoption is successful.</p>
 </li>
 </ol>
 <h2 id="whats-happening-behind-the-scenes">What's Happening Behind the Scenes?<a class="headerlink" href="#whats-happening-behind-the-scenes" title="Permanent link">#</a></h2>
-<p>When you adopt a cluster, Mirantis k0rdent Enterprise performs several actions:
-1. It validates the credentials and configuration provided in the <code>ClusterDeployment</code> object.
-2. It ensures network connectivity between the management cluster and the adopted cluster.
-3. It registers the adopted cluster within the Mirantis k0rdent Enterprise system, enabling it to be monitored and managed like 
-    any k0rdent-deployed cluster.</p>
+<p>When you adopt a cluster, Mirantis k0rdent Enterprise performs several actions:</p>
+<ol>
+<li>It validates the credentials and configuration provided in the <code>ClusterDeployment</code> object.</li>
+<li>It ensures network connectivity between the management cluster and the adopted cluster.</li>
+<li>It registers the adopted cluster within the Mirantis k0rdent Enterprise system, enabling it to be monitored and managed like 
+    any k0rdent-deployed cluster.</li>
+</ol>
 <p>This process doesn't change the adopted cluster's existing workloads or configurations. Instead, it enhances your 
 ability to manage the cluster through Mirantis k0rdent Enterprise.</p>
 <h2 id="self-adopting-the-management-cluster">Self-Adopting the Management Cluster<a class="headerlink" href="#self-adopting-the-management-cluster" title="Permanent link">#</a></h2>
