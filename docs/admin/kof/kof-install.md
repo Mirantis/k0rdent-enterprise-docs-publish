@@ -112,6 +112,7 @@ you can use the most straightforward (though less secure) [static credentials](h
       -n kof external-dns-aws-credentials \
       --from-file external-dns-aws-credentials
     ```
+
 #### Azure
 
 To enable DNS auto-config on Azure, use DNS Zone Contributor.
@@ -139,6 +140,11 @@ To enable DNS auto-config on Azure, use DNS Zone Contributor.
 See [external-dns Azure documentation](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md) for more details.
 
 ### Istio
+
+> NOTICE:
+> Istio option is temporary unavailable in KOF 1.1.0 Enterprise release.
+> It will be fixed in the next release.  
+> A workaround is to add `istio/gateway:1.24.3` chart to your `global.helmChartsRepo`
 
 If you've selected to skip both [DNS auto-config](#dns-auto-config) now
 and [Manual DNS config](./kof-verification.md#manual-dns-config) later, you can
