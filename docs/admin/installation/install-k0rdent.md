@@ -12,7 +12,7 @@ The actual management cluster is a Kubernetes cluster with the {{{ docsVersionIn
 helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
 ```
 ```console
-Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
+Pulled: registry.mirantis.com/k0rdent-enterprise/charts/k0rdent-enterprise:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
 Digest: {{{ extra.docsVersionInfo.k0rdentDigestValue }}}
 NAME: kcm
 LAST DEPLOYED: {{{ extra.docsVersionInfo.k0rdentDigestDate }}}
