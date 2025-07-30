@@ -51,8 +51,5 @@ Get started with the basic documentation:
 - [KOF Alerts](kof-alerts.md)
 - [Scaling KOF](kof-scaling.md)
 - [Maintaining KOF](kof-maintainence.md)
-- [Resource Limits](kof-limits.md)
-- [Version Compatibility](kof-version-compat.md)
-
 
 Once you have KOF up and running, check [k0rdent/kof/docs](https://github.com/k0rdent/kof/tree/v{{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}/docs) for advanced guides.
