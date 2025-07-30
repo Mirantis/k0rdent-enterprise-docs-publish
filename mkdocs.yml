@@ -177,6 +177,7 @@ nav:
       - Installing KOF: admin/kof/kof-install.md
       - Verifying the KOF installation: admin/kof/kof-verification.md
       - Using KOF: admin/kof/kof-using.md
+      - KOF Alerts: admin/kof/kof-alerts.md      
       - Storing KOF data: admin/kof/kof-storing.md
       - Scaling KOF: admin/kof/kof-scaling.md
       - Maintaining KOF: admin/kof/kof-maintainence.md
