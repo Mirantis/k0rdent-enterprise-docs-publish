@@ -4,7 +4,7 @@ Most of the time, you'll access KOF's data through Grafana.
 
 ## Access to Grafana
 
-To make Grafana available, follow these steps:
+To make Grafana available, start with these steps:
 
 1. Get the Grafana username and password:
     ```shell
