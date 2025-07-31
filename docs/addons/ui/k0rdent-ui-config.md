@@ -169,4 +169,26 @@ Alternatively, you can also create local access to the UI by following these ste
 
 3. Access the UI at <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>.
 
+## Catalog Repository
 
+In order to use the Addons catalog, you'll need to add the `k0rdent-catalog` Helm repository.  To do that, create a file, such as `helmrepo.yaml` and add the following:
+
+```yaml
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: k0rdent-catalog
+  namespace: kcm-system  
+spec:
+  type: oci
+  url: oci://ghcr.io/k0rdent/catalog/charts
+```
+
+Then add the object to your {{{ docsVersionInfo.k0rdentName }}} management cluster:
+
+```shell
+kubectl apply -f helmrepo.yaml
+```
+```console
+helmrepository.source.toolkit.fluxcd.io/k0rdent-catalog created
+```
