@@ -32,19 +32,38 @@ global:
   image:
     registry: registry.mirantis.com/k0rdent-enterprise
   hub: registry.mirantis.com/k0rdent-enterprise/istio
+  helmChartsRepo: oci://registry.mirantis.com/k0rdent-enterprise/charts
+cert-manager-istio-csr:
+  image:
+    repository: registry.mirantis.com/k0rdent-enterprise/jetstack/cert-manager-istio-csr
+cert-manager-service-template:
+  helm:
+    repository:
+      type: oci
+      url: oci://registry.mirantis.com/k0rdent-enterprise/charts
 cluster-api-visualizer:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/k0rdent
     tag: 1.4.1
-grafana-operator:
-  image:
-    repository: registry.mirantis.com/k0rdent-enterprise/grafana/grafana-operator
 external-dns:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/external-dns/external-dns
+grafana-operator:
+  image:
+    repository: registry.mirantis.com/k0rdent-enterprise/grafana/grafana-operator
+ingress-nginx-service-template:
+  helm:
+    repository:
+      type: oci
+      url: oci://registry.mirantis.com/k0rdent-enterprise/charts
 jaeger-operator:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/jaegertracing/jaeger-operator
+kcm:
+  kof:
+    repo:
+      spec:
+        url: oci://registry.mirantis.com/k0rdent-enterprise/charts
 opencost:
   opencost:
     exporter:
@@ -62,13 +81,6 @@ opentelemetry-operator:
   kubeRBACProxy:
     image:
       repository: registry.mirantis.com/k0rdent-enterprise/brancz/kube-rbac-proxy
-kcm:
-  kof:
-    repo:
-      spec:
-        url: oci://registry.mirantis.com/k0rdent-enterprise/charts
-cert-manager:
-  template: cert-manager-v1-16-4
 ```
 
 This file will be used in the next sections.
@@ -100,6 +112,7 @@ you can use the most straightforward (though less secure) [static credentials](h
       -n kof external-dns-aws-credentials \
       --from-file external-dns-aws-credentials
     ```
+
 #### Azure
 
 To enable DNS auto-config on Azure, use DNS Zone Contributor.
@@ -127,6 +140,11 @@ To enable DNS auto-config on Azure, use DNS Zone Contributor.
 See [external-dns Azure documentation](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md) for more details.
 
 ### Istio
+
+> NOTICE:
+> Istio option is temporarily unavailable in the KOF 1.1.0 Enterprise release.
+> It will be fixed in the next KOF release.  
+> A workaround is to add the `istio/gateway:1.24.3` chart to your `global.helmChartsRepo`.
 
 If you've selected to skip both [DNS auto-config](#dns-auto-config) now
 and [Manual DNS config](./kof-verification.md#manual-dns-config) later, you can
@@ -185,22 +203,9 @@ and apply this example, or use it as a reference:
     ```yaml
     kcm:
       installTemplates: true
-    cert-manager-service-template:
-      helm:
-        repository:
-          name: cert-manager
-          url: oci://registry.mirantis.com/k0rdent-enterprise/charts
-          type: oci
-        charts:
-          - name: cert-manager
-            version: v1.16.4
-      namespace: kcm-system
     ```
     This enables installation of `ServiceTemplates` such as `cert-manager` and `kof-storage`,
     making it possible to reference them from the regional and child `MultiClusterService` objects.
-
-    It also patches the version of `cert-manager`
-    (this workaround will be deleted in the next release).
 
 3. If you want to use a [default storage class](https://kubernetes.io/docs/concepts/storage/storage-classes/#default-storageclass),
     but `kubectl get sc` shows no `(default)`, create it.
@@ -209,6 +214,10 @@ and apply this example, or use it as a reference:
     global:
       storageClass: <EXAMPLE_STORAGE_CLASS>
     ```
+
+    If `kubectl get sc` shows nothing
+    or just `kubernetes.io/no-provisioner` in the `PROVISIONER` column,
+    apply [OpenEBS](https://docs.k0sproject.io/stable/examples/openebs/) or similar.
 
 4. If you've applied the [DNS auto-config](#dns-auto-config) section,
     add its information to the `kcm:` object in the `mothership-values.yaml` file.
@@ -254,6 +263,16 @@ and apply this example, or use it as a reference:
       oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-mothership --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
     
+    If you're upgrading from KOF version less than `1.1.0`, after upgrade please run:
+    ```shell
+    kubectl apply --server-side --force-conflicts \
+    -f https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
+    ```
+    This is required by [grafana-operator release notes](https://github.com/grafana/grafana-operator/releases/tag/v5.18.0).
+
+    There is a similar step for each regional cluster
+    on [verification step 2](./kof-verification.md#verification-steps).
+
 7. Wait until the value of `VALID` changes to `true` for all `ServiceTemplate` objects:
     ```shell
     kubectl get svctmpl -A
@@ -292,6 +311,7 @@ and apply this example, or use it as a reference:
     ```shell
     kubectl get pod -n kof
     ```
+10. Check options to store metrics of the management cluster in the [Storing KOF data](./kof-storing.md) guide.
 
 ## Regional Cluster
 
