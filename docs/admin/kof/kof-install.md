@@ -22,6 +22,13 @@ Let's configure the registry where the Docker images will be pulled from.
 > NOTICE:
 > For an air-gapped environment you may want to replace `registry.mirantis.com/k0rdent-enterprise`
 > with your own registry (for example `registry.local`) here and below.
+>
+> You may also need to add fields like `certSecretRef` to repo specs like `.kcm.kof.repo.spec`
+> as documented in [Configuring a Custom OCI Registry for KCM components](../../appendix/appendix-extend-mgmt.md/#configuring-a-custom-oci-registry-for-kcm-components).
+>
+> `cert-manager-service-template` and `ingress-nginx-service-template`
+> don't support `certSecretRef` in KOF 1.1.0 Enterprise release,
+> this will be fixed in the next release.
 
 Create the `global-values.yaml` file:
 
