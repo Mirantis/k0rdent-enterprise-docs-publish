@@ -102,9 +102,7 @@ helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.d
 You'll see something like the following. Ignore the warnings, since this is an ephemeral, non-production, non-shared environment:
 
 ```console
-WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: ./KUBECONFIG
-WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: ./KUBECONFIG
-Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
+Pulled: registry.mirantis.com/k0rdent-enterprise/charts/k0rdent-enterprise:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
 Digest: {{{ extra.docsVersionInfo.k0rdentDigestValue }}}
 NAME: kcm
 LAST DEPLOYED: {{{ extra.docsVersionInfo.k0rdentDigestDate }}}

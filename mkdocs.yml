@@ -235,7 +235,6 @@ nav:
       - Virtualization Best Practices: addons/mkvirt/best-practices.md
     - Mirantis k0rdent UI:
       - Overview: addons/ui/index.md
-      - Installation: addons/ui/k0rdent-ui-install.md
       - Configuration: addons/ui/k0rdent-ui-config.md
       - Usage: addons/ui/k0rdent-ui-usage.md
   - Reference:
@@ -339,8 +338,8 @@ extra:
             using our <a href="https://github.com/Mirantis/k0rdent-enterprise-docs/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
     k0rdentName: Mirantis k0rdent Enterprise
-    k0rdentVersion: v1-1-0-rc9
-    k0rdentDotVersion: v1.1.0-rc9
+    k0rdentVersion: 1-1-0-rc9
+    k0rdentDotVersion: 1.1.0-rc9
     ociRegistry: oci://registry.mirantis.com/k0rdent-enterprise/charts/k0rdent-enterprise
     k0rdentDigestValue: sha256:3645c61d59e88143e58a7050ca5b2601f5f5810f1eff163ddba74d1477cdc08c
     k0rdentDigestDate: Fri May  2 08:42:36 2025
