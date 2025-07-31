@@ -96,15 +96,13 @@ helm installed into /usr/local/bin/helm
 Now we'll install {{{ docsVersionInfo.k0rdentName }}} itself into the k0s management cluster:
 
 ```shell
-helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
+helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace --set kordent-ui.enabled=false
 ```
 
 You'll see something like the following. Ignore the warnings, since this is an ephemeral, non-production, non-shared environment:
 
 ```console
-WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: ./KUBECONFIG
-WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: ./KUBECONFIG
-Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
+Pulled: registry.mirantis.com/k0rdent-enterprise/charts/k0rdent-enterprise:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
 Digest: {{{ extra.docsVersionInfo.k0rdentDigestValue }}}
 NAME: kcm
 LAST DEPLOYED: {{{ extra.docsVersionInfo.k0rdentDigestDate }}}
@@ -113,6 +111,9 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 ```
+
+> NOTE:
+> This command installs {{{ docsVersionInfo.k0rdentName }}} with the UI disabled. To enable it, see the [instructions](../addons/ui/k0rdent-ui-config.md#enable--disable-the-ui) for configuring the UI.
 
 {{{ docsVersionInfo.k0rdentName }}} startup takes several minutes.
 

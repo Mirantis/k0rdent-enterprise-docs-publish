@@ -25,6 +25,7 @@ The {{{ docsVersionInfo.k0rdentName }}} architecture comprises the following hig
 * **State Management:** Controllers and systems for monitoring, updating, and managing the state of child clusters and their workloads.
 * **Infrastructure Providers:** Services and APIs responsible for the under-the-hood provisioning resources such as virtual machines, networking, and storage for clusters.
 * **Templates:** Templates define managed child clusters or the workloads that run on them. Instantiating those templates creates the corresponding resources.
+* **User Interface:** A comprehensive UI lets users create and manage clusters, services, and templates, simplifying the process of performing common operations.
 
 ![{{{ docsVersionInfo.k0rdentName }}} Architecture - Simplified](../assets/k0rdent-highlevel-architecure-overview.svg)
 

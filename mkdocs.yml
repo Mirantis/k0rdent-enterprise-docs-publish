@@ -235,6 +235,10 @@ nav:
       - Getting Started: addons/mkvirt/getting-started.md
       - Windows on Mirantis k0rdent Virtualization: addons/mkvirt/mkvirt-windows.md
       - Virtualization Best Practices: addons/mkvirt/best-practices.md
+    - Mirantis k0rdent UI:
+      - Overview: addons/ui/index.md
+      - Configuration: addons/ui/k0rdent-ui-config.md
+      - Usage: addons/ui/k0rdent-ui-usage.md
   - Reference:
     - Overview: reference/index.md
     - k0rdent CRDs: reference/crds/index.md    
@@ -336,12 +340,12 @@ extra:
             using our <a href="https://github.com/Mirantis/k0rdent-enterprise-docs/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
   docsVersionInfo:
     k0rdentName: Mirantis k0rdent Enterprise
-    k0rdentVersion: 1-1-0-rc7
-    k0rdentDotVersion: 1.1.0-rc7
+    k0rdentVersion: 1-1-0-rc9
+    k0rdentDotVersion: 1.1.0-rc9
     ociRegistry: oci://registry.mirantis.com/k0rdent-enterprise/charts/k0rdent-enterprise
     k0rdentDigestValue: sha256:3645c61d59e88143e58a7050ca5b2601f5f5810f1eff163ddba74d1477cdc08c
     k0rdentDigestDate: Fri May  2 08:42:36 2025
-    k0rdentTagList: https://github.com/k0rdent/kcm/tags
+    k0rdentTagList: https://github.com/k0rdent/k0rdent-enterprise/tags
     kofVersions:
       kofDotVersion: 1.1.0
     providerVersions:
@@ -415,6 +419,9 @@ extra:
         kyverno: 3.2.6       
         velero: 8.1.0  
     addonVersions:
+      digests:
+        k0rdentUI: sha256:60ab7a9dafff9dc143a1d5d697052408f3cf8b27f53c460700d09668a5eb2c71
+        k0rdentUIDate: Sat Jul 26 14:28:03 2025
       dashVersions:
         ceph: 1-0-3
         dex: 0-19-1
@@ -423,6 +430,7 @@ extra:
         stacklightChart: 0-1-0-mcp-16
         clusterApiProviderCapm3: 0-1-1
         capm3StandaloneCpCluster: 0-1-1
+        k0rdentUI: 1-0-0-rc7
       dotVersions:
         ceph: 1.0.3
         dex: 0.19.1
@@ -431,4 +439,5 @@ extra:
         stacklightChart: 0.1.0-mcp-16
         clusterApiProviderCapm3: 0.1.1
         capm3StandaloneCpCluster: 0.1.1
+        k0rdentUI: 1.0.0-rc7
 

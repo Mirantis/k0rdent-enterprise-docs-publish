@@ -1,4 +1,4 @@
-# Install {{{ docsVersionInfo.k0rdentName }}}
+# Installation
 
 This section assumes that you already have a kubernetes cluster installed. If you need to setup a cluster you can follow the [Create and prepare a Kubernetes cluster with k0s](./create-mgmt-clusters/mgmt-create-k0s-single.md) to create a test cluster, or [Create and prepare a production grade Kubernetes cluster with EKS](./create-mgmt-clusters/mgmt-create-eks-multi.md) to create something more substantial. 
 
@@ -7,12 +7,34 @@ The actual management cluster is a Kubernetes cluster with the {{{ docsVersionIn
 > NOTE:
 > Don't forget to [verify the installation files](sbom.md).
 
+## Configure the UI
+
+By default, {{{ docsVersionInfo.k0rdentName }}} installs the UI with a pre-determined password. You **MUST** either disable the UI or change the password when installing {{{ docsVersionInfo.k0rdentName }}}.
+
+To change the password, add the following to the installation command below:
 
 ```shell
-helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace
+--set k0rdent-ui.auth.basic.password='<NEW_PASSWORD>'
 ```
+
+To disable the UI, use:
+
+```shell
+--set kordent-ui.enabled=false
+```
+
+## Install {{{ docsVersionInfo.k0rdentName }}}
+
+You install {{{ docsVersionInfo.k0rdentName }}} via  Helm chart:
+
+```shell
+helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace <UI_CONFIG>
+```
+> NOTE:
+> Don't forget to set the UI configuration, as noted [above](#configure-the-ui).
+
 ```console
-Pulled: ghcr.io/k0rdent/kcm/charts/kcm:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
+Pulled: registry.mirantis.com/k0rdent-enterprise/charts/k0rdent-enterprise:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
 Digest: {{{ extra.docsVersionInfo.k0rdentDigestValue }}}
 NAME: kcm
 LAST DEPLOYED: {{{ extra.docsVersionInfo.k0rdentDigestDate }}}
@@ -21,9 +43,6 @@ STATUS: deployed
 REVISION: 1
 TEST SUITE: None
 ```
-
-> NOTE:
-> Make sure to specify the correct release version number.
 
 The helm chart deploys the KCM operator and prepares the environment, and KCM then proceeds to deploy the various subcomponents, including CAPI. The entire process takes a few minutes.
 
