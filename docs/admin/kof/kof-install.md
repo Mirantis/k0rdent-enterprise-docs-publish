@@ -142,9 +142,9 @@ See [external-dns Azure documentation](https://github.com/kubernetes-sigs/extern
 ### Istio
 
 > NOTICE:
-> Istio option is temporary unavailable in KOF 1.1.0 Enterprise release.
-> It will be fixed in the next release.  
-> A workaround is to add `istio/gateway:1.24.3` chart to your `global.helmChartsRepo`
+> Istio option is temporarily unavailable in the KOF 1.1.0 Enterprise release.
+> It will be fixed in the next KOF release.  
+> A workaround is to add the `istio/gateway:1.24.3` chart to your `global.helmChartsRepo`.
 
 If you've selected to skip both [DNS auto-config](#dns-auto-config) now
 and [Manual DNS config](./kof-verification.md#manual-dns-config) later, you can
