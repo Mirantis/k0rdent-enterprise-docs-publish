@@ -8,7 +8,7 @@ Key capabilities include:
 * **Cluster Management**: Template-based creation, editing, and deletion of clusters; support for adopting existing clusters.
 * **Multicluster Services**: Deploy and manage services across multiple clusters from a single service template with tagging, sync control, and drift detection.
 * **Credentials**: View infrastructure and access credentials required for operations (must be created outside the UI).
-* **Addons**: Deploy cluster-level toolsusing service templates from a pre-integrated catalog.
+* **Addons**: Deploy cluster-level tools using service templates from a pre-integrated catalog.
 * **Templates**: Reusable, versioned blueprints for both clusters and services; includes YAML editing, version control, and audit trails.
 
 The guide walks through these workflows in detail with UI screenshots, showing you how to use the platform effectively for declarative, multi-cluster Kubernetes operations.
@@ -27,7 +27,7 @@ You can use this screen to identify problem areas and navigate quickly to deeper
 
 ## Working with Clusters
 
-Of course the main point of {{{ docsVersionInfo.k0rdentName }}} is to create and manage Kubernetes clusters. The {{{ docsVersionInfo.k0rdentName }}} UI lets you to manage the full lifecycle of clusters, including creation of new clusters, adoption of existing clusters, updating clusters, and decommissioning them, all through templates and declarative configuration.
+Of course the main point of {{{ docsVersionInfo.k0rdentName }}} is to create and manage Kubernetes clusters. The {{{ docsVersionInfo.k0rdentName }}} UI enables you to manage the full lifecycle of clusters, including creation of new clusters, adoption of existing clusters, updating clusters, and decommissioning them, all through templates and declarative configuration.
 
 ![k0rdent-ui Cluster List](../assets/images/UI/k0rdent-ui-4.png)
 
@@ -35,13 +35,13 @@ When you click the `Clusters` button in the left-hand pane, you see a view that 
 
 ### Create a New ClusterDeployment
 
-To have {{{ docsVersionInfo.k0rdentName }}} a new cluster, click the "+ Create Cluster" button.
+To have {{{ docsVersionInfo.k0rdentName }}} create or deploy a new cluster, click the "+ Create Cluster" button.
 
 ![k0rdent-ui Cluster Detail](../assets/images/UI/k0rdent-ui-5.png)
 
-Start by naming the cluster; the cluster name should include only lowercase letters, numbers, and either `-` or `.` and must start and end with a letter or a number.  You can place the cluster in the `kcm-system` namespace, but it is good practice to keep users limited to other namespaces.
+Start by naming the cluster; the cluster name should include only lowercase letters, numbers, and either `-` or `.` and must start and end with a letter or a number.  You can place the cluster in the `kcm-system` namespace, but it is good practice to limit users to accessing other namespaces.
 
-Next choose a `ClusterTemplate` on which to base the cluster. You will see all of the available templates listed; choose a template based on the provider to which you have credentials.
+Next. choose a `ClusterTemplate` on which to base the cluster. You will see all of the available templates listed; choose a template based on the provider for which you have credentials.
 
 ![k0rdent-ui Cluster Detail](../assets/images/UI/k0rdent-ui-6.png)
 
@@ -86,7 +86,7 @@ From the cluster information page, you can also click `Delete Cluster` to start 
 
 While {{{ docsVersionInfo.k0rdentName }}} focuses on creating clusters, you will often want to use it to manage clusters that already exist. For example, {{{ docsVersionInfo.k0rdentName }}} makes it simple to add services to a cluster.
 
-To enable {{{ docsVersionInfo.k0rdentName }}} to manage an existing cluster, you "adopt" that cluster. To begin that process, first make sure you have the appropriate [`Credential`](k0rdent-ui-config.md#credentials) created to manage the cluster, then click the `Adopt Cluster` button.
+To enable {{{ docsVersionInfo.k0rdentName }}} to manage an existing cluster, you adopt that cluster. To begin that process, first make sure you have the appropriate [`Credential`](k0rdent-ui-config.md#credentials) created to manage the cluster, then click the `Adopt Cluster` button.
 
 ![k0rdent-ui Adopt a cluster](../assets/images/UI/k0rdent-ui-16.png)
 ![k0rdent-ui Adopt a cluster](../assets/images/UI/k0rdent-ui-17.png)
@@ -103,7 +103,7 @@ Finally, click `Adopt Cluster` to start the process.
 
 ## Multicluster Services
 
-{{{ docsVersionInfo.k0rdentName }}} makes it easy to deploy services across one or more clusters from a single source template, ensuring uniformity and centralized tracking.  
+{{{ docsVersionInfo.k0rdentName }}} makes it easy to deploy services across one or more clusters from a single source template, ensuring consistency and centralized tracking.  
 
 Keep in mind that in the context of {{{ docsVersionInfo.k0rdentName }}}, a `Service` is a one or more applications deployed with Helm according to a Service Template, which is separate from a Kubernetes `Service` object.
 
@@ -118,7 +118,7 @@ You can see what template was used and also the number of clusters on which it's
 ![k0rdent-ui-20.png](../assets/images/UI/k0rdent-ui-20.png)
 ![k0rdent-ui-21.png](../assets/images/UI/k0rdent-ui-21.png)
 
-Specify the name for the service; it will be used to create the Kubernetes resources such as pods. Specify the priority; should it pre-empt other services if necessary, or "step aside" if resources are short?  In addition, when a serivce is propogated to multiple clusters, should that synchronization happen continuousy or just once?  You can also "force" a sync if things have changed.
+Specify the name for the service; it will be used to create the Kubernetes resources such as pods. Specify the priority; should it pre-empt other services if necessary, or "step aside" if resources are short?  In addition, when a serivce is propagated to multiple clusters, should that synchronization happen continuousy or just once?  You can also force a sync if things have changed.
 
 If you have specific requirements for a cluster (for example, a cluster that has an `Ingress` installed, or a cluster in the development environment) you can set the value of tags that must be present on a cluster before the application is deployed there.
 

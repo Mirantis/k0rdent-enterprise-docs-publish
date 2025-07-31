@@ -4,7 +4,7 @@ The {{{ docsVersionInfo.k0rdentName }}} UI can assist in performing actions and 
 
 ## Enable / Disable the UI
 
-You don't need to install the {{{ docsVersionInfo.k0rdentName }}} UI because it's installed along automatically, but it is possible to enable and disable it by editing the `Management` object:
+You don't need to install the {{{ docsVersionInfo.k0rdentName }}} UI because it's already included with k0rdent-enterprise, but you can enable or disable it by editing the `Management` object:
 
 ```shell
 kubectl edit management kcm -n kcm-system
@@ -98,22 +98,22 @@ As of version 1.1.0, {{{ docsVersionInfo.k0rdentName }}} supports OIDC using Goo
     ...
     spec:
     core:
-        capi: {}
-        kcm:
+      capi: {}
+      kcm:
         config:
-            k0rdent-ui:
+          k0rdent-ui:
             auth:
-                google:
+              google:
                 secretKeyRef:
-                    name: oidc-secret
-                    clientIDKey: client-id
-                    clientSecretKey: client-secret
-                basic:
+                  name: oidc-secret
+                  clientIDKey: client-id
+                  clientSecretKey: client-secret
+              basic:
                 password: myNEWpassword
             nextAuth:
-                secretKeyRef:
-                name: nextauth-secret
-                key: nextauth-secret
+              secretKeyRef:
+              name: nextauth-secret
+              key: nextauth-secret
     providers:
     ...
     ```
@@ -139,7 +139,7 @@ As of version 1.1.0, {{{ docsVersionInfo.k0rdentName }}} supports OIDC using Goo
 
 ## Credentials
 
-In order to take action, {{{ docsVersionInfo.k0rdentName }}} must have the appropriate permissions.  In this case, that means creating `Credential` objects. 
+{{{ docsVersionInfo.k0rdentName }}} requires permissions to perform actions. You provide these permissions by creating `Credential` objects.
 
 ### Infrastructure credentials
 
@@ -147,7 +147,7 @@ Because {{{ docsVersionInfo.k0rdentName }}} can work with multiple infrastructur
 
 ### Cluster credentials
 
-While {{{ docsVersionInfo.k0rdentName }}} can be used to create and manage new clusters, it can also "adopt" existing clusters. Do do that, {{{ docsVersionInfo.k0rdentName }}} needs the ability to log into the cluster and perform actions. From the command line using `kubectl` you'd use the `KUBECONFIG`, and it's the same thing for {{{ docsVersionInfo.k0rdentName }}}. You need to create a `Credential` that includes the `KUBECONFIG`. You can get instructions in the documentation on [adopting clusters](../../admin/clusters/admin-adopting-clusters.md).
+While {{{ docsVersionInfo.k0rdentName }}} can be used to create and manage new clusters, it can also "adopt" existing clusters. To adopt a cluster, it needs login access to the cluster via a valid `KUBECONFIG`, just as you would use with `kubectl`. To make this available to {{{ docsVersionInfo.k0rdentName }}}, you can create a `Credential` that includes the `KUBECONFIG`. See the documentation for [adopting clusters](../../admin/clusters/admin-adopting-clusters.md) for more information.
 
 ## Make the UI avaiable
 
