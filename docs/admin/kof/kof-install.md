@@ -19,10 +19,6 @@ Before beginning KOF installation, you should have the following components in p
 
 Let's configure the registry where the Docker images will be pulled from.
 
-> NOTICE:
-> For an air-gapped environment you may want to replace `registry.mirantis.com/k0rdent-enterprise`
-> with your own registry (for example `registry.local`) here and below.
-
 Create the `global-values.yaml` file:
 
 ```yaml
@@ -84,6 +80,30 @@ opentelemetry-operator:
 ```
 
 This file will be used in the next sections.
+
+> NOTICE:
+> For an **air-gapped** environment
+> please replace the `registry.mirantis.com/k0rdent-enterprise`entry
+> with your own registry (for example, `registry.local`).
+>
+> Please also use the secrets created on the
+> [Configuring a Custom OCI Registry for KCM](../../appendix/appendix-extend-mgmt.md/#configuring-a-custom-oci-registry-for-kcm-components)
+> step. For example:
+> 
+> ```yaml
+> kcm:
+>   kof:
+>     repo:
+>       spec:
+>         secretRef:
+>           name: my-private-oci-registry-creds
+>         certSecretRef:
+>           name: registry-cert
+> ```
+>
+> In the KOF 1.1.0 Enterprise release, `cert-manager-service-template` and `ingress-nginx-service-template`
+> don't support such this secrets configuration; 
+> this will be fixed in the next release.
 
 ### DNS auto-config
 
