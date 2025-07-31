@@ -83,12 +83,13 @@ This file will be used in the next sections.
 
 > NOTICE:
 > For an **air-gapped** environment
-> please replace the `registry.mirantis.com/k0rdent-enterprise`
-> with your own registry (for example `registry.local`) here and below.
+> please replace the `registry.mirantis.com/k0rdent-enterprise`entry
+> with your own registry (for example, `registry.local`).
 >
 > Please also use the secrets created on the
 > [Configuring a Custom OCI Registry for KCM](../../appendix/appendix-extend-mgmt.md/#configuring-a-custom-oci-registry-for-kcm-components)
-> step, for example:
+> step. For example:
+> 
 > ```yaml
 > kcm:
 >   kof:
@@ -100,8 +101,8 @@ This file will be used in the next sections.
 >           name: registry-cert
 > ```
 >
-> `cert-manager-service-template` and `ingress-nginx-service-template`
-> don't support such secrets configuration in KOF 1.1.0 Enterprise release,
+> In the KOF 1.1.0 Enterprise release, `cert-manager-service-template` and `ingress-nginx-service-template`
+> don't support such this secrets configuration; 
 > this will be fixed in the next release.
 
 ### DNS auto-config
