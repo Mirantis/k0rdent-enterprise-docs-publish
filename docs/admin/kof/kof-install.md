@@ -33,10 +33,9 @@ cert-manager-istio-csr:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/jetstack/cert-manager-istio-csr
 cert-manager-service-template:
-  helm:
-    repository:
-      type: oci
-      url: oci://registry.mirantis.com/k0rdent-enterprise/charts
+  repo:
+    type: oci
+    url: oci://registry.mirantis.com/k0rdent-enterprise/charts
 cluster-api-visualizer:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/k0rdent
@@ -48,10 +47,9 @@ grafana-operator:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/grafana/grafana-operator
 ingress-nginx-service-template:
-  helm:
-    repository:
-      type: oci
-      url: oci://registry.mirantis.com/k0rdent-enterprise/charts
+  repo:
+    type: oci
+    url: oci://registry.mirantis.com/k0rdent-enterprise/charts
 jaeger-operator:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/jaegertracing/jaeger-operator
@@ -82,28 +80,35 @@ opentelemetry-operator:
 This file will be used in the next sections.
 
 > NOTICE:
-> For an **air-gapped** environment
-> please replace the `registry.mirantis.com/k0rdent-enterprise`entry
-> with your own registry (for example, `registry.local`).
->
-> Please also use the secrets created on the
-> [Configuring a Custom OCI Registry for KCM](../../appendix/appendix-extend-mgmt.md/#configuring-a-custom-oci-registry-for-kcm-components)
-> step. For example:
-> 
-> ```yaml
-> kcm:
->   kof:
->     repo:
->       spec:
->         secretRef:
->           name: my-private-oci-registry-creds
->         certSecretRef:
->           name: registry-cert
-> ```
->
-> In the KOF 1.1.0 Enterprise release, `cert-manager-service-template` and `ingress-nginx-service-template`
-> don't support such this secrets configuration; 
-> this will be fixed in the next release.
+> For an **air-gapped** environment please apply additional steps below.
+
+* Replace all mentions of the `registry.mirantis.com/k0rdent-enterprise`
+    with your own registry, for example, `registry.local`
+* Use the secrets created on the
+    [Configuring a Custom OCI Registry for KCM components](../../appendix/appendix-extend-mgmt.md/#configuring-a-custom-oci-registry-for-kcm-components)
+    step. For example:
+    ```yaml
+    kcm:
+      kof:
+        repo:
+          spec:
+            secretRef:
+              name: my-private-oci-registry-creds
+            certSecretRef:
+              name: registry-cert
+    cert-manager-service-template:
+      repo:
+        secretRef:
+          name: my-private-oci-registry-creds
+        certSecretRef:
+          name: registry-cert
+    ingress-nginx-service-template:
+      repo:
+        secretRef:
+          name: my-private-oci-registry-creds
+        certSecretRef:
+          name: registry-cert
+    ```
 
 ### DNS auto-config
 
