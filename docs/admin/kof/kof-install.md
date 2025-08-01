@@ -33,7 +33,7 @@ cert-manager-istio-csr:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/jetstack/cert-manager-istio-csr
 cert-manager-service-template:
-  verifyJobImage: registry.mirantis.com/k0rdent-enterprise/alpine/helm:3.14.0
+  skipVerifyJob: true
   repo:
     type: oci
     url: oci://registry.mirantis.com/k0rdent-enterprise/charts
@@ -48,7 +48,7 @@ grafana-operator:
   image:
     repository: registry.mirantis.com/k0rdent-enterprise/grafana/grafana-operator
 ingress-nginx-service-template:
-  verifyJobImage: registry.mirantis.com/k0rdent-enterprise/alpine/helm:3.14.0
+  skipVerifyJob: true
   repo:
     type: oci
     url: oci://registry.mirantis.com/k0rdent-enterprise/charts
