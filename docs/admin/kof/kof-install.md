@@ -111,6 +111,25 @@ This file will be used in the next sections.
         certSecretRef:
           name: registry-cert
     ```
+* Switch to self-signed `ClusterIssuer` by adding to `global-values.yaml` file:
+    ```yaml
+    storage:
+      cert-manager:
+        cluster-issuer:
+          provider: self-signed
+    ```
+* To use your own certificate:
+    * Wait until you apply the [Regional Cluster](#regional-cluster) section
+        and get the `regional-kubeconfig` in the [Verifying](kof-verification.md) step.
+    * Create the next secrets there in `kof` namespace
+        as documented in [Ingress - TLS](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls):
+        * `vmauth-tls`
+        * `jaeger-ingress-tls-secret`
+        * `grafana-cluster-tls`
+        * `dex-ingress-tls-secret`
+    * Or you can create these secrets in the management cluster
+        and auto-distribute them to regional clusters using the `clusterProfiles`
+        as documented in step 4 of the [Management Cluster](#management-cluster) section.
 
 ### DNS auto-config
 
