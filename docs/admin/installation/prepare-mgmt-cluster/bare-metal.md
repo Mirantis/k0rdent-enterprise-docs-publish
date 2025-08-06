@@ -208,23 +208,20 @@ The next step is to create `BareMetalHost` objects to represent your bare metal 
 
 ### Support for RAID disk arrays on baremetal hosts
 
-The ironic python agent(IPA) provides limited functionality of software RAID arrays. These limits do not allow to use 
-created RAID disk as rootfs. One of the IPA limits is the requirement to use a whole block device as RAID array part. 
-During RAID initialization, IPA will create a single partition on target disks and use it as part of RAID array i.e. 
-RAID array will be assembled not from raw block device but from full disk partition on this block device.
+The Ironic python agent (IPA) provides limited functionality for software RAID arrays. These limits do not allow  creating a RAID disk as `rootfs`. One limit is the requirement to use a whole block device as a RAID array part. During RAID initialization, IPA creates a single partition on target disks and uses it as part of the RAID array. For example, the RAID array will be assembled not from the raw block device, but from the full disk partition on this block device.
 
-The disk layout will be like this:
+The disk layout looks something like this:
 
 ```
 disk0 -> part0 -,
 disk1 -> part0 -+-> RAID -> [ p0, p1, p2 ... ]
 ```
 
-So UEFI/BIOS have access only to "root" partition. And it is not able to get access to EFI/boot partition defined into
-"nested" partition table (partition table created inside part0 i.e. inside RAID array). So if RAID array defined
-in IPA setup as the root device, the system will be unbootable.
+So UEFI/BIOS has access only to the "root" partition, and it cannot access the EFI/boot partition defined in the
+"nested" partition table--that is, the partition table created inside `part0` (inside the RAID array). So if the RAID array is defined
+in the IPA setup as the root device, the system will be unbootable.
 
-Example of `BareMetalHost` object that declare raid1 array:
+Consider this example of a `BareMetalHost` object that declares the RAID1 array:
 
 ```yaml
 ---
@@ -255,11 +252,11 @@ spec:
     deviceName: /dev/disk/by-path/pci-0000:00:07.0-scsi-0:0:0:0
 ```
 
-Host have three hard disks. The First one will be used as the root device. Second and third disks will be assembled into 
-RAID1 array. `rootDeviceHint` into bmh spec must be defined, because if `BMH` spec have raid definition and don't have 
-`rootDeviceHint` first RAID array will be marked as the root device [automatically](https://github.com/metal3-io/baremetal-operator/blob/v0.9.2/pkg/provisioner/ironic/raid.go#L39).
+The host has three hard disks. The first one will be used as the root device, and the second and third disks will be assembled into the 
+RAID1 array. The `rootDeviceHint` in in the `BareMetalHost` `spec` must be defined, because if it has a RAID definition and doesn't have the 
+`rootDeviceHint`, the first RAID array will be marked as the root device [automatically](https://github.com/metal3-io/baremetal-operator/blob/v0.9.2/pkg/provisioner/ironic/raid.go#L39).
 
-More info about software RAID support in IPA https://docs.openstack.org/ironic/latest/admin/raid.html#software-raid
+For more information about software RAID support in IPA, see the [Ironic documentation](https://docs.openstack.org/ironic/latest/admin/raid.html#software-raid).
 
 ## Create the cluster
 
