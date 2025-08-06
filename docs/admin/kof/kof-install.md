@@ -133,7 +133,7 @@ For an air-gapped environment please apply additional steps below:
           annotations:
             k0rdent.mirantis.com/kof-http-config: '{"tls_config": {"insecure_skip_verify": true}}'
         ```
-    * On step 7 in the [Child Cluster](#child-cluster) section apply:
+    * On step 7 in the [Child Cluster](#child-cluster) section you may apply:
         ```yaml
         spec:
           config:
@@ -150,7 +150,9 @@ For an air-gapped environment please apply additional steps below:
                     tls_options:
                       insecure_skip_verify: true
         ```
-    * On step 1 in the [Storing KOF data - From Management to Regional](kof-storing.md#from-management-to-regional) section apply:
+        Note: `insecure_skip_verify` is a temporary workaround auto-enabled by default
+        until we implement a chain of trust in the next releases.
+    * On step 1 in the [Storing KOF data - From Management to Regional](kof-storing.md#from-management-to-regional) section you may apply:
         ```shell
         cat >collectors-values.yaml <<EOF
         kof:
@@ -173,10 +175,12 @@ For an air-gapped environment please apply additional steps below:
                 url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus
         EOF
         ```
-        Note that `opencost.prometheus.external.url` and related [values of the opencost chart](https://github.com/opencost/opencost-helm-chart/tree/main/charts/opencost#values)
+        Note: `insecure_skip_verify` is a temporary workaround auto-enabled by default
+        until we implement a chain of trust in the next releases.
+
+        Note: `opencost.prometheus.external.url` and related [values of the opencost chart](https://github.com/opencost/opencost-helm-chart/tree/main/charts/opencost#values)
         do not support `insecure_skip_verify` for now.
-    * Note that `insecure_skip_verify` is a temporary workaround.
-        Chain of trust will be implemented in the next releases.
+
 5. To use **your own `cert-manager`**, add to `global-values.yaml` file:
       ```yaml
       storage:
