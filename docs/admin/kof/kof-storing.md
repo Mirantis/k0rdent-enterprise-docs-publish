@@ -78,7 +78,7 @@ To apply this option:
     cat >collectors-values.yaml <<EOF
     kof:
       logs:
-        endpoint: https://vmauth.$REGIONAL_DOMAIN/vls/insert/opentelemetry/v1/logs
+        endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs
       metrics:
         endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
       traces:

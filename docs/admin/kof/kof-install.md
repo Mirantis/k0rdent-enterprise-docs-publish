@@ -81,12 +81,15 @@ opentelemetry-operator:
 
 This file will be used in the next sections.
 
-> NOTICE:
-> For an **air-gapped** environment please apply additional steps below.
+### Air Gap
 
-* Replace all mentions of the `registry.mirantis.com/k0rdent-enterprise`
+For an air-gapped environment please apply additional steps below:
+
+1. Replace all mentions of the `registry.mirantis.com/k0rdent-enterprise`
+    in the `global-values.yaml` file and other examples
     with your own registry, for example, `registry.local`
-* Use the secrets created on the
+
+2. Update `global-values.yaml` file using the secrets created on the
     [Configuring a Custom OCI Registry for KCM components](../../appendix/appendix-extend-mgmt.md/#configuring-a-custom-oci-registry-for-kcm-components)
     step. For example:
     ```yaml
@@ -111,14 +114,80 @@ This file will be used in the next sections.
         certSecretRef:
           name: registry-cert
     ```
-* Switch to self-signed `ClusterIssuer` by adding to `global-values.yaml` file:
-    ```yaml
-    storage:
-      cert-manager:
-        cluster-issuer:
-          provider: self-signed
-    ```
-* To use your own certificate:
+
+3. Either apply the [Istio](#istio) section or one of the options below,
+    required for [DNS auto-config](#dns-auto-config)
+    and [Manual DNS config](kof-verification.md#manual-dns-config) cases only.
+
+4. To use **self-signed** certificates:
+    * Add to `global-values.yaml` file:
+        ```yaml
+        storage:
+          cert-manager:
+            cluster-issuer:
+              provider: self-signed
+        ```
+    * On step 9 in the [Regional Cluster](#regional-cluster) section apply:
+        ```yaml
+        metadata:
+          annotations:
+            k0rdent.mirantis.com/kof-http-config: '{"tls_config": {"insecure_skip_verify": true}}'
+        ```
+    * On step 7 in the [Child Cluster](#child-cluster) section you may apply:
+        ```yaml
+        spec:
+          config:
+            clusterAnnotations:
+              k0rdent.mirantis.com/kof-collectors-values: |
+                kof:
+                  logs:
+                    tls_options:
+                      insecure_skip_verify: true
+                  metrics:
+                    tls_options:
+                      insecure_skip_verify: true
+                  traces:
+                    tls_options:
+                      insecure_skip_verify: true
+        ```
+        Note: `insecure_skip_verify` is a temporary workaround auto-enabled by default
+        until we implement a chain of trust in the next releases.
+    * On step 1 in the [Storing KOF data - From Management to Regional](kof-storing.md#from-management-to-regional) section you may apply:
+        ```shell
+        cat >collectors-values.yaml <<EOF
+        kof:
+          logs:
+            endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs
+            tls_options:
+              insecure_skip_verify: true
+          metrics:
+            endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
+            tls_options:
+              insecure_skip_verify: true
+          traces:
+            endpoint: https://jaeger.$REGIONAL_DOMAIN/collector
+            tls_options:
+              insecure_skip_verify: true
+        opencost:
+          opencost:
+            prometheus:
+              external:
+                url: https://vmauth.$REGIONAL_DOMAIN/vm/select/0/prometheus
+        EOF
+        ```
+        Note: `insecure_skip_verify` is a temporary workaround auto-enabled by default
+        until we implement a chain of trust in the next releases.
+
+        Note: `opencost.prometheus.external.url` and related [values of the opencost chart](https://github.com/opencost/opencost-helm-chart/tree/main/charts/opencost#values)
+        do not support `insecure_skip_verify` for now.
+
+5. To use **your own `cert-manager`**, add to `global-values.yaml` file:
+      ```yaml
+      storage:
+        cert-manager:
+          enabled: false
+      ```
+6. To use **your own certificates**:
     * Wait until you apply the [Regional Cluster](#regional-cluster) section
         and get the `regional-kubeconfig` in the [Verifying](kof-verification.md) step.
     * Create the next secrets there in `kof` namespace
@@ -186,11 +255,6 @@ To enable DNS auto-config on Azure, use DNS Zone Contributor.
 See [external-dns Azure documentation](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md) for more details.
 
 ### Istio
-
-> NOTICE:
-> Istio option is temporarily unavailable in the KOF 1.1.0 Enterprise release.
-> It will be fixed in the next KOF release.  
-> A workaround is to add the `istio/gateway:1.24.3` chart to your `global.helmChartsRepo`.
 
 If you've selected to skip both [DNS auto-config](#dns-auto-config) now
 and [Manual DNS config](./kof-verification.md#manual-dns-config) later, you can
