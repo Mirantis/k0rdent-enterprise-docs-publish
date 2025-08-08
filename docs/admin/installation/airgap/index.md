@@ -5,8 +5,6 @@ to the Internet, but it is possible to deploy it in an airgapped environment.
 
 The general process involves several steps:
 
-1. Make sure the prerequisites are in place. This includes:
-    * [Tools and infrastructure](airgap-prereq.md)
-    * An [HTTP Server](airgap-http.md)
-2. Prepare the [airgap bundles](airgap-bundles.md)
-3. [Install {{{ docsVersionInfo.k0rdentName }}}](airgap-install.md)
+1. Fulfilling the [prerequisites](airgap-prereq.md).
+2. Getting the [airgap bundle](airgap-bundles.md)
+3. [{{{ docsVersionInfo.k0rdentName }}} installation](airgap-install.md)
