@@ -42,12 +42,18 @@ To apply this option:
       enabled: true
     ```
 
-2. If you want to use a non-default storage class, add to the `storage-values.yaml` file:
+    If you want to use a non-default storage class, add to the `storage-values.yaml` file:
     ```yaml
     victoria-logs-cluster:
       vlstorage:
         persistentVolume:
           storageClassName: <EXAMPLE_STORAGE_CLASS>
+    ```
+
+2. Create the `collectors-values.yaml` file:
+    ```yaml
+    kcm:
+      monitoring: true
     ```
 
 3. Install the `kof-storage` and `kof-collectors` charts to the management cluster:
@@ -59,6 +65,7 @@ To apply this option:
 
     helm upgrade -i --reset-values --wait -n kof kof-collectors \
       -f global-values.yaml \
+      -f collectors-values.yaml \
       oci://registry.mirantis.com/k0rdent-enterprise/charts/kof-collectors --version {{{ extra.docsVersionInfo.kofVersions.kofDotVersion }}}
     ```
 
@@ -76,9 +83,11 @@ To apply this option:
 1. Create the `collectors-values.yaml` file:
     ```shell
     cat >collectors-values.yaml <<EOF
+    kcm:
+      monitoring: true
     kof:
       logs:
-        endpoint: https://vmauth.$REGIONAL_DOMAIN/vls/insert/opentelemetry/v1/logs
+        endpoint: https://vmauth.$REGIONAL_DOMAIN/vli/insert/opentelemetry/v1/logs
       metrics:
         endpoint: https://vmauth.$REGIONAL_DOMAIN/vm/insert/0/prometheus/api/v1/write
       traces:
@@ -113,10 +122,12 @@ To apply this option:
 1. Create the `collectors-values.yaml` file:
     ```shell
     cat >collectors-values.yaml <<EOF
+    kcm:
+      monitoring: true
     kof:
       basic_auth: false
       logs:
-        endpoint: http://$REGIONAL_CLUSTER_NAME-logs:9428/insert/opentelemetry/v1/logs
+        endpoint: http://$REGIONAL_CLUSTER_NAME-logs-insert:9481/insert/opentelemetry/v1/logs
       metrics:
         endpoint: http://$REGIONAL_CLUSTER_NAME-vminsert:8480/insert/0/prometheus/api/v1/write
       traces:
@@ -184,6 +195,8 @@ For now, however, just for the sake of this demo, you can use the most straightf
             log_stream_name: logs"
 
     cat >collectors-values.yaml <<EOF
+    kcm:
+      monitoring: true
     kof:
       logs:
         endpoint: ""

@@ -11,7 +11,8 @@ The bare metal infrastructure provider is represented as a set of Helm charts. I
 * `baremetal-operator` installs the [Bare Metal Operator](https://github.com/metal3-io/baremetal-operator)
 * `capm3-crds` installs the `CustomResourceDefinition` objects for the Metal3 CAPM3 and IPAM components
 * `cluster-api-provider-metal3` installs the [Metal3 CAPM3 provider](https://github.com/metal3-io/cluster-api-provider-metal3) and [Metal3 IP Address Manager](https://github.com/metal3-io/ip-address-manager)
-* `ironic` installs OpenStack Ironic and accompanying [components needed by Metal3 CAPM3](https://github.com/metal3-io/ironic-image)
+* `ironic` installs [OpenStack Ironic](https://github.com/metal3-io/ironic-image) and accompanying components needed for management of bare metal machines:
+      MariaDB, keepalived, HTTP server, DHCP server, TFTP server, NTP server, dynamic-IPXE controller, resource controller. 
 
 ## Prerequisites
 
@@ -42,7 +43,7 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
       url: 'oci://registry.mirantis.com/k0rdent-bm/charts/'
       interval: 10m0s
     ---
-    apiVersion: k0rdent.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ProviderTemplate
     metadata:
       name: cluster-api-provider-metal3-{{{ docsVersionInfo.addonVersions.dashVersions.clusterApiProviderCapm3 }}}
@@ -58,7 +59,7 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
             kind: HelmRepository
             name: oot-capm3-repo
     ---
-    apiVersion: k0rdent.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ClusterTemplate
     metadata:
       annotations:
@@ -114,19 +115,23 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
             dhcp: # used by DHCP server to assign IPs to hosts during PXE boot
               rangeBegin: <DHCP_RANGE_START>      # e.g., 10.0.1.51
               rangeEnd: <DHCP_RANGE_END>          # e.g., 10.0.1.55
+              netmask: <DHCP_SUBNET_MASK>         # e.g., 255.255.255.192 (default is 255.255.255.0)
+              options:                            # DHCP options, used during PXE boot and by IPA
+                - "option:router,<ROUTER_IP>"     # e.g., 10.0.1.1. It's a mandatory option. 
+                - "option:dns-server,<DNS_IP[,DNS2_IP...]>" # can be set to KEEPALIVED_VIP (dnsmasq can serve as a DNS server with user-defined DNS records) or to IP of your preferred server. Optional.
+                - "option:ntp-server,<NTP_IP>"    # can be set to KEEPALIVED_VIP (internal ntp server) or to IP of your preferred server. That ntp server will be used on PXE boot stage then. Optional.
             interface: <PROVISION_INTERFACE>      # e.g., bond0 - interface of the management cluster node connected to BM hosts provision network
             ipAddress: <KEEPALIVED_VIP>          # e.g., 10.0.1.50 - keepalived VIP for DHCP server and Ironic services. This VIP will be configured on the <PROVISION_INTERFACE>, it must be in the same L3 network as DHCP range if no dhcp-relay used between management cluster and child cluster hosts.
         # By default, "ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2" is the only image available.
-        # You can define custom OS images here if needed bu adding new resources:
+        # You can define custom OS images here if needed by adding new resources:
         # resources:
-        #   static:
-        #     images:
-        #       ubuntu-24.04-server-cloudimg-amd64.img:
-        #         sha256sum: 071fceadf1ea57a388ff7a1ccb4127155d691a511f6a207b4c11b120563855e2
-        #         url: https://cloud-images.ubuntu.com/releases/noble/release/ubuntu-24.04-server-cloudimg-amd64.img
-    ```
+        #   images_target:
+        #     - name: ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
+        #       url: https://get.mirantis.com/k0rdent-bm/targetimages/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
+        #       checksum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
+      ```
 
-7. Wait for the `Management` object to be ready
+4. Wait for the `Management` object to be ready
 
     Monitor the `Management` object status:
 
@@ -134,9 +139,9 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
     kubectl get managements.k0rdent.mirantis.com -w
     ```
 
-    This process usually takes as long as 5 minutes. If the `Management` object doesn't become `Ready`, refer to the [Troubleshooting](#troubleshooting) section.
+    This process usually takes up to 5 minutes. If the `Management` object doesn't become `Ready`, refer to the [Troubleshooting](#troubleshooting) section.
 
-8. Verify the `ClusterTemplate` is valid
+5. Verify the `ClusterTemplate` is valid
 
     Check that the `ClusterTemplate` has been created successfully:
 
@@ -148,12 +153,31 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
     capm3-standalone-cp-{{{ docsVersionInfo.addonVersions.dotVersions.capm3StandaloneCpCluster }}}   true
     ```
 
+6. Optional. Tune the DHCP server.
+
+   > NOTE:
+   > Modification of this configuration should be done with special care.
+   > It's not recommended to change it during provisioning/deprovisioning of bare metal machines.
+
+   After CAPM3 provider is deployed, you can reconfigure DHCP server.
+
+   1. Using `dnsmasq` object, you can change configuration of the DHCP server and monitor DHCP leases related to your bare metal machines.
+
+      > NOTE:
+      > Modification of this configuration requires good knowledge of DHCP basics.
+
+      ```shell
+      kubectl -n kcm-system edit dnsmasq
+      ```
+
 ## Enroll bare metal machines
 
-The next step is to create `BareMetalHost` objects to represent your bare metal machines so {{{ docsVersionInfo.k0rdentName }}} can manage them. For each bare metal machine, create two objects: a `Secret` and a `BareMetalHost`. For detailed instructions, see the [Metal3 BareMetalHost enrollment guide](https://book.metal3.io/bmo/introduction.html#enrolling-baremetalhosts) (just `Enrolling`, not `Provisioning`), or follow these instructions.
+The next step is to create `BareMetalHost` objects to represent your bare metal machines so {{{ docsVersionInfo.k0rdentName }}} can manage them.
+For each bare metal machine, create two objects: a `Secret` and a `BareMetalHost`.
+For detailed instructions, see the [Metal3 BareMetalHost enrollment guide](https://book.metal3.io/bmo/introduction.html#enrolling-baremetalhosts) (just `Enrolling`, not `Provisioning`), or follow these instructions.
 
 > NOTE: 
-> You don't need to provision bare metal hosts at this stage. Provisioning should happen later as part of this process.
+> You don't need to provision bare metal hosts at this stage. Provisioning should happen later as part of a cluster deployment.
 
 1. Create credential `Secret` objects
 
@@ -171,9 +195,13 @@ The next step is to create `BareMetalHost` objects to represent your bare metal 
       password: <BASE64_ENCODED_BMC_PASSWORD>
     ```
 
+   > NOTE:
+   > `namespace` of all the objects used to describe bare metal machines and corresponding cluster must be equal to
+   > the `namespace` of the `ClusterTemplate` object used for deployment of that cluster.
+
 2. Create `BareMetalHost` objects
 
-    A `BareMetalHost` object represents the physical machine, as in:
+    A `BareMetalHost` object represents the physical machine. It contains a reference to the `Secret` created above. For example:
 
     ```yaml
     apiVersion: metal3.io/v1alpha1
@@ -187,10 +215,11 @@ The next step is to create `BareMetalHost` objects to represent your bare metal 
         address: <BMC_ADDRESS>  # e.g., ipmi://192.168.1.100:623
         credentialsName: <BMH_NAME>-bmc-secret
         #disableCertificateVerification: true # only needed when using redfish protocol
-      bootMACAddress: <MAC_ADDRESS>
+      bootMACAddress: <MAC_ADDRESS> # MAC address that is used for booting. It’s a MAC address of an actual NIC of the host, not the BMC MAC address.
+      #bootMode: legacy # UEFI or legacy BIOS. UEFI is the default and should be used unless there are serious reasons not to.
     ```
 
-10. Wait for `BareMetalHost` objects to complete enrollment
+3. Wait for `BareMetalHost` objects to complete enrollment
 
     Monitor your `BareMetalHost` objects until they are `available`:
 
@@ -279,7 +308,7 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
         k0rdent.mirantis.com/component: "kcm"
     type: Opaque
     ---
-    apiVersion: k0rdent.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1beta1
     kind: Credential
     metadata:
       name: capm3-stub-credential
@@ -311,10 +340,11 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
 
 3. Deploy a test cluster
 
-    Create a `ClusterDeployment` to test your bare metal configuration. Start with a `capm3-example.yaml` file. This one creates a cluster with 1 control node and 2 workers:
+    Create a `ClusterDeployment` template to deploy a cluster using your bare metal machines.
+    Start with a `capm3-example.yaml` file. This one creates a cluster with 1 control node and 2 workers:
 
     ```yaml
-    apiVersion: k0rdent.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1beta1
     kind: ClusterDeployment
     metadata:
       name: capm3-example
@@ -335,12 +365,12 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
               - 10.95.0.0/16
         controlPlane:
           # the image that was uploaded by default
-          checksum: http://<IRONIC_HTTP_ENDPOINT>:6180/images/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2.sha256sum
+          checksum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
           image: http://<IRONIC_HTTP_ENDPOINT>:6180/images/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
           keepalived:
             authPass: <VRRP_PASSWORD> # optional, from 4 to 8 letters
             enabled: true
-            virtualIP: <CLUSTER_API_VIP>/24  # e.g., 10.0.1.70/24
+            virtualIP: <CLUSTER_API_VIP>/<SUBNET_PREFIX>  # e.g., 10.0.1.70/24. must match k0s.api.externalAddress
           preStartCommands:
             - sudo useradd -G sudo -s /bin/bash -d /home/user1 -p $(openssl passwd -1 myuserpass) user1 # define your user here. it can be used e.g. for debugging.
             - sudo apt update # for Ubuntu
@@ -380,11 +410,11 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
                 - id: pxe
                   ipAddressFromIPPool: pool-pxe
                   link: <INTERFACE_NAME>
-            routes:
-              - gateway:
-                  fromIPPool: pool-pxe
-                network: 0.0.0.0
-                prefix: 0
+                  routes:
+                  - gateway:
+                      fromIPPool: pool-pxe
+                    network: 0.0.0.0
+                    prefix: 0
             services:
               dns:
                 - <DNS_SERVER_IP>   # e.g., 8.8.8.8
@@ -393,7 +423,7 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
             pools:
               - end: <IP_POOL_END>      # e.g., 10.0.1.65
                 gateway: <GATEWAY_IP>   # e.g., 10.0.1.1
-                prefix: 24
+                prefix: <SUBNET_PREFIX> # e.g, "/24"
                 start: <IP_POOL_START>  # e.g., 10.0.1.61
         k0s:
           api:
@@ -403,7 +433,7 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
           version: v1.32.3+k0s.0
         worker:
           # the image that was uploaded by default
-          checksum: http://<IRONIC_HTTP_ENDPOINT>:6180/images/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2.sha256sum
+          checksum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
           image: http://<IRONIC_HTTP_ENDPOINT>:6180/images/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
           preStartCommands:
             - sudo useradd -G sudo -s /bin/bash -d /home/user1 -p $(openssl passwd -1 myuserpass) user1 # define your user here. it can be used e.g. for debugging.
@@ -419,10 +449,10 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
         workersNumber: 2
     ```
 
-    Apply the YAML to your management cluster:
+    Create a `ClusterDeployment` object on your management cluster from the YAML file:
 
     ```shell
-    kubectl apply -f capm3-example.yaml
+    kubectl create -f capm3-example.yaml
     ```
 
 4. Monitor the provisioning process
@@ -454,22 +484,22 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
     kubectl -n <NAMESPACE> get metal3machine -w
     ```
     ```console
-    NAME                           AGE     PROVIDERID                                              READY   CLUSTER        PHASE
-    capm3-example-cp-templ-0       5m17s   metal3://kcm-system/child-2/capm3-example-cp-templ-0  true    capm3-example
-    capm3-example-md-txr9f-k8z9d   2m40s   metal3://kcm-system/child-1/capm3-example-md-txr9f-k8z9d true capm3-example
-    capm3-example-md-txr9f-lkc5c   2m40s   metal3://kcm-system/child-3/capm3-example-md-txr9f-lkc5c true capm3-example
+    NAME                           AGE     PROVIDERID                                               READY   CLUSTER        PHASE
+    capm3-example-cp-templ-0       5m17s   metal3://kcm-system/child-2/capm3-example-cp-templ-0     true    capm3-example
+    capm3-example-md-txr9f-k8z9d   2m40s   metal3://kcm-system/child-1/capm3-example-md-txr9f-k8z9d true    capm3-example
+    capm3-example-md-txr9f-lkc5c   2m40s   metal3://kcm-system/child-3/capm3-example-md-txr9f-lkc5c true    capm3-example
     ```
 
-15. Access the deployed cluster
+5. Access the deployed cluster
 
-    Once all machines are running, retrieve the `KUBECONFIG` for your new cluster:
+    Once the first control plane machine is ready, retrieve the `KUBECONFIG` for your new cluster:
 
     ```shell
-    kubectl get secret -n <NAMESPACE> capm3-example-kubeconfig -o jsonpath='{.data.value}' | base64 -d > capm3-example-kubeconfig.kubeconfig
-    KUBECONFIG="capm3-example-kubeconfig.kubeconfig" kubectl get pods -A
+    kubectl get secret -n <NAMESPACE> capm3-example-kubeconfig -o jsonpath='{.data.value}' | base64 -d > capm3-example-kubeconfig
+    KUBECONFIG="capm3-example-kubeconfig" kubectl get pods -A
     ```
 
-16. Cleanup
+6. Cleanup
 
     To clean up bare metal resources, delete the child cluster by deleting the `ClusterDeployment`:
 
@@ -487,10 +517,10 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
     clusterdeployment.k0rdent.mirantis.com "capm3-example" deleted
     ```
 
-    Cluster deletion may take several minutes.
-    
+    Cluster deletion may take several minutes. Bare metal machines are deprovisioned at this time. 
+
     Watch the `BareMetalHost` objects as they transition through provisioning states:
-    
+
     ```shell
     kubectl -n <NAMESPACE> get bmh -w
     ```
@@ -508,8 +538,48 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
     child-2   available                                   true             43m
     ```
 
-    Then, the available hosts can be used to deploy another cluster,
+    Then, the available bare metal machines can be used to deploy another cluster,
     using the same `BareMetalHost` objects.
+
+## The OOT CAPM3 provider upgrade notes
+
+To upgrade the OOT CAPM3 provider from v0.1.x to v0.2.0, you need to proceed through the same steps as you do in case
+of installing the provider from scratch.
+Pay attention to the parameters that are defined in the `management` object:
+
+* the following parameters are new to v0.2.0 and `"option:router,<ROUTER_IP>"` is a required one:
+   ```yaml
+     config:
+       ironic:
+         networking:
+           dhcp: # used by DHCP server to assign IPs to hosts during PXE boot
+             netmask: <DHCP_SUBNET_MASK>         # e.g., 255.255.255.192 (default is 255.255.255.0)
+             options:                            # DHCP options, used during PXE boot and by IPA
+               - "option:router,<ROUTER_IP>"     # e.g., 10.0.1.1. It's a mandatory option. 
+               - "option:dns-server,<DNS_IP[,DNS2_IP...]>" # can be set to KEEPALIVED_VIP (dnsmasq can serve as a DNS server with user-defined DNS records) or to IP of your preferred server. Optional.
+               - "option:ntp-server,<NTP_IP>"    # can be set to KEEPALIVED_VIP (internal ntp server) or to IP of your preferred server. That ntp server will be used on PXE boot stage then. Optional.
+   ```
+
+* if you changed the set of OS images used for provisioning of bare metal machines, ensure that the new format is used:
+```yaml
+  # v0.1.x
+  config:
+    ironic:
+      resources:
+        static:
+          images:
+            ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2:
+              sha256sum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
+              url: https://get.mirantis.com/k0rdent-bm/targetimages/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
+  # v0.2.0
+  config:
+    ironic:
+      resources:
+        images_target:
+          - name: ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
+            url: https://get.mirantis.com/k0rdent-bm/targetimages/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
+            checksum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
+```
 
 ## Troubleshooting
 
