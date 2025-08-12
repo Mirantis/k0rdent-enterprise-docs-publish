@@ -235,12 +235,60 @@ For detailed instructions, see the [Metal3 BareMetalHost enrollment guide](https
 
     For more information about `BareMetalHost` states, see the [Metal3 state machine documentation](https://book.metal3.io/bmo/state_machine).
 
-4. Optional. Specify a root device
+### Support for RAID disk arrays on baremetal hosts
 
-    Bare-metal machines often have more than one block device, and in many cases a user will want to specify, which of them to use as the root device.
-    The `spec.rootDeviceHints` field on your `BareMetalHost` allows selecting one device or a group of devices to choose from.
+The ironic python agent(IPA) provides limited functionality of software RAID arrays. These limits do not allow to use 
+created RAID disk as rootfs. One of the IPA limits is the requirement to use a whole block device as RAID array part. 
+During RAID initialization, IPA will create a single partition on target disks and use it as part of RAID array i.e. 
+RAID array will be assembled not from raw block device but from full disk partition on this block device.
 
-    Please refer to [Specifying Root Device](https://book.metal3.io/bmo/root_device_hints) for more information.
+The disk layout will be like this:
+
+```
+disk0 -> part0 -,
+disk1 -> part0 -+-> RAID -> [ p0, p1, p2 ... ]
+```
+
+So UEFI/BIOS have access only to "root" partition. And it is not able to get access to EFI/boot partition defined into
+"nested" partition table (partition table created inside part0 i.e. inside RAID array). So if RAID array defined
+in IPA setup as the root device, the system will be unbootable.
+
+Example of `BareMetalHost` object that declare raid1 array:
+
+```yaml
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: child-master-1
+spec:
+  bmc:
+    address: ipmi://10.0.1.1:6234
+    credentialsName: child-master-1.ipmi-auth
+  userData:
+    name: child-master-1.user-data
+  bootMACAddress: 52:54:1f:8b:19:15
+  # bootMode: legacy
+  online: true
+  image:
+    checksum: http://10.0.1.1:31080/SHA256SUMS
+    checksumType: auto
+    url: http://10.0.1.1:31080/ubuntu-24.04-server-cloudimg-amd64.img
+  raid:
+    softwareRAIDVolumes:
+      - level: "1"
+        physicalDisks:
+          - deviceName: /dev/disk/by-path/pci-0000:00:07.0-scsi-0:0:0:1
+          - deviceName: /dev/disk/by-path/pci-0000:00:07.0-scsi-0:0:0:2
+  rootDeviceHints:
+    deviceName: /dev/disk/by-path/pci-0000:00:07.0-scsi-0:0:0:0
+```
+
+Host have three hard disks. The First one will be used as the root device. Second and third disks will be assembled into 
+RAID1 array. `rootDeviceHint` into bmh spec must be defined, because if `BMH` spec have raid definition and don't have 
+`rootDeviceHint` first RAID array will be marked as the root device [automatically](https://github.com/metal3-io/baremetal-operator/blob/v0.9.2/pkg/provisioner/ironic/raid.go#L39).
+
+More info about software RAID support in IPA https://docs.openstack.org/ironic/latest/admin/raid.html#software-raid
 
 ## Create the cluster
 
