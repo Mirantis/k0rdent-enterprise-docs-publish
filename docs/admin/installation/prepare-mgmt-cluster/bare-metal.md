@@ -101,7 +101,7 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
     kubectl edit managements.k0rdent.mirantis.com
     ```
 
-    Add the following configuration to the providers section:
+    Add the following configuration to the `providers` section:
 
     ```yaml
     - name: cluster-api-provider-metal3
@@ -129,7 +129,7 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
         #     - name: ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
         #       url: https://get.mirantis.com/k0rdent-bm/targetimages/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
         #       checksum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
-      ```
+    ```
 
 4. Wait for the `Management` object to be ready
 
