@@ -218,8 +218,7 @@ disk1 -> part0 -+-> RAID -> [ p0, p1, p2 ... ]
 ```
 
 So UEFI/BIOS has access only to the "root" partition, and it cannot access the EFI/boot partition defined in the
-"nested" partition table--that is, the partition table created inside `part0` (inside the RAID array). So if the RAID array is defined
-in the IPA setup as the root device, the system will be unbootable.
+"nested" partition table--that is, the partition table created inside `part0` (inside the RAID array). So if the RAID array is defined as the [root device](https://book.metal3.io/bmo/root_device_hints), the system will be unbootable.
 
 Consider this example of a `BareMetalHost` object that declares the RAID1 array:
 
@@ -233,15 +232,9 @@ spec:
   bmc:
     address: ipmi://10.0.1.1:6234
     credentialsName: child-master-1.ipmi-auth
-  userData:
-    name: child-master-1.user-data
   bootMACAddress: 52:54:1f:8b:19:15
   # bootMode: legacy
   online: true
-  image:
-    checksum: http://10.0.1.1:31080/SHA256SUMS
-    checksumType: auto
-    url: http://10.0.1.1:31080/ubuntu-24.04-server-cloudimg-amd64.img
   raid:
     softwareRAIDVolumes:
       - level: "1"
@@ -253,7 +246,7 @@ spec:
 ```
 
 The host has three hard disks. The first one will be used as the root device, and the second and third disks will be assembled into the 
-RAID1 array. The `rootDeviceHint` in in the `BareMetalHost` `spec` must be defined, because if it has a RAID definition and doesn't have the 
+RAID1 array. The `rootDeviceHint` in the `BareMetalHost` `spec` must be defined, because if it has a RAID definition and doesn't have the 
 `rootDeviceHint`, the first RAID array will be marked as the root device [automatically](https://github.com/metal3-io/baremetal-operator/blob/v0.9.2/pkg/provisioner/ironic/raid.go#L39).
 
 For more information about software RAID support in IPA, see the [Ironic documentation](https://docs.openstack.org/ironic/latest/admin/raid.html#software-raid).
