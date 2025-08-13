@@ -38,4 +38,4 @@ jobs:
         run: |
           git remote add publish \
             https://x-access-token:${TOKEN}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git
-          git push publish HEAD:release-v1.0.0 --force
+          git push publish HEAD:release-v1.1.0 --force
