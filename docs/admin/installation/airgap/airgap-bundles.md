@@ -53,7 +53,7 @@ tar -xf airgap-bundle-{{{ extra.docsVersionInfo.k0rdentDotVersion }}}.tar.gz -C 
 
 Upload to the registry using `skopeo`:
 
-1. Load `skopeo` image from the airgap bundle
+1. Load `skopeo` image from the airgap bundle:
 
     ```shell
     docker load -i airgap-bundle/skopeo_v1.17.0.tar
@@ -79,7 +79,7 @@ Upload to the registry using `skopeo`:
 ## Download k0s binaries
 
 `k0s` binaries must be available from the HTTP server inside the airgapped
-environment so they could be used when installing child clusters.
+environment so they can be used when installing child clusters.
 
 Download the binaries and their signatures:
 
@@ -104,5 +104,4 @@ Upload the `k0s` binary file to any HTTP server available from within the
 airgapped environment, such as one running in the management cluster.
 
 > WARNING:
-> Do not change the name of the `k0s` binary. The deployment will fail if you
-> rename it.
+> Do not change the name of the `k0s` binary, or the deployment will fail.
