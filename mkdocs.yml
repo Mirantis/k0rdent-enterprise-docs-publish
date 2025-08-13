@@ -262,6 +262,7 @@ nav:
   - Release Notes:
     - Overview: release-notes/index.md
     - v1.0.0: release-notes/release-notes-v1.0.0.md
+    - v1.1.0: release-notes/release-notes-v1.1.0.md
   - k0rdent Catalog:
     - Overview: catalog/index.md
     - Ceph:
