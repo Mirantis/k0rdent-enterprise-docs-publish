@@ -9,7 +9,7 @@ The actual management cluster is a Kubernetes cluster with the {{{ docsVersionIn
 
 ## Configure the UI
 
-By default, {{{ docsVersionInfo.k0rdentName }}} installs the UI with a pre-determined password. You **MUST** either disable the UI or change the password when installing {{{ docsVersionInfo.k0rdentName }}}. **Failure to take at least one of these actions will allow unauthorized individuals write access to your {{{ docsVersionInfo.k0rdentName }}} environment.**
+By default, {{{ docsVersionInfo.k0rdentName }}} installs and enables the UI with a pre-determined password. Please change the password (or disable the UI) when installing {{{ docsVersionInfo.k0rdentName }}}. If you do not, anyone with access to the management cluster's network can log into the UI and deploy or affect resources in the {{{ docsVersionInfo.k0rdentName }}} environment.
 
 To change the password, add the following to the installation command below:
 
@@ -30,8 +30,8 @@ You install {{{ docsVersionInfo.k0rdentName }}} via  Helm chart:
 ```shell
 helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace <UI_CONFIG>
 ```
-> WARNING:
-> Don't forget to set the UI configuration, as noted [above](#configure-the-ui). Remember, if you do not disable the UI or change the default password, **anyone with access to the management cluster's network will have the ability to create or destroy resources managed by {{{ docsVersionInfo.k0rdentName }}}, up to and potentially including {{{ docsVersionInfo.k0rdentName }}} itself.**
+> IMPORTANT:
+> Don't forget to set the UI configuration to modify the default username and password or disable the UI before deploying, as noted [above](#configure-the-ui). If you do not, the UI will be enabled with a default username and password, potentially leaving the management cluster open to attack by anyone able to access the network it's on.
 
 ```console
 Pulled: registry.mirantis.com/k0rdent-enterprise/charts/k0rdent-enterprise:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
