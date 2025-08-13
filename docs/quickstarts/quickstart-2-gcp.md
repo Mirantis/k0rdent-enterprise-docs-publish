@@ -226,7 +226,6 @@ gcloud compute images list --uri
 You'll see output like this:
 
 ```console
-https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-9-arm64-v20250311
 https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-9-v20250311
 https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-105-17412-535-84
 https://www.googleapis.com/compute/v1/projects/cos-cloud/global/images/cos-109-17800-436-79
