@@ -7,10 +7,10 @@ system, you can install one to serve the `k0s` binary right in the
 The following instructions were tested on an "airgapped" AWS instance.
 
 > WARNING:
-> Images used in the following example (such as `nginx:1.27.5`) aren't the part
-> of airgap bundle and must be downloaded separately.
+> Images used in the following example (such as `nginx:1.27.5`) aren't part
+> of the airgap bundle and must be downloaded separately.
 
-1. Create the `Deployment`
+1. Create the `Deployment`:
 
     Start by creating the YAML for the webserver, say, in `k0s-bundle-ag.yaml`:
 
@@ -112,7 +112,7 @@ The following instructions were tested on an "airgapped" AWS instance.
     kube-system   metrics-server-7db8586f5-blh6w   1/1     Running   0          21h
     ```
 
-3. The `k0s-ag-image*` pod runs an Nginx HTTP server that serves files from a hostPath volume:
+3. The `k0s-ag-image*` pod runs an Nginx HTTP server that serves files from a `hostPath` volume:
 
     ```yaml
     hostPath:
