@@ -1,0 +1,5771 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Mirantis k0rdent Enterprise.">
+      
+      
+        <meta name="author" content="Mirantis, Inc.">
+      
+      
+      
+        <link rel="prev" href="../entra-id/">
+      
+      
+        <link rel="next" href="../../../clusters/">
+      
+      
+      <link rel="icon" href="../../../../img/k0rdent-logo-mark.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.49">
+    
+    
+      
+        <title>Pinniped - Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pinniped" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Documentation" class="md-header__button md-logo" aria-label="Documentation" data-md-component="logo">
+      
+  <img src="../../../../img/k0rdent-enterprise-logo-horizontal-inverted.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Pinniped
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/k0rdent/kcm" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    k0rdent/kcm
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Documentation" class="md-nav__button md-logo" aria-label="Documentation" data-md-component="logo">
+      
+  <img src="../../../../img/k0rdent-enterprise-logo-horizontal-inverted.svg" alt="logo">
+
+    </a>
+    Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/k0rdent/kcm" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    k0rdent/kcm
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome to the docs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../concepts/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent concepts
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../concepts/why-k0rdent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Why k0rdent?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../concepts/k0rdent-architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k0rdent architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../quickstarts/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    QuickStarts
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            QuickStarts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../quickstarts/quickstart-1-mgmt-node-and-cluster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup Management Cluster
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../quickstarts/quickstart-2-aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy to AWS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../quickstarts/quickstart-2-azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy to Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../quickstarts/quickstart-2-remote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy w/ SSH
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../quickstarts/quickstart-2-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configure and Deploy to GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Administrator Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Administrator Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Installation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../create-mgmt-clusters/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Creating the management cluster
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_2" id="__nav_4_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Creating the management cluster
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../create-mgmt-clusters/mgmt-create-k0s-single/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create a single node k0s cluster
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../create-mgmt-clusters/mgmt-create-k0s-multi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create a multi-node k0s cluster
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../create-mgmt-clusters/mgmt-create-eks-multi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create a multinode EKS cluster
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install-k0rdent/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install k0rdent
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../airgap/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Install k0rdent in airgapped environment
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_4" id="__nav_4_2_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Install k0rdent in airgapped environment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../airgap/airgap-prereq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prerequisites
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../airgap/airgap-http/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing an HTTP server
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../airgap/airgap-bundles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Get the airgap bundles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../airgap/airgap-install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install k0rdent
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sbom/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Verifying Artifacts and Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../verify-install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Verify the k0rdent installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../prepare-mgmt-cluster/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Prepare k0rdent to create child clusters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_7" id="__nav_4_2_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            Prepare k0rdent to create child clusters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prepare-mgmt-cluster/aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prepare-mgmt-cluster/azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prepare-mgmt-cluster/bare-metal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bare Metal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prepare-mgmt-cluster/gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prepare-mgmt-cluster/openstack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenStack
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prepare-mgmt-cluster/vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_8" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_2_8" id="__nav_4_2_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            Authentication
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../okta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Okta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entra-id/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Entra-ID
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Pinniped
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Pinniped
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-create-a-the-mirantis-k0rdent-enterprise-management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1. Create a the Mirantis k0rdent Enterprise management cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-install-the-pinniped-supervisor-on-the-management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2. Install the Pinniped Supervisor on the management cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-expose-the-pinniped-supervisor-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3. Expose the pinniped-supervisor deployment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-install-an-ingress-controller-contour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4. Install an Ingress Controller (Contour)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-create-an-ingress-for-the-supervisor-which-uses-tls-passthrough-to-allow-the-supervisor-to-terminate-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5. Create an Ingress for the Supervisor which uses TLS passthrough to allow the Supervisor to terminate TLS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-check-the-status-of-the-http-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6. Check the status of the HTTP proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-add-a-custom-dns-record-to-make-it-available-to-reach-the-supervisor-through-dns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 7. Add a custom DNS record to make it available to reach the supervisor through DNS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 7. Add a custom DNS record to make it available to reach the supervisor through DNS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux-etchosts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linux /etc/hosts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-cwindowssystem32driversetchosts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows c:\Windows\System32\Drivers\etc\hosts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-install-cert-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 8. Install cert-manager
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-9-generate-a-self-signed-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 9. Generate a self-signed certificate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-10-read-the-cas-public-key-from-the-secret-and-save-it-locally-for-later-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 10. Read the CA’s public key from the Secret and save it locally for later use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-11-configure-an-identity-provider-in-the-pinniped-supervisor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 11. Configure an Identity Provider in the Pinniped Supervisor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 11. Configure an Identity Provider in the Pinniped Supervisor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-an-oidc-client-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an OIDC Client Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#export-the-secrets-as-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Export the Secrets as Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-oidcidentityprovider-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an OIDCIdentityProvider Resource
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-12-validate-the-oidcidentityprovider-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 12. Validate the OIDCIdentityProvider Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-13-create-and-configure-a-federationdomain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 13. Create and Configure a FederationDomain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-14-verify-the-federationdomain-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 14. Verify the FederationDomain Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-15-verify-dns-certificate-ingress-and-federationdomain-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 15. Verify DNS, Certificate, Ingress, and FederationDomain Integration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-16-install-pinniped-concierge-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 16. Install Pinniped Concierge (Agent)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-17-prepare-the-ca-certificate-for-concierge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 17. Prepare the CA Certificate for Concierge
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-18-configure-the-concierge-with-a-jwtauthenticator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 18. Configure the Concierge with a JWTAuthenticator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-19-verify-the-jwtauthenticator-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 19. Verify the JWTAuthenticator Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-20-create-a-rolebinding-for-end-user-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 20. Create a RoleBinding for End-User Access
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-21-install-the-pinniped-cli-for-amd64" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 21. Install the Pinniped CLI (for AMD64)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-22-generate-kubeconfig-files-for-end-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 22. Generate Kubeconfig Files for End Users
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-23-authenticate-and-complete-the-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 23. Authenticate and Complete the Flow
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-24-test-the-created-kubeconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 24. Test the Created Kubeconfig
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../clusters/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Working with clusters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Working with clusters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../clusters/deploy-cluster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deploying standalone clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../clusters/update-cluster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Updating standalone clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../clusters/admin-adopting-clusters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adopting clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../clusters/cluster-ipam/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IP Address Management (IPAM)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../services/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Working with services
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Working with services
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../services/admin-service-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using and creating service templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../services/admin-create-multiclusterservice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Creating multi-cluster services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../hosted-control-plane/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Hosted control planes
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Hosted control planes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hosted-control-plane/hcp-aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hosted-control-plane/hcp-azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hosted-control-plane/hcp-openstack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenStack
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hosted-control-plane/hcp-vmware/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VMware
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../hosted-control-plane/hcp-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../kof/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent Observability & FinOps
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent Observability & FinOps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kof/kof-architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kof/kof-install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kof/kof-verification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Verifying the KOF installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kof/kof-using/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kof/kof-alerts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    KOF Alerts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kof/kof-storing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Storing KOF data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kof/kof-scaling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scaling KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kof/kof-maintainence/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maintaining KOF
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kof/kof-limits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resource Limits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kof/kof-version-compat/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version Compatibility
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../upgrade/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Upgrading k0rdent
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            Upgrading k0rdent
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../access/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Access Management
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8">
+            <span class="md-nav__icon md-icon"></span>
+            Access Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../access/credentials/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent Credentials Management
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_8_2" id="__nav_4_8_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent Credentials Management
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../access/credentials/credentials-process/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Credentials Process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../access/credentials/credentials-propagation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Credential Propagation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../access/rbac/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent Role Based Access Control (RBAC)
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_8_3" id="__nav_4_8_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent Role Based Access Control (RBAC)
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../access/rbac/what-roles-do/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What Roles Do
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../access/rbac/roles-summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Role Definitions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_9" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../backup/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Backup and Restore
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_9" id="__nav_4_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_9">
+            <span class="md-nav__icon md-icon"></span>
+            Backup and Restore
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../backup/prepare-backups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preparing for Backup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../backup/scheduled-backups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled Management Backups
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../backup/ondemand-backups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Management Backup on Demand
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../backup/whats-included/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What's Included in a Backup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../backup/restore/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Restoring From Backup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../backup/upgrades-rollbacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrades and Rollbacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../backup/caveats/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Caveats
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../backup/customization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_10" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../troubleshooting/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_10" id="__nav_4_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_10">
+            <span class="md-nav__icon md-icon"></span>
+            Troubleshooting
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../troubleshooting/events/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Events
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../troubleshooting/admin-troubleshooting-aws-vpcs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS VPCs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../troubleshooting/known-issues-eks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EKS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../troubleshooting/known-issues-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../troubleshooting/known-issues-custom-ca/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom CA Certificates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_11" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../user/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_11" id="__nav_4_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_11">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../user/user-create-cluster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Creating clusters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_11_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../user/services/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Adding services
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_11_3" id="__nav_4_11_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_11_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_11_3">
+            <span class="md-nav__icon md-icon"></span>
+            Adding services
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../user/services/understanding-servicetemplates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Understanding ServiceTemplates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../user/services/add-service-to-clusterdeployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adding a Service to a ClusterDeployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../user/services/beach-head/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Beach Head Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../user/services/checking-status/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Checking Status
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../user/services/remove-beach-head/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remove Beach Head Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../user/services/servicetemplate-parameters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ServiceTemplate Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../user/services/service-upgrade/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading Deployed Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../user/user-enable-drift-detection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Enabling drift detection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../addons/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../k0rdent_ai/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mirantis k0rdent AI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../addons/mkvirt/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Mirantis k0rdent Virtualization
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Mirantis k0rdent Virtualization
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/mkvirt/mkvirt-install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install Mirantis k0rdent Virtualization and HCO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/mkvirt/configuration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/mkvirt/getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/mkvirt/mkvirt-windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows on Mirantis k0rdent Virtualization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/mkvirt/best-practices/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtualization Best Practices
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../addons/ui/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Mirantis k0rdent UI
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Mirantis k0rdent UI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ui/k0rdent-ui-config/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ui/k0rdent-ui-usage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../reference/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../reference/crds/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k0rdent CRDs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../reference/template/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent Templates Reference
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent Templates Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../reference/template/template-predefined/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Removing predefined templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../reference/template/template-byo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bring-your-own (BYO) templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../reference/template/template-aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for Amazon Web Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../reference/template/template-azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../reference/template/template-gcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for GCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../reference/template/template-openstack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for OpenStack
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../reference/template/template-vsphere/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for vSphere
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../reference/template/template-remote/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Templates for Remote SSH
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../appendix/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Appendix
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Appendix
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../appendix/glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../appendix/appendix-extend-mgmt/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extended management configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../appendix/private-secure-registry/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deploy from a private secure registry
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../appendix/appendix-dryrun/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Understanding the dry run
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../appendix/appendix-providers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloud provider credentials management in CAPI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../release-notes/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Release Notes
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Release Notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../release-notes/release-notes-v1.0.0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    v1.0.0
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../catalog/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    k0rdent Catalog
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            k0rdent Catalog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../addons/ceph/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Ceph
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9_2" id="__nav_9_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9_2">
+            <span class="md-nav__icon md-icon"></span>
+            Ceph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ceph/ceph-install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing Ceph
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ceph/ceph-airgap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing Ceph in an airgapped environment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_2_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../addons/ceph/configuration/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Configuring Ceph
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9_2_4" id="__nav_9_2_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_9_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Configuring Ceph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ceph/configuration/MiraCeph/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MiraCeph
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ceph/configuration/MiraCephHealth/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MiraCephHealth
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ceph/configuration/MiraCephSecret/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MiraCephSecret
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ceph/configuration/CephOsdRemoveRequest/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CephOsdRemoveRequest
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ceph/configuration/CephPerfTestRequest/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CephPerfTestRequest
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ceph/replace-kaascephcluster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using MiraCeph Instead of KaasCephCluster
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ceph/ceph-operating/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operating Ceph
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../addons/ceph/ceph-user-scenarios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ceph Examples
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../support/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Support, Services, Contact
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Support, Services, Contact
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.mirantis.com/support/enterprise-support-services/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Get support
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://support.mirantis.com/s/login/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mirantis CloudCare Portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://www.mirantis.com/contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact us
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-create-a-the-mirantis-k0rdent-enterprise-management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1. Create a the Mirantis k0rdent Enterprise management cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-install-the-pinniped-supervisor-on-the-management-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2. Install the Pinniped Supervisor on the management cluster
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-expose-the-pinniped-supervisor-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3. Expose the pinniped-supervisor deployment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-install-an-ingress-controller-contour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4. Install an Ingress Controller (Contour)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-create-an-ingress-for-the-supervisor-which-uses-tls-passthrough-to-allow-the-supervisor-to-terminate-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5. Create an Ingress for the Supervisor which uses TLS passthrough to allow the Supervisor to terminate TLS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-check-the-status-of-the-http-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6. Check the status of the HTTP proxy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-add-a-custom-dns-record-to-make-it-available-to-reach-the-supervisor-through-dns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 7. Add a custom DNS record to make it available to reach the supervisor through DNS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 7. Add a custom DNS record to make it available to reach the supervisor through DNS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linux-etchosts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linux /etc/hosts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-cwindowssystem32driversetchosts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows c:\Windows\System32\Drivers\etc\hosts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-install-cert-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 8. Install cert-manager
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-9-generate-a-self-signed-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 9. Generate a self-signed certificate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-10-read-the-cas-public-key-from-the-secret-and-save-it-locally-for-later-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 10. Read the CA’s public key from the Secret and save it locally for later use
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-11-configure-an-identity-provider-in-the-pinniped-supervisor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 11. Configure an Identity Provider in the Pinniped Supervisor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 11. Configure an Identity Provider in the Pinniped Supervisor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-an-oidc-client-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an OIDC Client Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#export-the-secrets-as-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Export the Secrets as Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-oidcidentityprovider-resource" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create an OIDCIdentityProvider Resource
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-12-validate-the-oidcidentityprovider-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 12. Validate the OIDCIdentityProvider Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-13-create-and-configure-a-federationdomain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 13. Create and Configure a FederationDomain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-14-verify-the-federationdomain-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 14. Verify the FederationDomain Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-15-verify-dns-certificate-ingress-and-federationdomain-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 15. Verify DNS, Certificate, Ingress, and FederationDomain Integration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-16-install-pinniped-concierge-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 16. Install Pinniped Concierge (Agent)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-17-prepare-the-ca-certificate-for-concierge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 17. Prepare the CA Certificate for Concierge
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-18-configure-the-concierge-with-a-jwtauthenticator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 18. Configure the Concierge with a JWTAuthenticator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-19-verify-the-jwtauthenticator-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 19. Verify the JWTAuthenticator Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-20-create-a-rolebinding-for-end-user-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 20. Create a RoleBinding for End-User Access
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-21-install-the-pinniped-cli-for-amd64" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 21. Install the Pinniped CLI (for AMD64)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-22-generate-kubeconfig-files-for-end-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 22. Generate Kubeconfig Files for End Users
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-23-authenticate-and-complete-the-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 23. Authenticate and Complete the Flow
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-24-test-the-created-kubeconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 24. Test the Created Kubeconfig
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+    
+      
+    
+    <a href="https://github.com/Mirantis/k0rdent-enterprise-docs-publish/raw/release-v1.1.0/docs/admin/installation/auth/pinniped.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="pinniped">Pinniped<a class="headerlink" href="#pinniped" title="Permanent link">#</a></h1>
+<p>This section explains how to configure Mirantis k0rdent Enterprise to use the [Pinniped0(https://pinniped.dev/) components as an OIDC provider for authentication. While the examples use KinD (Kubernetes in Docker) for demonstration purposes, the concepts and procedures are fully applicable to any Mirantis k0rdent Enterprise management cluster (for example, <a href="https://minikube.sigs.k8s.io/docs/start/">Minikube</a>, <a href="https://microk8s.io/">MicroK8s</a>, or a cloud-based cluster) that meets the minimum requirements for k0rdent.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
+<ul>
+<li><strong>Mirantis k0rdent Enterprise Management Cluster:</strong> Although KinD is used in this guide, you may use any Mirantis k0rdent Enterprise management cluster that supports deploying k0rdent.</li>
+<li><strong><a href="https://helm.sh/">Helm</a>:</strong> A package manager for Kubernetes to install and manage applications.</li>
+<li><strong><a href="https://curl.se/">cURL</a>:</strong> A versatile command-line tool that enables users to send requests to network endpoints, helping to verify connectivity and inspect API responses.</li>
+<li><strong>Familiarity with basic Kubernetes operations</strong> as well as working knowledge of TLS, DNS, and RBAC concepts.</li>
+</ul>
+<h2 id="step-1-create-a-the-mirantis-k0rdent-enterprise-management-cluster">Step 1. Create a the Mirantis k0rdent Enterprise management cluster<a class="headerlink" href="#step-1-create-a-the-mirantis-k0rdent-enterprise-management-cluster" title="Permanent link">#</a></h2>
+<p>Follow instructions in the <a href="../../install-k0rdent/">documentation</a> to install the management cluster.  </p>
+<h2 id="step-2-install-the-pinniped-supervisor-on-the-management-cluster">Step 2. Install the <code>Pinniped</code> Supervisor on the management cluster<a class="headerlink" href="#step-2-install-the-pinniped-supervisor-on-the-management-cluster" title="Permanent link">#</a></h2>
+<p>The Pinniped Supervisor is the core component that handles authentication requests and token validation.</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://get.pinniped.dev/v0.37.0/install-pinniped-supervisor.yaml
+</code></pre></div>
+The Pinniped Supervisor installs the necessary resources and configures the Supervisor to manage authentication across clusters.</p>
+<h2 id="step-3-expose-the-pinniped-supervisor-deployment">Step 3. Expose the pinniped-supervisor deployment<a class="headerlink" href="#step-3-expose-the-pinniped-supervisor-deployment" title="Permanent link">#</a></h2>
+<p>To enable internal access to the Supervisor, expose its service:</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl create -f -</span>
+<span class="s">apiVersion: v1</span>
+<span class="s">kind: Service</span>
+<span class="s">metadata:</span>
+<span class="s">  name: pinniped-supervisor</span>
+<span class="s">  namespace: pinniped-supervisor</span>
+<span class="s">spec:</span>
+<span class="s">  type: ClusterIP</span>
+<span class="s">  selector:</span>
+<span class="s">    app: pinniped-supervisor</span>
+<span class="s">  ports:</span>
+<span class="s">    - protocol: TCP</span>
+<span class="s">      port: 443</span>
+<span class="s">      # TLS port of the Supervisor pods</span>
+<span class="s">      targetPort: 8443</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>This YAML creates a ClusterIP service that maps port 443 on the service to port 8443 on the Supervisor pods, enabling internal cluster communication over TLS.</p>
+<h2 id="step-4-install-an-ingress-controller-contour">Step 4. Install an Ingress Controller (Contour)<a class="headerlink" href="#step-4-install-an-ingress-controller-contour" title="Permanent link">#</a></h2>
+<p>You'll need an ingress controller, such as Contour, to manage external access and TLS termination.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://projectcontour.io/quickstart/contour.yaml
+</code></pre></div>
+<p>Contour handles ingress traffic and route requests to the Supervisor. {{ no such element: super_collections.SuperDict object['k0rdentname'] }} uses it for managing external access with secure, TLS-passthrough configurations. You can accomplish the same thing with other Ingress controllers such as Nginx.</p>
+<h2 id="step-5-create-an-ingress-for-the-supervisor-which-uses-tls-passthrough-to-allow-the-supervisor-to-terminate-tls">Step 5. Create an Ingress for the Supervisor which uses TLS passthrough to allow the Supervisor to terminate TLS<a class="headerlink" href="#step-5-create-an-ingress-for-the-supervisor-which-uses-tls-passthrough-to-allow-the-supervisor-to-terminate-tls" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: projectcontour.io/v1</span>
+<span class="s">kind: HTTPProxy</span>
+<span class="s">metadata:</span>
+<span class="s">  name: supervisor-proxy</span>
+<span class="s">  namespace: pinniped-supervisor</span>
+<span class="s">spec:</span>
+<span class="s">  virtualhost:</span>
+<span class="s">    fqdn: pinniped-supervisor.pinniped-supervisor.svc.cluster.local</span>
+<span class="s">    tls:</span>
+<span class="s">      passthrough: true</span>
+<span class="s">  tcpproxy:</span>
+<span class="s">    services:</span>
+<span class="s">      - name: pinniped-supervisor</span>
+<span class="s">        port: 443</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>This configuration sets up an ingress route that directs traffic for the specified FQDN to the Supervisor service on port 443. TLS passthrough ensures that TLS termination happens at the Supervisor, preserving end-to-end encryption.</p>
+<h2 id="step-6-check-the-status-of-the-http-proxy">Step 6. Check the status of the HTTP proxy<a class="headerlink" href="#step-6-check-the-status-of-the-http-proxy" title="Permanent link">#</a></h2>
+<p>To access the Supervisor via a web browser, add a custom DNS record on your local machine.</p>
+<p>Check that the HTTP proxy has been correctly configured and is running as expected:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>httpproxy<span class="w"> </span>supervisor-proxy<span class="w"> </span>--namespace<span class="w"> </span>pinniped-supervisor<span class="w"> </span>-o<span class="w"> </span>yaml
+</code></pre></div>
+<h2 id="step-7-add-a-custom-dns-record-to-make-it-available-to-reach-the-supervisor-through-dns">Step 7. Add a custom DNS record to make it available to reach the supervisor through DNS<a class="headerlink" href="#step-7-add-a-custom-dns-record-to-make-it-available-to-reach-the-supervisor-through-dns" title="Permanent link">#</a></h2>
+<p>Do this on the machine where you will be accessing authorization via Web Browser.</p>
+<h3 id="linux-etchosts">Linux <code>/etc/hosts</code><a class="headerlink" href="#linux-etchosts" title="Permanent link">#</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
+<span class="s2">&quot;echo &#39;127.0.0.1 pinniped-supervisor.pinniped-supervisor.svc.cluster.local&#39; &gt;&gt; /etc/hosts&quot;</span>
+</code></pre></div>
+<h3 id="windows-cwindowssystem32driversetchosts">Windows <code>c:\Windows\System32\Drivers\etc\hosts</code><a class="headerlink" href="#windows-cwindowssystem32driversetchosts" title="Permanent link">#</a></h3>
+<p>In a Powershell window with elevated privileges, type:</p>
+<div class="highlight"><pre><span></span><code>Add-Content<span class="w"> </span>-Path<span class="w"> </span><span class="s2">&quot;C:\Windows\System32\drivers\etc\hosts&quot;</span><span class="w"> </span>-Value<span class="w"> </span><span class="s2">&quot;127.0.0.1 pinniped-supervisor.pinniped-supervisor.svc.cluster.local&quot;</span>
+</code></pre></div>
+<p>These commands add a local DNS entry so that requests to the specified FQDN are resolved to your local machine, enabling access to the Pinniped Supervisor.</p>
+<h2 id="step-8-install-cert-manager">Step 8. Install cert-manager<a class="headerlink" href="#step-8-install-cert-manager" title="Permanent link">#</a></h2>
+<p>cert-manager is used to manage TLS certificates within Kubernetes.</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/jetstack/cert-manager/releases/download/v1.15.0/cert-manager.yaml
+</code></pre></div>
+cert-manager automates the issuance and renewal of TLS certificates. This installation is essential for generating and managing certificates used by the Pinniped Supervisor.</p>
+<h2 id="step-9-generate-a-self-signed-certificate">Step 9. Generate a self-signed certificate<a class="headerlink" href="#step-9-generate-a-self-signed-certificate" title="Permanent link">#</a></h2>
+<p>Create a self-signed certificate to secure the Supervisor’s communications.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl create -f -</span>
+<span class="s">---</span>
+<span class="s"># Create a self-signed issuer</span>
+<span class="s">apiVersion: cert-manager.io/v1</span>
+<span class="s">kind: Issuer</span>
+<span class="s">metadata:</span>
+<span class="s">  name: selfsigned-issuer</span>
+<span class="s">  namespace: pinniped-supervisor</span>
+<span class="s">spec:</span>
+<span class="s">  selfSigned: {}</span>
+<span class="s">---</span>
+<span class="s"># Use the self-signed issuer to create a self-signed CA</span>
+<span class="s">apiVersion: cert-manager.io/v1</span>
+<span class="s">kind: Certificate</span>
+<span class="s">metadata:</span>
+<span class="s">  name: demo-ca</span>
+<span class="s">  namespace: pinniped-supervisor</span>
+<span class="s">spec:</span>
+<span class="s">  isCA: true</span>
+<span class="s">  commonName: demo-ca</span>
+<span class="s">  subject:</span>
+<span class="s">    organizations:</span>
+<span class="s">      - Project Pinniped</span>
+<span class="s">    organizationalUnits:</span>
+<span class="s">      - Demo</span>
+<span class="s">  secretName: demo-ca-secret</span>
+<span class="s">  privateKey:</span>
+<span class="s">    algorithm: ECDSA</span>
+<span class="s">    size: 256</span>
+<span class="s">  issuerRef:</span>
+<span class="s">    group: cert-manager.io</span>
+<span class="s">    kind: Issuer</span>
+<span class="s">    name: selfsigned-issuer</span>
+<span class="s">---</span>
+<span class="s"># Create an issuer that will sign certs with our self-signed CA</span>
+<span class="s">apiVersion: cert-manager.io/v1</span>
+<span class="s">kind: Issuer</span>
+<span class="s">metadata:</span>
+<span class="s">  name: demo-ca-issuer</span>
+<span class="s">  namespace: pinniped-supervisor</span>
+<span class="s">spec:</span>
+<span class="s">  ca:</span>
+<span class="s">    secretName: demo-ca-secret</span>
+<span class="s">---</span>
+<span class="s"># Create serving certificate using our CA, this Secret will be used by Supervisor</span>
+<span class="s">apiVersion: cert-manager.io/v1</span>
+<span class="s">kind: Certificate</span>
+<span class="s">metadata:</span>
+<span class="s">  name: supervisor-tls-cert-request</span>
+<span class="s">  namespace: pinniped-supervisor</span>
+<span class="s">spec:</span>
+<span class="s">  secretName: supervisor-tls-cert</span>
+<span class="s">  issuerRef:</span>
+<span class="s">    name: demo-ca-issuer</span>
+<span class="s">  dnsNames:</span>
+<span class="s">    - pinniped-supervisor.pinniped-supervisor.svc.cluster.local</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>This multi-part YAML creates a self-signed issuer, generates a CA, and issues a serving certificate for the Pinniped Supervisor. The certificate is stored in a <code>Secret</code> and later referenced in the <code>FederationDomain</code> configuration.</p>
+<h2 id="step-10-read-the-cas-public-key-from-the-secret-and-save-it-locally-for-later-use">Step 10. Read the CA’s public key from the Secret and save it locally for later use<a class="headerlink" href="#step-10-read-the-cas-public-key-from-the-secret-and-save-it-locally-for-later-use" title="Permanent link">#</a></h2>
+<p>Retrieve the public key of the CA to use later when configuring the Pinniped Concierge.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>supervisor-tls-cert<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--namespace<span class="w"> </span>pinniped-supervisor<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.data[&#39;ca\.crt&#39;]}&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>/tmp/supervisor-ca.crt
+</code></pre></div>
+<p>Storing the CA's public key locally allows you to verify TLS connections and configure trust for downstream components like Pinniped Concierge.</p>
+<h2 id="step-11-configure-an-identity-provider-in-the-pinniped-supervisor">Step 11. Configure an Identity Provider in the Pinniped Supervisor<a class="headerlink" href="#step-11-configure-an-identity-provider-in-the-pinniped-supervisor" title="Permanent link">#</a></h2>
+<p>In this step, you configure an OIDC client application (for example, using Okta) to integrate with Pinniped. Although the configuration below references Okta, you can adjust it to use your preferred identity provider.</p>
+<h3 id="create-an-oidc-client-application">Create an OIDC Client Application<a class="headerlink" href="#create-an-oidc-client-application" title="Permanent link">#</a></h3>
+<ol>
+<li><strong>In the Okta Admin Console (or your identity provider):</strong></li>
+<li>Navigate to Applications and create a new OIDC application.</li>
+<li>Set the sign-in redirect URI to <code>https://pinniped-supervisor.pinniped-supervisor.svc.cluster.local/demo-issuer/callback</code>.</li>
+<li>Note the Client ID and Client Secret.</li>
+<li>
+<p>Configure the token to include claims such as <code>email</code>, <code>groups</code>, and <code>profile</code>.</p>
+</li>
+<li>
+<p><strong>Create a Group:</strong></p>
+</li>
+<li>In your identity provider’s admin console, create a group (e.g., <code>k8s-group</code>) and assign users who should have access to Kubernetes.</li>
+</ol>
+<h3 id="export-the-secrets-as-environment-variables">Export the Secrets as Environment Variables<a class="headerlink" href="#export-the-secrets-as-environment-variables" title="Permanent link">#</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">OKTA_APP_CLIENT_ID</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_OKTA_APP_CLIENT_ID&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OKTA_APP_CLIENT_SECRET</span><span class="o">=</span><span class="s2">&quot;EXAMPLE_OKTA_APP_CLIENT_SECRET&quot;</span>
+</code></pre></div>
+<h3 id="create-an-oidcidentityprovider-resource">Create an OIDCIdentityProvider Resource<a class="headerlink" href="#create-an-oidcidentityprovider-resource" title="Permanent link">#</a></h3>
+<p>Create the identity provider resource in Pinniped by running:</p>
+<p><div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl create -f -</span>
+<span class="s">apiVersion: idp.supervisor.pinniped.dev/v1alpha1</span>
+<span class="s">kind: OIDCIdentityProvider</span>
+<span class="s">metadata:</span>
+<span class="s">  namespace: pinniped-supervisor</span>
+<span class="s">  name: okta</span>
+<span class="s">spec:</span>
+<span class="s">  # Specify the upstream issuer URL (no trailing slash). Change this to the actual issuer provided by your identity provider.</span>
+<span class="s">  issuer: https://my-company.okta.com</span>
+<span class="s">  authorizationConfig:</span>
+<span class="s">    additionalScopes: [offline_access, groups, email]</span>
+<span class="s">    allowPasswordGrant: false</span>
+<span class="s">  claims:</span>
+<span class="s">    username: email</span>
+<span class="s">    groups: groups</span>
+<span class="s">  client:</span>
+<span class="s">    secretName: okta-client-credentials</span>
+<span class="s">---</span>
+<span class="s">apiVersion: v1</span>
+<span class="s">kind: Secret</span>
+<span class="s">metadata:</span>
+<span class="s">  namespace: pinniped-supervisor</span>
+<span class="s">  name: okta-client-credentials</span>
+<span class="s">type: secrets.pinniped.dev/oidc-client</span>
+<span class="s">stringData:</span>
+<span class="s">  clientID: &quot;$OKTA_APP_CLIENT_ID&quot;</span>
+<span class="s">  clientSecret: &quot;$OKTA_APP_CLIENT_SECRET&quot;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+This resource defines how Pinniped should interact with your OIDC identity provider. It maps token claims to Kubernetes identities and securely references client credentials stored in a secret.</p>
+<h2 id="step-12-validate-the-oidcidentityprovider-status">Step 12. Validate the OIDCIdentityProvider Status<a class="headerlink" href="#step-12-validate-the-oidcidentityprovider-status" title="Permanent link">#</a></h2>
+<p>Ensure that the identity provider configuration is active and error-free:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>OIDCIdentityProvider<span class="w"> </span>-n<span class="w"> </span>pinniped-supervisor<span class="w"> </span>okta
+</code></pre></div>
+<p>Reviewing the resource status confirms that Pinniped has successfully registered your OIDC identity provider.</p>
+<h2 id="step-13-create-and-configure-a-federationdomain">Step 13. Create and Configure a FederationDomain<a class="headerlink" href="#step-13-create-and-configure-a-federationdomain" title="Permanent link">#</a></h2>
+<p>The <code>FederationDomain</code> resource ties together the TLS configuration and identity providers to expose a unified issuer endpoint.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl create -f -</span>
+<span class="s">apiVersion: config.supervisor.pinniped.dev/v1alpha1</span>
+<span class="s">kind: FederationDomain</span>
+<span class="s">metadata:</span>
+<span class="s">  name: demo-federation-domain</span>
+<span class="s">  namespace: pinniped-supervisor</span>
+<span class="s">spec:</span>
+<span class="s">  issuer: &quot;https://pinniped-supervisor.pinniped-supervisor.svc.cluster.local/demo-issuer&quot;</span>
+<span class="s">  tls:</span>
+<span class="s">    secretName: supervisor-tls-cert</span>
+<span class="s">  identityProviders:</span>
+<span class="s">    - displayName: okta</span>
+<span class="s">      objectRef:</span>
+<span class="s">        apiGroup: idp.supervisor.pinniped.dev</span>
+<span class="s">        kind: OIDCIdentityProvider</span>
+<span class="s">        name: okta</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>This <code>FederationDomain</code> configuration declares the external issuer URL, references the TLS certificate, and links the previously configured OIDC identity provider.</p>
+<h2 id="step-14-verify-the-federationdomain-status">Step 14. Verify the <code>FederationDomain</code> Status<a class="headerlink" href="#step-14-verify-the-federationdomain-status" title="Permanent link">#</a></h2>
+<p>Check the status of the <code>FederationDomain</code> to ensure that all components are correctly integrated:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>federationdomain<span class="w"> </span>demo-federation-domain<span class="w"> </span>--namespace<span class="w"> </span>pinniped-supervisor<span class="w"> </span>-o<span class="w"> </span>yaml
+</code></pre></div>
+<h2 id="step-15-verify-dns-certificate-ingress-and-federationdomain-integration">Step 15. Verify DNS, Certificate, Ingress, and FederationDomain Integration<a class="headerlink" href="#step-15-verify-dns-certificate-ingress-and-federationdomain-integration" title="Permanent link">#</a></h2>
+<p>Test that the endpoint is accessible and properly serving OIDC configuration by using curl:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--cacert<span class="w"> </span>/tmp/supervisor-ca.crt<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s2">&quot;https://pinniped-supervisor.pinniped-supervisor.svc.cluster.local/demo-issuer/.well-known/openid-configuration&quot;</span>
+</code></pre></div>
+<p>This command retrieves the OIDC discovery document, confirming that DNS resolution, TLS, ingress routing, and FederationDomain configuration are all working in unison.</p>
+<h2 id="step-16-install-pinniped-concierge-agent">Step 16. Install Pinniped Concierge (Agent)<a class="headerlink" href="#step-16-install-pinniped-concierge-agent" title="Permanent link">#</a></h2>
+<p>The Pinniped Concierge component is responsible for issuing and refreshing authentication tokens on behalf of end users.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;https://get.pinniped.dev/v0.37.0/install-pinniped-concierge-crds.yaml&quot;</span>
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;https://get.pinniped.dev/v0.37.0/install-pinniped-concierge-resources.yaml&quot;</span>
+</code></pre></div>
+<p>These commands install the necessary Custom Resource Definitions (CRDs) and resources for Pinniped Concierge, enabling it to integrate with your authentication flow.</p>
+<h2 id="step-17-prepare-the-ca-certificate-for-concierge">Step 17. Prepare the CA Certificate for Concierge<a class="headerlink" href="#step-17-prepare-the-ca-certificate-for-concierge" title="Permanent link">#</a></h2>
+<p>Copy the base64-encoded version of the CA certificate saved earlier. This certificate is needed so that the Concierge can trust the Supervisor’s <code>FederationDomain</code>.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>/tmp/supervisor-ca.crt<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w0
+</code></pre></div>
+<p>This command outputs the CA certificate in a single base64-encoded line. Save this output for later use when configuring the Concierge.</p>
+<h2 id="step-18-configure-the-concierge-with-a-jwtauthenticator">Step 18. Configure the Concierge with a <code>JWTAuthenticator</code><a class="headerlink" href="#step-18-configure-the-concierge-with-a-jwtauthenticator" title="Permanent link">#</a></h2>
+<p>Create a <code>JWTAuthenticator</code> resource to allow the Concierge to trust the Supervisor’s <code>FederationDomain</code>.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl create -f -</span>
+<span class="s">apiVersion: authentication.concierge.pinniped.dev/v1alpha1</span>
+<span class="s">kind: JWTAuthenticator</span>
+<span class="s">metadata:</span>
+<span class="s">  name: demo-supervisor-jwt-authenticator</span>
+<span class="s">spec:</span>
+<span class="s">  issuer: &quot;https://pinniped-supervisor.pinniped-supervisor.svc.cluster.local/demo-issuer&quot;</span>
+<span class="s">  audience: workload1-dd9de13c370982f61e9f</span>
+<span class="s">  tls:</span>
+<span class="s">    certificateAuthorityData: &quot;---&gt; Paste the base64 encoded CA here &lt;---&quot;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>The <code>JWTAuthenticator</code> resource configures the Concierge to trust tokens issued by the Supervisor. Replace the placeholder with the base64-encoded CA certificate you generated in the previous step.</p>
+<h2 id="step-19-verify-the-jwtauthenticator-status">Step 19. Verify the <code>JWTAuthenticator</code> Status<a class="headerlink" href="#step-19-verify-the-jwtauthenticator-status" title="Permanent link">#</a></h2>
+<p>Ensure that the JWTAuthenticator resource is ready:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>jwtauthenticator<span class="w"> </span>demo-supervisor-jwt-authenticator<span class="w"> </span>-o<span class="w"> </span>yaml
+</code></pre></div>
+The status should indicate that the resource is in the “Ready” phase, confirming that the Concierge is configured correctly to validate tokens.</p>
+<h2 id="step-20-create-a-rolebinding-for-end-user-access">Step 20. Create a <code>RoleBinding</code> for End-User Access<a class="headerlink" href="#step-20-create-a-rolebinding-for-end-user-access" title="Permanent link">#</a></h2>
+<p>Define RBAC policies to grant authenticated users appropriate permissions. In this example, a <code>RoleBinding</code> is created to bind users from a specified identity provider group to a <code>ClusterRole</code>.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl create -f -</span>
+<span class="s">apiVersion: rbac.authorization.k8s.io/v1</span>
+<span class="s">kind: RoleBinding</span>
+<span class="s">metadata:</span>
+<span class="s">  name: kcm-ns-viewer</span>
+<span class="s">  namespace: kcm-system</span>
+<span class="s">subjects:</span>
+<span class="s">  - kind: Group</span>
+<span class="s">    name: &quot; ---&gt; Here specify the name of your Okta group &lt;---&quot;</span>
+<span class="s">    apiGroup: rbac.authorization.k8s.io</span>
+<span class="s">roleRef:</span>
+<span class="s">  apiGroup: rbac.authorization.k8s.io</span>
+<span class="s">  kind: ClusterRole</span>
+<span class="s">  name: kcm-namespace-viewer-role</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>This RoleBinding grants read-only access (as defined by the <code>kcm-namespace-viewer-role</code>) to users in the specified group, ensuring that only authorized users can view resources in the <code>kcm-system</code> namespace.</p>
+<h2 id="step-21-install-the-pinniped-cli-for-amd64">Step 21. Install the Pinniped CLI (for AMD64)<a class="headerlink" href="#step-21-install-the-pinniped-cli-for-amd64" title="Permanent link">#</a></h2>
+<p>Download and install the Pinniped CLI to interact with Pinniped resources more easily.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-Lso<span class="w"> </span>pinniped<span class="w"> </span>https://get.pinniped.dev/v0.37.0/pinniped-cli-linux-amd64<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>pinniped<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>pinniped<span class="w"> </span>/usr/local/bin/pinniped
+</code></pre></div>
+<p>This command downloads the CLI binary, makes it executable, and moves it to a directory in your PATH for convenient access.</p>
+<h2 id="step-22-generate-kubeconfig-files-for-end-users">Step 22. Generate Kubeconfig Files for End Users<a class="headerlink" href="#step-22-generate-kubeconfig-files-for-end-users" title="Permanent link">#</a></h2>
+<p>Use the Pinniped CLI to generate a kubeconfig file that end users will use for authentication.</p>
+<div class="highlight"><pre><span></span><code>pinniped<span class="w"> </span>get<span class="w"> </span>kubeconfig<span class="w"> </span>&gt;<span class="w"> </span>/tmp/developer.yaml
+</code></pre></div>
+<p>If you have multiple identity providers configured, specify the desired one:</p>
+<div class="highlight"><pre><span></span><code>pinniped<span class="w"> </span>get<span class="w"> </span>kubeconfig<span class="w"> </span>--upstream-identity-provider-name<span class="w"> </span>okta<span class="w"> </span>&gt;<span class="w"> </span>/tmp/developer.yaml
+</code></pre></div>
+<p>The generated kubeconfig file contains the necessary configuration to authenticate with the cluster using Pinniped. When the command is run, it will open an authentication link in your browser. If a browser is not available, follow the command-line instructions to complete authentication.</p>
+<h2 id="step-23-authenticate-and-complete-the-flow">Step 23. Authenticate and Complete the Flow<a class="headerlink" href="#step-23-authenticate-and-complete-the-flow" title="Permanent link">#</a></h2>
+<p>Upon running the kubeconfig generation command, your default browser should open to an authentication page.<br />
+- <strong>Action:</strong> Log in using your identity provider credentials (e.g., Okta).<br />
+- <strong>Outcome:</strong> Once authenticated, an authorization code is provided and processed, generating a kubeconfig file with the proper token.</p>
+<div class="highlight"><pre><span></span><code>Current cluster info:
+Name: kind-kind-pinniped
+URL: https://127.0.0.1:38395
+
+Current user info:
+Username: &lt;user@example.com&gt;
+Groups: Everyone, k8s-group, system:authenticated
+</code></pre></div>
+<p>This output confirms that the authentication flow is successful and that the RBAC permissions are applied as expected.</p>
+<h2 id="step-24-test-the-created-kubeconfig">Step 24. Test the Created Kubeconfig<a class="headerlink" href="#step-24-test-the-created-kubeconfig" title="Permanent link">#</a></h2>
+<p>Verify that the new kubeconfig file works by checking access to various resources.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">KUBECONFIG</span><span class="o">=</span>/tmp/developer.yaml
+
+kubectl<span class="w"> </span>auth<span class="w"> </span>can-i<span class="w"> </span>get<span class="w"> </span>secrets<span class="w"> </span>--namespace<span class="o">=</span>kcm-system
+kubectl<span class="w"> </span>auth<span class="w"> </span>can-i<span class="w"> </span>create<span class="w"> </span>secrets<span class="w"> </span>--namespace<span class="o">=</span>kcm-system
+</code></pre></div>
+<ul>
+<li><code>kubectl auth can-i get secrets</code> should return "yes".</li>
+<li><code>kubectl auth can-i create secrets</code> should return "no", reflecting the read-only access provided.</li>
+</ul>
+<p>These tests confirm that the RBAC configuration is working correctly and that the authenticated user only has the permissions granted by the RoleBinding.</p>
+<p>By following these detailed steps, you have set up a fully functional Pinniped-based federated authentication solution on your Mirantis k0rdent Enterprise management cluster. This configuration integrates TLS, Ingress, and your chosen identity provider to provide secure, centralized access management across multiple Kubernetes clusters. The Pinniped system also periodically checks and refreshes authentication tokens, ensuring that access permissions remain up to date.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        Was this page helpful?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page was helpful" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 21.35-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page could be improved" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 21.35-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c.67 0 1.32.12 1.94.33L13 9.35l-4 5zM16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35l-1-7 4.5-5-2.65-5.08C13.87 3.47 15.17 3 16.5 3"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              Thanks for your feedback!
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              Thanks for your feedback! Help us improve this page by using our <a href="https://github.com/Mirantis/k0rdent-enterprise-docs/docs/issues/new" target="_blank" rel="noopener">feedback form</a>.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Mirantis | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>. -- <a href="#__consent">Change cookie settings</a>
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://x.com/k0rdent" target="_blank" rel="noopener" title="k0rdent on X" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8l164.9-188.5L26.8 48h145.6l100.5 132.9zm-24.8 373.8h39.1L151.1 88h-42z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://bsky.app/profile/k0rdent.bsky.social" target="_blank" rel="noopener" title="k0rdent on BlueSky" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M111.8 62.2C170.2 105.9 233 194.7 256 242.4c23-47.6 85.8-136.4 144.2-180.2 42.1-31.6 110.3-56 110.3 21.8 0 15.5-8.9 130.5-14.1 149.2-18.2 64.8-84.4 81.4-143.3 71.3C456 322 482.2 380 425.6 438c-107.4 110.2-154.3-27.6-166.3-62.9-1.7-4.9-2.6-7.8-3.3-7.8s-1.6 3-3.3 7.8c-12 35.3-59 173.1-166.3 62.9-56.5-58-30.4-116 72.5-133.5C100 314.6 33.8 298 15.7 233.1 10.4 214.4 1.5 99.4 1.5 83.9c0-77.8 68.2-53.4 110.3-21.8z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.youtube.com/channel/UChXQ6kbvjnAtdZAQpl7Fo4A" target="_blank" rel="noopener" title="k0rdent on YouTube" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305m-317.51 213.508V175.185l142.739 81.205z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/company/k0rdent/" target="_blank" rel="noopener" title="k0rdent on LinkedIn" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["toc.autohide", "search.suggest", "search.highlight", "content.code.copy", "navigation.tracking", "toc.follow", "search.suggest", "search.highlight", "content.action.view", "navigation.path", "navigation.indexes"], "search": "../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.88dd0f4e.min.js"></script>
+      
+        <script src="../../../../javascripts/feedback.js"></script>
+      
+        <script src="../../../../javascripts/plausible.js"></script>
+      
+    
+  </body>
+</html>
