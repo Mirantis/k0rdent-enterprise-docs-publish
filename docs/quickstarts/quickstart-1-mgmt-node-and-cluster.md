@@ -110,6 +110,10 @@ NAMESPACE: kcm-system
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
+NOTES:
+k0rdent enterprise chart has been installed.
+Please make sure to change the auth method or set a new password for basic auth by
+creating a secret and referencing it in `k0rdent-ui.auth.basic.secretKeyRef`
 ```
 
 > NOTE:

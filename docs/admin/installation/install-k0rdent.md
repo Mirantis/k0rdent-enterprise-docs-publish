@@ -9,7 +9,7 @@ The actual management cluster is a Kubernetes cluster with the {{{ docsVersionIn
 
 ## Configure the UI
 
-By default, {{{ docsVersionInfo.k0rdentName }}} installs the UI with a pre-determined password. You **MUST** either disable the UI or change the password when installing {{{ docsVersionInfo.k0rdentName }}}.
+By default, {{{ docsVersionInfo.k0rdentName }}} installs the UI with a pre-determined password. You **MUST** either disable the UI or change the password when installing {{{ docsVersionInfo.k0rdentName }}}. **Failure to take at least one of these actions will allow unauthorized individuals write access to your {{{ docsVersionInfo.k0rdentName }}} environment.**
 
 To change the password, add the following to the installation command below:
 
@@ -30,8 +30,8 @@ You install {{{ docsVersionInfo.k0rdentName }}} via  Helm chart:
 ```shell
 helm install kcm {{{ extra.docsVersionInfo.ociRegistry }}} --version {{{ extra.docsVersionInfo.k0rdentDotVersion }}} -n kcm-system --create-namespace <UI_CONFIG>
 ```
-> NOTE:
-> Don't forget to set the UI configuration, as noted [above](#configure-the-ui).
+> WARNING:
+> Don't forget to set the UI configuration, as noted [above](#configure-the-ui). Remember, if you do not disable the UI or change the default password, **anyone with access to the management cluster's network will have the ability to create or destroy resources managed by {{{ docsVersionInfo.k0rdentName }}}, up to and potentially including {{{ docsVersionInfo.k0rdentName }}} itself.**
 
 ```console
 Pulled: registry.mirantis.com/k0rdent-enterprise/charts/k0rdent-enterprise:{{{ extra.docsVersionInfo.k0rdentDotVersion }}}
@@ -42,6 +42,10 @@ NAMESPACE: kcm-system
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
+NOTES:
+k0rdent enterprise chart has been installed.
+Please make sure to change the auth method or set a new password for basic auth by
+creating a secret and referencing it in `k0rdent-ui.auth.basic.secretKeyRef`
 ```
 
 The helm chart deploys the KCM operator and prepares the environment, and KCM then proceeds to deploy the various subcomponents, including CAPI. The entire process takes a few minutes.
