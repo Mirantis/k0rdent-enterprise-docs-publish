@@ -1,12 +1,16 @@
 # Installing an HTTP server
 
-Fortunately, if you don't have an HTTP server available to your airgapped system, 
-you can install one to serve the `k0s` binary right in the
-{{{ docsVersionInfo.k0rdentName}}} management cluster.
+Optionally, if you don't have an HTTP server available to your airgapped
+system, you can install one to serve the `k0s` binary right in the
+{{{docsVersionInfo.k0rdentName}}} management cluster.
 
 The following instructions were tested on an "airgapped" AWS instance.
 
-1. Create the `Deployment`
+> WARNING:
+> Images used in the following example (such as `nginx:1.27.5`) aren't part
+> of the airgap bundle and must be downloaded separately.
+
+1. Create the `Deployment`:
 
     Start by creating the YAML for the webserver, say, in `k0s-bundle-ag.yaml`:
 
@@ -87,13 +91,13 @@ The following instructions were tested on an "airgapped" AWS instance.
           location /heathz {
             return 200 'OK';
           }
-        }    
+        }
     ```
 
     Apply the YAML to your management cluster:
 
     ```shell
-    kubectl apply -f k0s-bundle-ag.yaml 
+    kubectl apply -f k0s-bundle-ag.yaml
     ```
 
 2. Check for the `k0s-ag-image*` pod:
@@ -108,12 +112,12 @@ The following instructions were tested on an "airgapped" AWS instance.
     kube-system   metrics-server-7db8586f5-blh6w   1/1     Running   0          21h
     ```
 
-3. The `k0s-ag-image*` pod runs an Nginx HTTP server that serves files from a hostPath volume:
+3. The `k0s-ag-image*` pod runs an Nginx HTTP server that serves files from a `hostPath` volume:
 
     ```yaml
     hostPath:
       path: /home/ubuntu/k0s
-    ```    
+    ```
 
 4. Place the k0s binary in that directory, as in:
 
@@ -153,5 +157,5 @@ The following instructions were tested on an "airgapped" AWS instance.
     Accept-Ranges: bytes
     ```
 
-Once you have uploaded all the necessary images, you can start the {{{ docsVersionInfo.k0rdentName }}} installation
-process.
+Once you have uploaded all the necessary images, you can start the
+{{{ docsVersionInfo.k0rdentName }}} installation process.

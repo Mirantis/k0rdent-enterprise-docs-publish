@@ -136,7 +136,7 @@ nav:
       - Install k0rdent in airgapped environment: 
         - Overview: admin/installation/airgap/index.md
         - Prerequisites: admin/installation/airgap/airgap-prereq.md
-        - Install an HTTP server: admin/installation/airgap/airgap-http.md
+        - Installing an HTTP server: admin/installation/airgap/airgap-http.md
         - Get the airgap bundles: admin/installation/airgap/airgap-bundles.md
         - Install k0rdent: admin/installation/airgap/airgap-install.md
       - Verifying Artifacts and Security: admin/installation/sbom.md
