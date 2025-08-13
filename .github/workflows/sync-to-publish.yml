@@ -1,23 +1,22 @@
 name: Sync to Publish Repo
 
 on:
-  push:
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: write  # ensure permission to push
 
 jobs:
   sync:
-    if: github.repository == 'Mirantis/k0rdent-enterprise-docs'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout triggering branch
+      - name: Checkout release branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: release-v1.0.0
           fetch-depth: 0
-          persist-credentials: false
+          persist-credentials: false  # important!
 
       - name: Configure Git identity
         run: |
@@ -33,28 +32,10 @@ jobs:
             echo "✅ PUBLISH_TOKEN is set"
           fi
 
-      - name: Update mkdocs.yml edit_uri
-        run: |
-          if [ ! -f mkdocs.yml ]; then
-            echo "❌ mkdocs.yml not found"
-            exit 1
-          fi
-
-          # Replace the existing edit_uri line with the new target
-          sed -i 's|^\(edit_uri:\s*\).*|\1https://github.com/Mirantis/k0rdent-enterprise-docs-publish/edit/main/docs/|' mkdocs.yml
-
-          echo "✅ edit_uri updated to:"
-          grep 'edit_uri' mkdocs.yml
-
-      - name: Commit mkdocs.yml change
-        run: |
-          git add mkdocs.yml
-          git commit -m "Update edit_uri to point to publish repo" || echo "No changes to commit"
-
       - name: Force push to publish repo
         env:
           TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         run: |
           git remote add publish \
             https://x-access-token:${TOKEN}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git
-          git push publish HEAD:${{ github.ref_name }} --force
+          git push publish HEAD:release-v1.0.0 --force
