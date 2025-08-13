@@ -89,9 +89,9 @@ For an air-gapped environment please apply additional steps below:
     in the `global-values.yaml` file and other examples
     with your own registry, for example, `registry.local`
 
-2. Update `global-values.yaml` file using the secrets created on the
+2. If you have a `Secret` with Registry Credentials created on the
     [Configuring a Custom OCI Registry for KCM components](../../appendix/appendix-extend-mgmt.md/#configuring-a-custom-oci-registry-for-kcm-components)
-    step. For example:
+    step, add the `secretRef` to the `global-values.yaml` file. For example:
     ```yaml
     kcm:
       kof:
@@ -99,20 +99,14 @@ For an air-gapped environment please apply additional steps below:
           spec:
             secretRef:
               name: my-private-oci-registry-creds
-            certSecretRef:
-              name: registry-cert
     cert-manager-service-template:
       repo:
         secretRef:
           name: my-private-oci-registry-creds
-        certSecretRef:
-          name: registry-cert
     ingress-nginx-service-template:
       repo:
         secretRef:
           name: my-private-oci-registry-creds
-        certSecretRef:
-          name: registry-cert
     ```
 
 3. Either apply the [Istio](#istio) section or one of the options below,
