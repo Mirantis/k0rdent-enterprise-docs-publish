@@ -89,6 +89,10 @@ For an air-gapped environment please apply additional steps below:
     in the `global-values.yaml` file and other examples
     with your own registry, for example, `registry.local`
 
+    > NOTICE:
+    > Custom registry using **HTTP redirect** is not supported yet
+    > due to certificate verification issue. We plan to fix it in the next release.
+
 2. If you have a `Secret` with Registry Credentials created on the
     [Configuring a Custom OCI Registry for KCM components](../../appendix/appendix-extend-mgmt.md/#configuring-a-custom-oci-registry-for-kcm-components)
     step, add the `secretRef` to the `global-values.yaml` file. For example:
@@ -181,6 +185,7 @@ For an air-gapped environment please apply additional steps below:
         cert-manager:
           enabled: false
       ```
+
 6. To use **your own certificates**:
     * Wait until you apply the [Regional Cluster](#regional-cluster) section
         and get the `regional-kubeconfig` in the [Verifying](kof-verification.md) step.
