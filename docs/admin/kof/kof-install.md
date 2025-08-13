@@ -108,7 +108,6 @@ For an air-gapped environment please apply additional steps below:
         secretRef:
           name: my-private-oci-registry-creds
     ```
-    Note: don't add the `certSecretRef` - it is [handled by KCM](https://github.com/k0rdent/kcm/issues/1841).
 
 3. Either apply the [Istio](#istio) section or one of the options below,
     required for [DNS auto-config](#dns-auto-config)
