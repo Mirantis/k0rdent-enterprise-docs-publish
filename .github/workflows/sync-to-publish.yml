@@ -36,7 +36,6 @@ jobs:
         run: |
           BRANCH_NAME="${GITHUB_REF_NAME}"
           TEMP_BRANCH="publish-${BRANCH_NAME}"
-
           echo "🔧 Creating temporary branch: $TEMP_BRANCH"
           git checkout -b "$TEMP_BRANCH"
 
@@ -57,8 +56,12 @@ jobs:
 
           BRANCH_NAME="${GITHUB_REF_NAME}"
 
-          sed -i.bak -E "s|(edit_uri: https://github.com/[^/]+/[^/]+)(/edit/)[^/]+|\1-publish\2${BRANCH_NAME}|" mkdocs.yml
-          echo "✅ edit_uri rewritten to point to publish repo and correct branch"
+          echo "🔧 Rewriting edit_uri in mkdocs.yml"
+          sed -i.bak -E "s|(edit_uri:\s+https://github.com/[^/]+/[^/]+)(/edit/)[^/]+|\1-publish\2${BRANCH_NAME}|" mkdocs.yml
+
+          git add mkdocs.yml
+          git commit -m "Update edit_uri in mkdocs.yml for publish target"
+          echo "✅ edit_uri rewritten and committed"
 
       - name: Push cleaned branch to publish repo
         env:
