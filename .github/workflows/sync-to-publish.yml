@@ -3,6 +3,8 @@ name: Sync to Publish Repo
 on:
   workflow_dispatch:
   push:
+    branches:
+      - 'release-*'
 
 permissions:
   contents: write
