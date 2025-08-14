@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'release-*'
+      - 'release-v1.1.0'
 
 permissions:
   contents: write
