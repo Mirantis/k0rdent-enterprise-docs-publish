@@ -58,9 +58,9 @@ To install virtctl:
 2. Download using `wget`:
 
     ```bash
-    wget https://binary-mirantis-com.s3.amazonaws.com/kubevirt/bin/artifacts/virtctl-1.3.1-20240911005512-<ARCH>-<PLATFORM> -O virtctl
+    wget https://binary-mirantis-com.s3.amazonaws.com/kubevirt/bin/artifacts/virtctl-1.3.1-20240911005512-<ARCH>-amd64 -O virtctl
     ```
-    Replace `<ARCH>` with either `darwin` or `linux` and `<PLATFORM>` with either `amd64` or `arm64`.
+    Replace `<ARCH>` with either `darwin` or `linux`.
 
 3. Move the binary:
 
