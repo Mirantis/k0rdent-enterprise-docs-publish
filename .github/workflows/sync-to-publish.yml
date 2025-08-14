@@ -1,8 +1,8 @@
 name: Sync to Publish Repo
 
 on:
-  push:
   workflow_dispatch:
+  push:
 
 permissions:
   contents: write
@@ -32,17 +32,6 @@ jobs:
             echo "✅ PUBLISH_TOKEN is set"
           fi
 
-      - name: Rewrite edit_uri in mkdocs.yml
-        run: |
-          if [ ! -f "mkdocs.yml" ]; then
-            echo "❌ mkdocs.yml not found"
-            exit 1
-          fi
-
-          sed -i.bak -E \
-            "s|(edit_uri: https://github.com/[^/]+/)([^/]+)(/edit/)[^/]+|\1\2-publish\3${GITHUB_REF_NAME}|" \
-            mkdocs.yml
-
       - name: Create temporary branch without publish workflow
         run: |
           BRANCH_NAME="${GITHUB_REF_NAME}"
@@ -55,7 +44,21 @@ jobs:
             git rm --cached .github/workflows/sync-to-publish.yml
             rm -f .github/workflows/sync-to-publish.yml
             git commit -m "Remove sync-to-publish workflow before mirroring"
+          else
+            echo "✅ sync-to-publish.yml not present or already removed"
           fi
+
+      - name: Rewrite edit_uri in mkdocs.yml
+        run: |
+          if [ ! -f "mkdocs.yml" ]; then
+            echo "❌ mkdocs.yml not found"
+            exit 1
+          fi
+
+          BRANCH_NAME="${GITHUB_REF_NAME}"
+
+          sed -i.bak -E "s|(edit_uri: https://github.com/[^/]+/[^/]+)(/edit/)[^/]+|\1-publish\2${BRANCH_NAME}|" mkdocs.yml
+          echo "✅ edit_uri rewritten to point to publish repo and correct branch"
 
       - name: Push cleaned branch to publish repo
         env:
