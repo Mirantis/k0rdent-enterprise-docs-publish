@@ -31,15 +31,21 @@ jobs:
             echo "✅ PUBLISH_TOKEN is set"
           fi
 
-      - name: Prepare cleaned branch
+      - name: Create temporary branch without publish workflow
         run: |
-          export BRANCH_NAME="${GITHUB_REF_NAME}"
-          echo "Current branch: $BRANCH_NAME"
+          BRANCH_NAME="${GITHUB_REF_NAME}"
+          TEMP_BRANCH="publish-${BRANCH_NAME}"
 
-          # Create a working copy with .github removed
-          git checkout -b temp-publish
-          git rm -r --cached .github || echo "No .github directory to remove"
-          git commit -m "Remove GitHub workflows before publishing" || echo "Nothing to commit"
+          echo "🔧 Creating temporary branch: $TEMP_BRANCH"
+          git checkout -b "$TEMP_BRANCH"
+
+          if [ -f ".github/workflows/sync-to-publish.yml" ]; then
+            git rm --cached .github/workflows/sync-to-publish.yml
+            rm -f .github/workflows/sync-to-publish.yml
+            git commit -m "Remove sync-to-publish workflow before mirroring"
+          else
+            echo "✅ sync-to-publish.yml not present or already removed"
+          fi
 
       - name: Push cleaned branch to publish repo
         env:
@@ -47,11 +53,9 @@ jobs:
         run: |
           git remote add publish \
             https://x-access-token:${TOKEN}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git
-
-          # Push temp-publish to the same name as the source branch
           git push publish HEAD:"${GITHUB_REF_NAME}" --force
 
-      - name: Cleanup
+      - name: Cleanup temporary branch
         run: |
           git checkout "${GITHUB_REF_NAME}"
-          git branch -D temp-publish
+          git branch -D "publish-${GITHUB_REF_NAME}"
