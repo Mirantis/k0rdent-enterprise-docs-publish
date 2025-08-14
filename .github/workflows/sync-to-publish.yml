@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # ensure permission to push
+  contents: write
 
 jobs:
   sync:
@@ -23,15 +23,6 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      - name: Rewrite mkdocs.yml edit_uri to target repo and current branch
-        run: |
-          if [ ! -f mkdocs.yml ]; then
-            echo "❌ mkdocs.yml not found. Failing workflow."
-            exit 1
-          fi
-          echo "✅ mkdocs.yml found. Updating edit_uri..."
-          sed -i "s|^edit_uri:.*|edit_uri: https://github.com/Mirantis/k0rdent-enterprise-docs-publish/edit/${GITHUB_REF_NAME}/docs/|" mkdocs.yml
-
       - name: Confirm token is populated
         run: |
           if [ -z "${{ secrets.PUBLISH_TOKEN }}" ]; then
@@ -40,6 +31,17 @@ jobs:
           else
             echo "✅ PUBLISH_TOKEN is set"
           fi
+
+      - name: Rewrite edit_uri in mkdocs.yml
+        run: |
+          if [ ! -f "mkdocs.yml" ]; then
+            echo "❌ mkdocs.yml not found"
+            exit 1
+          fi
+
+          sed -i.bak -E \
+            "s|(edit_uri: https://github.com/[^/]+/)([^/]+)(/edit/)[^/]+|\1\2-publish\3${GITHUB_REF_NAME}|" \
+            mkdocs.yml
 
       - name: Create temporary branch without publish workflow
         run: |
@@ -53,8 +55,6 @@ jobs:
             git rm --cached .github/workflows/sync-to-publish.yml
             rm -f .github/workflows/sync-to-publish.yml
             git commit -m "Remove sync-to-publish workflow before mirroring"
-          else
-            echo "✅ sync-to-publish.yml not present or already removed"
           fi
 
       - name: Push cleaned branch to publish repo
