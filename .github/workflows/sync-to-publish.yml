@@ -4,19 +4,18 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # ensure permission to push
+  contents: write
 
 jobs:
   sync:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout release branch
+      - name: Checkout current branch
         uses: actions/checkout@v4
         with:
-          ref: release-v1.1.0
           fetch-depth: 0
-          persist-credentials: false  # important!
+          persist-credentials: false
 
       - name: Configure Git identity
         run: |
@@ -32,10 +31,27 @@ jobs:
             echo "✅ PUBLISH_TOKEN is set"
           fi
 
-      - name: Force push to publish repo
+      - name: Prepare cleaned branch
+        run: |
+          export BRANCH_NAME="${GITHUB_REF_NAME}"
+          echo "Current branch: $BRANCH_NAME"
+
+          # Create a working copy with .github removed
+          git checkout -b temp-publish
+          git rm -r --cached .github || echo "No .github directory to remove"
+          git commit -m "Remove GitHub workflows before publishing" || echo "Nothing to commit"
+
+      - name: Push cleaned branch to publish repo
         env:
           TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         run: |
           git remote add publish \
             https://x-access-token:${TOKEN}@github.com/Mirantis/k0rdent-enterprise-docs-publish.git
-          git push publish HEAD:release-v1.1.0 --force
+
+          # Push temp-publish to the same name as the source branch
+          git push publish HEAD:"${GITHUB_REF_NAME}" --force
+
+      - name: Cleanup
+        run: |
+          git checkout "${GITHUB_REF_NAME}"
+          git branch -D temp-publish
