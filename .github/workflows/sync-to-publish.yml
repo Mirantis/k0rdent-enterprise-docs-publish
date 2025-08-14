@@ -1,10 +1,11 @@
 name: Sync to Publish Repo
 
 on:
+  push:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: write  # ensure permission to push
 
 jobs:
   sync:
@@ -21,6 +22,15 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
+
+      - name: Rewrite mkdocs.yml edit_uri to target repo and current branch
+        run: |
+          if [ ! -f mkdocs.yml ]; then
+            echo "❌ mkdocs.yml not found. Failing workflow."
+            exit 1
+          fi
+          echo "✅ mkdocs.yml found. Updating edit_uri..."
+          sed -i "s|^edit_uri:.*|edit_uri: https://github.com/Mirantis/k0rdent-enterprise-docs-publish/edit/${GITHUB_REF_NAME}/docs/|" mkdocs.yml
 
       - name: Confirm token is populated
         run: |
