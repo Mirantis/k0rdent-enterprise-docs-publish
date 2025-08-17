@@ -23,6 +23,8 @@ To disable the UI, use:
 --set kordent-ui.enabled=false
 ```
 
+For more information on using and configuring the {{{ docsVersionInfo.k0rdentName }}} UI, including additional authentication options, see [the UI documentation](../../addons/ui/index.md).
+
 ## Install {{{ docsVersionInfo.k0rdentName }}}
 
 You install {{{ docsVersionInfo.k0rdentName }}} via  Helm chart:
