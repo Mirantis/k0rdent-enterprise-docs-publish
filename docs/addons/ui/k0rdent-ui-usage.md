@@ -60,7 +60,6 @@ Click `Create Cluster`.
 You can follow the status of the deployment from the `Clusters` page.
 
 ![k0rdent-ui-9.png](../assets/images/UI/k0rdent-ui-9.png)  
-![k0rdent-ui-11.png](../assets/images/UI/k0rdent-ui-11.png)
 
 You can also click on the cluster name to get more details about the cluster.  This includes both configuration information and log events as the cluster is created.
 
@@ -89,7 +88,6 @@ While {{{ docsVersionInfo.k0rdentName }}} focuses on creating clusters, you will
 To enable {{{ docsVersionInfo.k0rdentName }}} to manage an existing cluster, you adopt that cluster. To begin that process, first make sure you have the appropriate [`Credential`](k0rdent-ui-config.md#credentials) created to manage the cluster, then click the `Adopt Cluster` button.
 
 ![k0rdent-ui Adopt a cluster](../assets/images/UI/k0rdent-ui-16.png)
-![k0rdent-ui Adopt a cluster](../assets/images/UI/k0rdent-ui-17.png)
 
 Enter the name of the cluster; this is an arbitrary name used just for your reference.
 
@@ -116,7 +114,6 @@ You can see what template was used and also the number of clusters on which it's
 
 ![k0rdent-ui-19.png](../assets/images/UI/k0rdent-ui-19.png)
 ![k0rdent-ui-20.png](../assets/images/UI/k0rdent-ui-20.png)
-![k0rdent-ui-21.png](../assets/images/UI/k0rdent-ui-21.png)
 
 Specify the name for the service; it will be used to create the Kubernetes resources such as pods. Specify the priority; should it pre-empt other services if necessary, or "step aside" if resources are short?  In addition, when a serivce is propagated to multiple clusters, should that synchronization happen continuousy or just once?  You can also force a sync if things have changed.
 
@@ -135,8 +132,6 @@ You can see the new service on the Services list.
  Click the name of the service to get details.
 
 ![k0rdent-ui-23.png](../assets/images/UI/k0rdent-ui-23.png)
-![k0rdent-ui-24.png](../assets/images/UI/k0rdent-ui-24.png)
-![k0rdent-ui-25.png](../assets/images/UI/k0rdent-ui-25.png)
 
 The details page shows the parameters for the service, as well as the latest events and information on the clusters on which it can run.
 
@@ -213,7 +208,6 @@ Start by clicking `Cluster Templates` in the left-hand pane.
 Click the `+ Create Template` button to bring up the Cluster Template editor.
 
 ![k0rdent-ui-43.png](../assets/images/UI/k0rdent-ui-43.png)
-![k0rdent-ui-44.png](../assets/images/UI/k0rdent-ui-44.png)
 
 Name your template and the namespace in which you want that template to live. Note that the template does **not** have to be in the same namespace to which you deploy the actual cluster.
 

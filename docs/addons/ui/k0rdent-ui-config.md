@@ -149,7 +149,7 @@ Because {{{ docsVersionInfo.k0rdentName }}} can work with multiple infrastructur
 
 While {{{ docsVersionInfo.k0rdentName }}} can be used to create and manage new clusters, it can also "adopt" existing clusters. To adopt a cluster, it needs login access to the cluster via a valid `KUBECONFIG`, just as you would use with `kubectl`. To make this available to {{{ docsVersionInfo.k0rdentName }}}, you can create a `Credential` that includes the `KUBECONFIG`. See the documentation for [adopting clusters](../../admin/clusters/admin-adopting-clusters.md) for more information.
 
-## Make the UI avaiable
+## Make the UI available
 
 To make the UI available to users, create an `Ingress` that points to the `k0rdent-ui-*` `Pod`.
 
