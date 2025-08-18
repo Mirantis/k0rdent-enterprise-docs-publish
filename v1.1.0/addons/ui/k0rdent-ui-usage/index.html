@@ -5002,8 +5002,7 @@
 <p>Click <code>Create Cluster</code>.</p>
 <p><img alt="k0rdent-ui-8.png" src="../../assets/images/UI/k0rdent-ui-8.png" /></p>
 <p>You can follow the status of the deployment from the <code>Clusters</code> page.</p>
-<p><img alt="k0rdent-ui-9.png" src="../../assets/images/UI/k0rdent-ui-9.png" /><br />
-<img alt="k0rdent-ui-11.png" src="../../assets/images/UI/k0rdent-ui-11.png" /></p>
+<p><img alt="k0rdent-ui-9.png" src="../../assets/images/UI/k0rdent-ui-9.png" />  </p>
 <p>You can also click on the cluster name to get more details about the cluster.  This includes both configuration information and log events as the cluster is created.</p>
 <p><img alt="k0rdent-ui-13.png" src="../../assets/images/UI/k0rdent-ui-13.png" /></p>
 <p>To edit the configuration of an existing cluster, click the edit link.</p>
@@ -5016,8 +5015,7 @@
 <h3 id="adopting-a-cluster">Adopting a cluster<a class="headerlink" href="#adopting-a-cluster" title="Permanent link">#</a></h3>
 <p>While Mirantis k0rdent Enterprise focuses on creating clusters, you will often want to use it to manage clusters that already exist. For example, Mirantis k0rdent Enterprise makes it simple to add services to a cluster.</p>
 <p>To enable Mirantis k0rdent Enterprise to manage an existing cluster, you adopt that cluster. To begin that process, first make sure you have the appropriate <a href="../k0rdent-ui-config/#credentials"><code>Credential</code></a> created to manage the cluster, then click the <code>Adopt Cluster</code> button.</p>
-<p><img alt="k0rdent-ui Adopt a cluster" src="../../assets/images/UI/k0rdent-ui-16.png" />
-<img alt="k0rdent-ui Adopt a cluster" src="../../assets/images/UI/k0rdent-ui-17.png" /></p>
+<p><img alt="k0rdent-ui Adopt a cluster" src="../../assets/images/UI/k0rdent-ui-16.png" /></p>
 <p>Enter the name of the cluster; this is an arbitrary name used just for your reference.</p>
 <p>Just as with creating a new cluster, you can use the <code>kcm-system</code> namespace, but you should consider creating it elsewhere.</p>
 <p>Regardless of the infrastructure on which the adopted cluster lives, use the "adopted" <code>ClusterTemplate</code>; management is handled via the <code>KUBECONFIG</code> specified in the adoption <code>Credential</code>.  The provider credentials are handled separately, in the <code>ProviderCredential</code> field.  Again, you must <a href="../k0rdent-ui-config/#credentials">create this <code>Credential</code></a> ahead of time.</p>
@@ -5030,8 +5028,7 @@
 <p><img alt="k0rdent-ui-18.png" src="../../assets/images/UI/k0rdent-ui-18.png" /></p>
 <p>You can see what template was used and also the number of clusters on which it's running.  To create a new service, click <code>+ Deploy Service</code>.</p>
 <p><img alt="k0rdent-ui-19.png" src="../../assets/images/UI/k0rdent-ui-19.png" />
-<img alt="k0rdent-ui-20.png" src="../../assets/images/UI/k0rdent-ui-20.png" />
-<img alt="k0rdent-ui-21.png" src="../../assets/images/UI/k0rdent-ui-21.png" /></p>
+<img alt="k0rdent-ui-20.png" src="../../assets/images/UI/k0rdent-ui-20.png" /></p>
 <p>Specify the name for the service; it will be used to create the Kubernetes resources such as pods. Specify the priority; should it pre-empt other services if necessary, or "step aside" if resources are short?  In addition, when a serivce is propagated to multiple clusters, should that synchronization happen continuousy or just once?  You can also force a sync if things have changed.</p>
 <p>If you have specific requirements for a cluster (for example, a cluster that has an <code>Ingress</code> installed, or a cluster in the development environment) you can set the value of tags that must be present on a cluster before the application is deployed there.</p>
 <p>A note about these tags: they are completely arbitrary. There is no special intelligence involved in them. A cluster that has the <code>ingress=true</code> tag has that value because it's been deliberately set, not because an <code>Ingress</code> has been installed.</p>
@@ -5040,9 +5037,7 @@
 <p>You can see the new service on the Services list. </p>
 <p><img alt="k0rdent-ui-22.png" src="../../assets/images/UI/k0rdent-ui-22.png" /></p>
 <p>Click the name of the service to get details.</p>
-<p><img alt="k0rdent-ui-23.png" src="../../assets/images/UI/k0rdent-ui-23.png" />
-<img alt="k0rdent-ui-24.png" src="../../assets/images/UI/k0rdent-ui-24.png" />
-<img alt="k0rdent-ui-25.png" src="../../assets/images/UI/k0rdent-ui-25.png" /></p>
+<p><img alt="k0rdent-ui-23.png" src="../../assets/images/UI/k0rdent-ui-23.png" /></p>
 <p>The details page shows the parameters for the service, as well as the latest events and information on the clusters on which it can run.</p>
 <p>To remove a service, click the <code>Delete Service</code> button.</p>
 <p><img alt="k0rdent-ui-26.png" src="../../assets/images/UI/k0rdent-ui-26.png" /></p>
@@ -5080,8 +5075,7 @@
 <p>Start by clicking <code>Cluster Templates</code> in the left-hand pane.</p>
 <p><img alt="k0rdent-ui-42.png" src="../../assets/images/UI/k0rdent-ui-42.png" /></p>
 <p>Click the <code>+ Create Template</code> button to bring up the Cluster Template editor.</p>
-<p><img alt="k0rdent-ui-43.png" src="../../assets/images/UI/k0rdent-ui-43.png" />
-<img alt="k0rdent-ui-44.png" src="../../assets/images/UI/k0rdent-ui-44.png" /></p>
+<p><img alt="k0rdent-ui-43.png" src="../../assets/images/UI/k0rdent-ui-43.png" /></p>
 <p>Name your template and the namespace in which you want that template to live. Note that the template does <strong>not</strong> have to be in the same namespace to which you deploy the actual cluster.</p>
 <p>Specify the cloud or infrastructure provider on which these clusters will run. If the cluster will run on-premise, choose the <code>infrastructure-internal</code> provider.</p>
 <p>You can also use the <code>YAML Editor</code> to directly make changes to the template definition.</p>
