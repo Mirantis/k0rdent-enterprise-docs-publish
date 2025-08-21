@@ -616,7 +616,7 @@ kubectl -n kcm-system get helmrelease cluster-api-provider-metal3
 ```
 ```console
 NAME                          AGE    READY   STATUS
-cluster-api-provider-metal3   164m   False   Helm install failed for release kcm-system/cluster-api-provider-metal3 with chart cluster-api-provider-metal3@0.1.0-9d6d9c8: context deadline exceeded
+cluster-api-provider-metal3   164m   False   Helm install failed for release kcm-system/cluster-api-provider-metal3 with chart cluster-api-provider-metal3@0.2.1: context deadline exceeded
 ```
 
 If you see this error, delete the `HelmRelease`:
@@ -625,8 +625,23 @@ If you see this error, delete the `HelmRelease`:
 kubectl -n kcm-system delete helmrelease cluster-api-provider-metal3
 ```
 
-Kubernetes will automatically reinstall the `HelmRelease`.
+Flux will automatically reinstall the `HelmRelease`.
+If you see the same error again, set the `defaultHelmTimeout` value in the `management` object (default value is 5 minutes), 
+wait for the `management` object to become `Ready` and delete the `HelmRelease` again.
 
+```shell
+kubectl edit managements.k0rdent.mirantis.com
+```
+```yaml
+spec:
+  core:
+    kcm:
+      config:
+        controller:
+          defaultHelmTimeout: 30m
+```
+
+For more context, see [the related issue](https://github.com/k0rdent/kcm/issues/1643).
 
 ### Useful resources
 
