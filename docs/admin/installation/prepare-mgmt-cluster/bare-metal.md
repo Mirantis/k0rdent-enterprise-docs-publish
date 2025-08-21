@@ -150,7 +150,7 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
     ```
     ```console
     NAME                        VALID
-    capm3-standalone-cp-{{{ docsVersionInfo.addonVersions.dotVersions.capm3StandaloneCpCluster }}}   true
+    capm3-standalone-cp-{{{ docsVersionInfo.addonVersions.dashVersions.capm3StandaloneCpCluster }}}   true
     ```
 
 6. Optional. Tune the DHCP server.
@@ -280,7 +280,7 @@ RAID1 array. The `rootDeviceHint` in the `BareMetalHost` `spec` must be defined,
 
 For more information about software RAID support in IPA, see the [Ironic documentation](https://docs.openstack.org/ironic/latest/admin/raid.html#software-raid).
 
-## Create the cluster
+## Create a bare metal cluster
 
 You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} can create a bare metal cluster.
 
@@ -420,7 +420,7 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
             externalAddress: <CLUSTER_API_VIP>  # e.g., 10.0.1.70
           telemetry:
             enabled: false
-          version: v1.32.3+k0s.0
+          version: v1.32.6+k0s.0
         worker:
           # the image that was uploaded by default
           checksum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
@@ -533,11 +533,11 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
 
 ## The OOT CAPM3 provider upgrade notes
 
-To upgrade the OOT CAPM3 provider from v0.1.x to v0.2.0, you need to proceed through the same steps as you do in case
+To upgrade the OOT CAPM3 provider from v0.1.x to v0.2.x, you need to proceed through the same steps as you do in case
 of installing the provider from scratch.
 Pay attention to the parameters that are defined in the `management` object:
 
-* the following parameters are new to v0.2.0 and `"option:router,<ROUTER_IP>"` is a required one:
+* the following parameters are new to v0.2.x and `"option:router,<ROUTER_IP>"` is a required one:
    ```yaml
      config:
        ironic:
@@ -561,7 +561,7 @@ Pay attention to the parameters that are defined in the `management` object:
             ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2:
               sha256sum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
               url: https://get.mirantis.com/k0rdent-bm/targetimages/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
-  # v0.2.0
+  # v0.2.x
   config:
     ironic:
       resources:
@@ -570,6 +570,250 @@ Pay attention to the parameters that are defined in the `management` object:
             url: https://get.mirantis.com/k0rdent-bm/targetimages/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
             checksum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
 ```
+
+## Install and use CAPM3 provider in the air-gapped environment
+
+After {{{ docsVersionInfo.k0rdentName }}} is installed in the air-gapped environment,
+CAPM3 provider can also be installed for {{{ docsVersionInfo.k0rdentName }}} and used in this environment.
+
+### Install CAPM3 provider in the air-gapped environment
+
+1. Download and unpack the CAPM3 airgap bundle.
+
+   ```shell
+   wget get.mirantis.com/k0rdent-enterprise/bare-metal/{{{ docsVersionInfo.addonVersions.dotVersions.clusterApiProviderCapm3 }}}/airgap-bundle-{{{ docsVersionInfo.addonVersions.dotVersions.clusterApiProviderCapm3 }}}.tar.gz
+   mkdir airgap-bm
+   tar xf airgap-bundle-0.0.0-068c98d.tar.gz -C airgap-bm
+   ```
+
+2. # Upload the CAPM3 artifacts.
+
+   It's implied here that the same registry host is used for CAPM3 artifacts as for general {{{ docsVersionInfo.k0rdentName }}} artifacts.
+   So, the same `registry.local` alias will be used as in [Install {{{ docsVersionInfo.k0rdentName }}} in the airgapped environment](../airgap/airgap-install.md).
+
+   ```shell
+   export REGISTRY="registry.local"
+   ```
+
+   > WARNING:
+   > Replace `registry.local` with your actual registry hostname.
+
+   Upload charts and images to the registry. 
+
+   ```shell
+   cd airgap-bm/bundle
+
+   for i in $(ls charts); do ARTIFACT=$(echo "$i" | tr '@' ':' | tr '&' '/' | sed 's/\.tar//g'); skopeo --insecure-policy copy --dest-cert-dir ~/certs -a oci-archive:charts/${i} docker://${REGISTRY}/${ARTIFACT}; done
+
+   for i in $(ls images); do ARTIFACT=$(echo "$i" | tr '@' ':' | tr '&' '/' | sed 's/\.tar//g'); skopeo --insecure-policy copy --dest-cert-dir ~/certs -a oci-archive:images/${i} docker://${REGISTRY}/${ARTIFACT}; done 
+   ```
+
+   It's implied here that the same HTTP server is used for CAPM3 binaries as for other {{{ docsVersionInfo.k0rdentName }}} binaries.
+   So, the same `binary.local` alias will be used as in [Install {{{ docsVersionInfo.k0rdentName }}} in the airgapped environment](../airgap/airgap-install.md).
+
+   ```shell
+   export BIN_PATH="binary.local"
+   ```
+   > WARNING:
+   > Replace `binary.local` with the actual path used by your HTTP server.
+
+   Move the binary files so that they are accessible via the HTTP server.
+
+   ```shell
+   for i in $(ls bins); do
+     BIN=$(echo "$i" | tr '@' ':' | tr '&' '/' | sed 's/\.tar//g')
+     mkdir -p ${BIN_PATH}/${BIN%/*}
+     mv bins/${i} ${BIN_PATH}/${BIN}
+   done
+   ```
+
+3. Create the necessary Kubernetes CR objects to install the CAPM3 provider.
+
+    ```shell
+    kubectl create -f - <<EOF
+    apiVersion: source.toolkit.fluxcd.io/v1
+    kind: HelmRepository
+    metadata:
+      name: oot-capm3-repo
+      namespace: kcm-system
+      labels:
+        k0rdent.mirantis.com/managed: "true"
+    spec:
+      type: oci
+      url: 'oci://registry.local/k0rdent-bm/charts/'
+      interval: 10m0s
+      certSecretRef:          # This is required only if you didn't add a reference to the registry cert secret
+        name: <registry-cert> # in the "management" object: `spec.core.kcm.config.controller.registryCertSecret`
+    ---
+    apiVersion: k0rdent.mirantis.com/v1beta1
+    kind: ProviderTemplate
+    metadata:
+      name: cluster-api-provider-metal3-{{{ docsVersionInfo.addonVersions.dashVersions.clusterApiProviderCapm3 }}}
+      annotations:
+        helm.sh/resource-policy: keep
+    spec:
+      helm:
+        chartSpec:
+          chart: cluster-api-provider-metal3
+          version: {{{ docsVersionInfo.addonVersions.dotVersions.clusterApiProviderCapm3 }}}
+          interval: 10m0s
+          sourceRef:
+            kind: HelmRepository
+            name: oot-capm3-repo
+    ---
+    apiVersion: k0rdent.mirantis.com/v1beta1
+    kind: ClusterTemplate
+    metadata:
+      annotations:
+        helm.sh/resource-policy: keep
+      labels:
+        k0rdent.mirantis.com/component: kcm
+      name: capm3-standalone-cp-{{{ docsVersionInfo.addonVersions.dashVersions.capm3StandaloneCpCluster }}}
+      namespace: kcm-system
+    spec:
+      helm:
+        chartSpec:
+          chart: capm3-standalone-cp
+          version: {{{ docsVersionInfo.addonVersions.dotVersions.capm3StandaloneCpCluster }}}
+          interval: 10m0s
+          reconcileStrategy: ChartVersion
+          sourceRef:
+            kind: HelmRepository
+            name: oot-capm3-repo
+    EOF
+    ```
+
+   > WARNING:
+   > Replace `registry.local` with your actual registry hostname.
+
+4. Verify the `ProviderTemplate` is valid
+
+   Check that the `ProviderTemplate` has been created successfully:
+
+   ```shell
+   kubectl get providertemplates cluster-api-provider-metal3-{{{ docsVersionInfo.addonVersions.dashVersions.clusterApiProviderCapm3 }}}
+   ```
+   ```console
+   NAME                              VALID
+   cluster-api-provider-metal3-{{{ docsVersionInfo.addonVersions.dashVersions.clusterApiProviderCapm3 }}} true
+   ```
+
+5. Configure the `Management` object
+
+    Edit the `Management` object to add the CAPM3 provider configuration:
+
+    ```shell
+    kubectl edit managements.k0rdent.mirantis.com
+    ```
+
+    Add the following configuration to the providers section:
+
+    ```yaml
+    - name: cluster-api-provider-metal3
+      template: cluster-api-provider-metal3-{{{ docsVersionInfo.addonVersions.dashVersions.clusterApiProviderCapm3 }}}
+      config:
+        baremetal-operator:
+          resources:
+            images:
+              bm_operator: registry.local/k0rdent-bm/images/external/metal3-io/baremetal-operator:v0.9.1-2025-04-17-16-07-19
+              kube_rbac_proxy: registry.local/k0rdent-bm/images/external/gcr.io/kubebuilder/kube-rbac-proxy:v0.5.1-amd64--2025-04-16-21-32-23
+        global:
+          ironic:
+            enabled: true # networking configuration ("ironic.networking" section) should be defined prior to enabling ironic
+        ironic:
+          dnsmasq:
+            ipxe_boot_server: http://binary.local/k0rdent-bm/ipa/pxe/
+          networking:
+            dhcp: # used by DHCP server to assign IPs to hosts during PXE boot
+              rangeBegin: <DHCP_RANGE_START>      # e.g., 10.0.1.51
+              rangeEnd: <DHCP_RANGE_END>          # e.g., 10.0.1.55
+              netmask: <DHCP_SUBNET_MASK>         # e.g., 255.255.255.192 (default is 255.255.255.0)
+              options:                            # DHCP options, used during PXE boot and by IPA
+                - "option:router,<ROUTER_IP>"     # e.g., 10.0.1.1. It's a mandatory option. 
+                - "option:dns-server,<DNS_IP[,DNS2_IP...]>" # can be set to KEEPALIVED_VIP (dnsmasq can serve as a DNS server with user-defined DNS records) or to IP of your preferred server. Optional.
+                - "option:ntp-server,<NTP_IP>"    # can be set to KEEPALIVED_VIP (internal ntp server) or to IP of your preferred server. That ntp server will be used on PXE boot stage then. Optional.
+            interface: <PROVISION_INTERFACE>      # e.g., bond0 - interface of the management cluster node connected to BM hosts provision network
+            ipAddress: <KEEPALIVED_VIP>          # e.g., 10.0.1.50 - keepalived VIP for DHCP server and Ironic services. This VIP will be configured on the <PROVISION_INTERFACE>, it must be in the same L3 network as DHCP range if no dhcp-relay used between management cluster and child cluster hosts.
+          resources:
+            images:
+              dnsmasq: registry.local/k0rdent-bm/images/baremetal-dnsmasq:base-alpine-20250217104414
+              dnsmasq_controller: registry.local/k0rdent-bm/images/dnsmasq-controller:0.2.0
+              dnsmasq_operator: registry.local/k0rdent-bm/images/dnsmasq-operator:0.2.0
+              dynamic_ipxe: registry.local/k0rdent-bm/images/dynamic-ipxe:0.2.0
+              ironic: registry.local/k0rdent-bm/images/external/metal3-io/ironic:v29.0.0-2025-04-16-21-32-23
+              keepalived: registry.local/k0rdent-bm/images/external/metal3-io/keepalived:2025-04-16-21-32-23
+              mariadb: registry.local/k0rdent-bm/images/external/metal3-io/mariadb:2025-04-16-21-32-23
+              ntp: registry.local/k0rdent-bm/images/baremetal-dnsmasq:base-alpine-20250217104414
+              resource_controller: registry.local/k0rdent-bm/images/resource-controller:0.2.0
+            images_ipa:
+            - checksum: 56abb6b45eb75373a4c1cfba5c0653b1
+              name: ironic-python-agent.initramfs
+              url: http://binary.local/k0rdent-bm/ipa/initramfs-caracal-noble-debug-20250624163043
+            - checksum: 960f08ee9c0d967bbcbd2105602a1098
+              name: ironic-python-agent.kernel
+              url: http://binary.local/k0rdent-bm/ipa/kernel-caracal-noble-debug-20250624163043
+            images_target:
+            # By default, "ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2" is the only image available.
+            # You can define custom OS images here if needed by adding new items:
+            - checksum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
+              name: ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
+              url: http://binary.local/k0rdent-bm/target/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
+        resources:
+          images:
+            capm_provider_metal3: registry.local/k0rdent-bm/images/metal3-io/cluster-api-provider-metal3:v1.9.3-2025-06-04-15-35-00
+            ip_address_manager: registry.local/k0rdent-bm/images/external/metal3-io/ip-address-manager:v1.9.4-2025-04-16-21-32-23
+   ```
+
+   > WARNING:
+   > Replace `registry.local` with your actual registry hostname.
+   > Replace `binary.local` with the actual path used by your HTTP server.
+
+6. Continue with steps 4,5,6 of the "Prepare {{{ docsVersionInfo.k0rdentName }}} for Bare Metal clusters" section
+
+### Deploy a bare metal cluster in the air-gapped environment
+
+After the CAPM3 provider is deployed in the air-gapped environment, you can create a bare metal child cluster.
+General procedure is the same as described in "Create a bare metal cluster" section.
+Though, there are certain differences in parameters of `ClusterDeployment` object (created in step 3):
+
+* `spec.config.k0s` parameters section must include the following:
+
+  ```yaml
+    k0s:
+      ...
+      version: v1.32.6+k0s.0 # mandatory
+      arch: amd64 # mandatory
+      images:
+        metricsserver:
+          image: "registry.local/k0rdent-enterprise/metrics-server/metrics-server"
+        kubeproxy:
+          image: "registry.local/k0rdent-enterprise/k0sproject/kube-proxy"
+        coredns:
+          image: "registry.local/k0rdent-enterprise/k0sproject/coredns"
+        pause:
+          image: "registry.local/k0rdent-enterprise/pause"
+        calico:
+          cni:
+            image: "registry.local/k0rdent-enterprise/k0sproject/calico-cni"
+          node:
+            image: "registry.local/k0rdent-enterprise/k0sproject/calico-node"
+          kubecontrollers:
+            image: "registry.local/k0rdent-enterprise/k0sproject/calico-kube-controllers"
+  ```
+
+  > WARNING:
+  > Replace `registry.local` with your actual registry hostname.
+
+  > WARNING:
+  > Ensure that the artifacts for your target k0s version are included in the {{{ docsVersionInfo.k0rdentName }}} airgap bindle.
+
+* `spec.config.controlPlane.preStartCommands` and `spec.config.worker.preStartCommands` must not
+  include commands that need access to external networks.
+
+  > WARNING:
+  > `jq` package is still required for the deployment of child cluster.
+  > Thus, ensure that it's included in your target OS image, or it's uploaded from
+  > your HTTP server and installed during cloud-init - for both control plane and worker nodes.
 
 ## Troubleshooting
 
