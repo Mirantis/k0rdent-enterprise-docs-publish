@@ -4,11 +4,12 @@ Before installing {{{ docsVersionInfo.k0rdentName }}} prepare a special
 `values.yaml` file to identify the registry and k0s binaries URL for the main
 components.
 
-The following is an example of the `values.yaml` file. In this example, the `k0s` binaries are placed on the HTTP host
-`binary.local`. Thus it's expected that the `k0s` binary will be available on
-the URL `http://binary.local/k0rdent-enterprise/k0s-v1.32.6+k0s.0-amd64` In
-addition, the registry is assumed to be at `registry.local`. Adjust your
-`values.yaml` file accordingly.
+The following is an example of the `values.yaml` file. In this example, the
+`k0s` binaries are placed on the HTTP host `binary.local`. Thus it's expected
+that the `k0s` binary will be available on the URL
+`http://binary.local/k0rdent-enterprise/k0s-v1.32.6+k0s.0-amd64` In addition,
+the registry is assumed to be at `registry.local`. Adjust your `values.yaml`
+file accordingly.
 
 > WARNING:
 > If you're using a registry with a self-signed certificate you must first create a
@@ -56,6 +57,10 @@ cluster-api-operator:
 velero:
   image:
     repository: registry.local/k0rdent-enterprise/velero/velero
+
+k0rdent-ui:
+  image:
+    repository: registry.local/k0rdent-enterprise/k0rdent-ui
 ```
 
 Start the installation itself with the following command:
