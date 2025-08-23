@@ -627,7 +627,7 @@ kubectl -n kcm-system delete helmrelease cluster-api-provider-metal3
 
 Flux will automatically reinstall the `HelmRelease`.
 If you see the same error again, set the `defaultHelmTimeout` value in the `management` object (default value is 5 minutes), 
-wait for the `management` object to become `Ready` and delete the `HelmRelease` again.
+wait for the `management` object to become `Ready` and delete the `HelmRelease` again so Flux will reinstall it.
 
 ```shell
 kubectl edit managements.k0rdent.mirantis.com
