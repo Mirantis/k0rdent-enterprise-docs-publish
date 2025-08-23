@@ -79,7 +79,7 @@ Mirantis k0rdent Enterprise builds on the upstream, community-driven k0rdent OSS
     ```
    This is noted as required in the [grafana-operator release notes](https://github.com/grafana/grafana-operator/releases/tag/v5.18.0).
 
-* [ **airgap only** ] Before upgrade please add k0rdent-ui configuration to the
+* [ **airgap only** ] Before upgrade, please add the k0rdent-ui configuration to the
   management cluster like so (where `registry.local` is your registry host):
 
     ```yaml
@@ -92,8 +92,8 @@ Mirantis k0rdent Enterprise builds on the upstream, community-driven k0rdent OSS
                 repository: registry.local/k0rdent-enterprise/k0rdent-ui
 	```
 
-* [ **airgap only** ] If you're using self-signed certificate for the registry
-  and you were using workarounds to support it with `1.0.0` you must create CA
+* [ **airgap only** ] If you're using a self-signed certificate for the registry
+  and you were using workarounds to support it with `1.0.0`, you must create a CA
   Secret and proceed with the [custom CA configuration](../appendix/appendix-extend-mgmt.md#configuring-a-custom-oci-registry-for-kcm-components)
   **before** the upgrade.
 
@@ -166,3 +166,4 @@ Huge thanks to the following contributors for making this release possible:
 ## Try It Out
 
 QuickStart guide: [https://docs.k0rdent-enterprise.io/v1.1.0/quickstarts/](https://docs.k0rdent-enterprise.io/v1.1.0/quickstarts/)
+
