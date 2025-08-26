@@ -301,3 +301,22 @@ spec:
           EKSEnableIAM: true
           EKSAllowAddRoles: true
 ```
+
+### Configuring Default Timeout for Helm Install and Upgrade Operations
+
+In some environments, Helm chart installations or upgrades may take longer than the default timeout of 5 minutes.
+This hardcoded limit could cause operations to fail unexpectedly if they exceeded the timeout.
+
+Starting from {{{ docsVersionInfo.k0rdentName }}} v1.1.0, KCM allows you to configure the default Helm timeout using the `defaultHelmTimeout`
+controller setting:
+
+```yaml
+spec:
+  core:
+    kcm:
+      config:
+        controller:
+           defaultHelmTimeout: 20m
+```
+
+This value accepts standard duration format (for example, 20m or 1h).
