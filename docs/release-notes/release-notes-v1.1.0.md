@@ -63,22 +63,39 @@ Mirantis k0rdent Enterprise builds on the upstream, community-driven k0rdent OSS
 
 * After upgrading KOF, please run:
 
-  ```bash
-  kubectl apply --server-side --force-conflicts \
-    -f https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
-  ```
+    ```bash
+    kubectl apply --server-side --force-conflicts \
+      -f https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
+    ```
 
 * And run the same for each regional cluster:
 
-  ```bash
-  kubectl get secret -n kcm-system $REGIONAL_CLUSTER_NAME-kubeconfig \
-    -o=jsonpath={.data.value} | base64 -d > regional-kubeconfig
+    ```bash
+    kubectl get secret -n kcm-system $REGIONAL_CLUSTER_NAME-kubeconfig \
+      -o=jsonpath={.data.value} | base64 -d > regional-kubeconfig
 
-  KUBECONFIG=regional-kubeconfig kubectl apply --server-side --force-conflicts \
-    -f https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
-  ```
+    KUBECONFIG=regional-kubeconfig kubectl apply --server-side --force-conflicts \
+      -f https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
+    ```
+   This is noted as required in the [grafana-operator release notes](https://github.com/grafana/grafana-operator/releases/tag/v5.18.0).
 
-This is noted as required in the [grafana-operator release notes](https://github.com/grafana/grafana-operator/releases/tag/v5.18.0).
+* [ **airgap only** ] Before upgrade, please add the k0rdent-ui configuration to the
+  management cluster like so (where `registry.local` is your registry host):
+
+    ```yaml
+	spec:
+      core:
+        kcm:
+          config:
+	        k0rdent-ui:
+              image:
+                repository: registry.local/k0rdent-enterprise/k0rdent-ui
+	```
+
+* [ **airgap only** ] If you're using a self-signed certificate for the registry
+  and you were using workarounds to support it with `1.0.0`, you must create a CA
+  Secret and proceed with the [custom CA configuration](../appendix/appendix-extend-mgmt.md#configuring-a-custom-oci-registry-for-kcm-components)
+  **before** the upgrade.
 
 ### ✨ Notable Changes ✨
 
@@ -126,7 +143,7 @@ This is noted as required in the [grafana-operator release notes](https://github
 ## Known Issues
 
 - None
-    
+
 ## Release Metadata
 
 | Key                   | Value                                     |
@@ -139,7 +156,7 @@ This is noted as required in the [grafana-operator release notes](https://github
 
 ## Contributors
 
-Huge thanks to the following contributors for making this release possible:  
+Huge thanks to the following contributors for making this release possible:
 [@gmlexx](https://github.com/gmlexx), [@denis-ryzhkov](https://github.com/denis-ryzhkov), [@aglarendil](https://github.com/aglarendil), [@kylewuolle](https://github.com/kylewuolle), [@a13x5](https://github.com/a13x5), [@eromanova](https://github.com/eromanova), [@zerospiel](https://github.com/zerospiel), [@BROngineer](https://github.com/BROngineer), [@Kshatrix](https://github.com/Kshatrix), [@dis-xcom](https://github.com/dis-xcom), [@wahabmk](https://github.com/wahabmk), [@AndrejsPon00](https://github.com/AndrejsPon00)
 
 ## Resources
@@ -149,3 +166,4 @@ Huge thanks to the following contributors for making this release possible:
 ## Try It Out
 
 QuickStart guide: [https://docs.k0rdent-enterprise.io/v1.1.0/quickstarts/](https://docs.k0rdent-enterprise.io/v1.1.0/quickstarts/)
+

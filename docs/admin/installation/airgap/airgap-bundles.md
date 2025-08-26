@@ -71,7 +71,11 @@ Upload to the registry using `skopeo`:
     cd airgap-bundle
 	for file in $(find . -type f ! -name 'skopeo*' | sed -s s~^./~~g); do
 	  echo $file; bn=${file%*.tar};
-	  docker run -v ${HOME}/.docker/config.json:/config.json skopeo:v1.17.0 copy -a --authfile /config.json oci-archive:${file} docker://${REGISTRY}/${bn%_*}:${bn#*_};
+	  docker run --rm --network=host \
+	  -v ${HOME}/.docker/config.json:/config.json \
+	  -v ${PWD}:/airgap-bundle -w /airgap-bundle \
+	  skopeo:v1.17.0 copy -a --authfile /config.json --insecure-policy --dest-tls-verify=false \
+	  oci-archive:${file} docker://${REGISTRY}/${bn%_*}:${bn#*_};
 	done
     ```
 
