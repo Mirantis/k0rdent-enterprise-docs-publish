@@ -2729,6 +2729,8 @@
       
         
       
+        
+      
     
     
     
@@ -2863,6 +2865,27 @@
   
   <span class="md-ellipsis">
     Custom CA Certificates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/known-issues-clusterctl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clusterctl Issues
   </span>
   
 
@@ -4849,11 +4872,10 @@ look something like this:</p>
 <span class="w">      </span><span class="nt">routeTableName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mgmt-cluster-node-routetable</span>
 <span class="w">      </span><span class="nt">securityGroupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mgmt-cluster-node-nsg</span>
 </code></pre></div>
-</li>
-<li>
-<p>Generate the <code>ClusterDeployment</code> Manifest</p>
-<p>To simplify the creation of a <code>ClusterDeployment</code> manifest, you can use the following template, which dynamically inserts 
-the appropriate values:</p>
+<p>Alternatively, you can generate the <code>ClusterDeployment</code> manifest.</p>
+<p>If the management cluster you prepared in the first step was deployed using k0rdent or the CAPI Azure provider,
+you can simplify the creation of a <code>ClusterDeployment</code> manifest, and use the following template, which
+dynamically inserts the appropriate values:</p>
 <p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
 <span class="nt">metadata</span><span class="p">:</span>

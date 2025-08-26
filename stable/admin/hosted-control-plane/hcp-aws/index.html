@@ -2729,6 +2729,8 @@
       
         
       
+        
+      
     
     
     
@@ -2863,6 +2865,27 @@
   
   <span class="md-ellipsis">
     Custom CA Certificates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/known-issues-clusterctl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clusterctl Issues
   </span>
   
 
@@ -4862,11 +4885,10 @@ deploy and manage the hosted control plane. For example:</p>
 <p class="admonition-title">Note</p>
 <p>The example above uses the <code>us-west-1</code> region, but you should use the region of your VPC.</p>
 </div>
-</li>
-<li>
-<p>Generate the <code>ClusterDeployment</code> Manifest</p>
-<p>To simplify the creation of a <code>ClusterDeployment</code> manifest, you can use the following template, which dynamically 
-inserts the appropriate values:
+<p>Alternatively, you can generate the <code>ClusterDeployment</code> manifest.</p>
+<p>If the management cluster you prepared in the first step was deployed using k0rdent or the CAPI AWS provider,
+you can simplify the creation of a <code>ClusterDeployment</code> manifest and use the following template, which
+dynamically inserts the appropriate values:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterDeployment</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4893,10 +4915,20 @@ inserts the appropriate values:
 <span class="w">    </span><span class="nt">rootVolumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span><span class="w">        </span>
 <span class="w">    </span><span class="nt">securityGroupIDs</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;{{.status.networkStatus.securityGroups.node.id}}&quot;</span>
-</code></pre></div></p>
+</code></pre></div>
 <p>Save this template as <code>clusterdeployment.yaml.tpl</code>, then generate your manifest using the following command:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>awscluster<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>clusterdeployment.yaml.tpl<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>clusterdeployment.yaml
 </code></pre></div>
+<p>Or if the management cluster is deployed on EKS, use the following command:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>awsmanagedcontrolplane<span class="w"> </span>&lt;cluster-name&gt;<span class="w"> </span>-o<span class="w"> </span>go-template<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>cat<span class="w"> </span>clusterdeployment.yaml.tpl<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>clusterdeployment.yaml
+</code></pre></div>
+</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+For EKS management clusters, update the <code>spec.config.managementClusterName</code> parameter as described in
+<a href="../../../reference/template/template-aws/#setting-the-managementclustername-parameter-for-hosted-control-plane-clusters">Setting the <code>managementClusterName</code> parameter</a>.</p>
+</div>
 </li>
 <li>
 <p>Apply the <code>ClusterTemplate</code></p>

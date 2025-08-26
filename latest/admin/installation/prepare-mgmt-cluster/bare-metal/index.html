@@ -2842,6 +2842,8 @@
       
         
       
+        
+      
     
     
     
@@ -2976,6 +2978,27 @@
   
   <span class="md-ellipsis">
     Custom CA Certificates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../troubleshooting/known-issues-clusterctl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clusterctl Issues
   </span>
   
 
@@ -5539,12 +5562,24 @@ Pay attention to the parameters that are defined in the <code>management</code> 
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>helmrelease<span class="w"> </span>cluster-api-provider-metal3
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                          AGE    READY   STATUS</span>
-<span class="go">cluster-api-provider-metal3   164m   False   Helm install failed for release kcm-system/cluster-api-provider-metal3 with chart cluster-api-provider-metal3@0.1.0-9d6d9c8: context deadline exceeded</span>
+<span class="go">cluster-api-provider-metal3   164m   False   Helm install failed for release kcm-system/cluster-api-provider-metal3 with chart cluster-api-provider-metal3@0.2.1: context deadline exceeded</span>
 </code></pre></div></p>
 <p>If you see this error, delete the <code>HelmRelease</code>:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>delete<span class="w"> </span>helmrelease<span class="w"> </span>cluster-api-provider-metal3
 </code></pre></div>
-<p>Kubernetes will automatically reinstall the <code>HelmRelease</code>.</p>
+<p>Flux will automatically reinstall the <code>HelmRelease</code>.
+If you see the same error again, set the <code>defaultHelmTimeout</code> value in the <code>management</code> object (default value is 5 minutes), 
+wait for the <code>management</code> object to become <code>Ready</code> and delete the <code>HelmRelease</code> again so Flux will reinstall it.</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>managements.k0rdent.mirantis.com
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">core</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">controller</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">defaultHelmTimeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30m</span>
+</code></pre></div></p>
+<p>For more context, see <a href="https://github.com/k0rdent/kcm/issues/1643">the related issue</a>.</p>
 <h3 id="useful-resources">Useful resources<a class="headerlink" href="#useful-resources" title="Permanent link">#</a></h3>
 <p>For additional troubleshooting guidance, refer to the <a href="https://book.metal3.io/troubleshooting">Metal3 troubleshooting documentation</a>.</p>
 <p>For more information about bare metal cluster configuration options, see:</p>

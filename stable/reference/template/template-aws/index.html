@@ -2676,6 +2676,8 @@
       
         
       
+        
+      
     
     
     
@@ -2810,6 +2812,27 @@
   
   <span class="md-ellipsis">
     Custom CA Certificates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/known-issues-clusterctl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clusterctl Issues
   </span>
   
 
@@ -3840,6 +3863,48 @@
       Non-root volumes
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-the-managementclustername-parameter-for-hosted-control-plane-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting the managementClusterName parameter for Hosted Control Plane clusters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-the-managementclustername-parameter-for-hosted-control-plane-clusters_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting the managementClusterName parameter for Hosted Control Plane clusters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting the managementClusterName parameter for Hosted Control Plane clusters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#management-cluster-is-ec2-based-self-managed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Management Cluster is EC2-Based (Self-Managed)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#management-cluster-deployed-on-eks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Management Cluster Deployed on EKS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4887,6 +4952,48 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#setting-the-managementclustername-parameter-for-hosted-control-plane-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting the managementClusterName parameter for Hosted Control Plane clusters
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-the-managementclustername-parameter-for-hosted-control-plane-clusters_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting the managementClusterName parameter for Hosted Control Plane clusters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting the managementClusterName parameter for Hosted Control Plane clusters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#management-cluster-is-ec2-based-self-managed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Management Cluster is EC2-Based (Self-Managed)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#management-cluster-deployed-on-eks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Management Cluster Deployed on EKS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -5029,6 +5136,34 @@ fields in the <code>ClusterDeployment</code> responsible for these settings, whi
 </tbody>
 </table>
 <p>The <code>nonRootVolumes</code> field is <strong>a list</strong> of <a href="https://cluster-api-aws.sigs.k8s.io/crd/#infrastructure.cluster.x-k8s.io/v1beta2.Volume">Volumes</a>.</p>
+<h2 id="setting-the-managementclustername-parameter-for-hosted-control-plane-clusters">Setting the <code>managementClusterName</code> parameter for Hosted Control Plane clusters<a class="headerlink" href="#setting-the-managementclustername-parameter-for-hosted-control-plane-clusters" title="Permanent link">#</a></h2>
+<p>The <code>managementClusterName</code> parameter is <strong>required</strong> for hosted control plane clusters.
+It should match the <code>&lt;cluster-id&gt;</code> from the <code>kubernetes.io/cluster/&lt;cluster-id&gt; = owned</code> tag on existing AWS network
+resources:</p>
+<h2 id="setting-the-managementclustername-parameter-for-hosted-control-plane-clusters_1">Setting the <code>managementClusterName</code> parameter for Hosted Control Plane clusters<a class="headerlink" href="#setting-the-managementclustername-parameter-for-hosted-control-plane-clusters_1" title="Permanent link">#</a></h2>
+<p>The <code>managementClusterName</code> parameter is <strong>required</strong> for hosted control plane clusters.
+It should match the <code>&lt;cluster-id&gt;</code> from the <code>kubernetes.io/cluster/&lt;cluster-id&gt; = owned</code> tag on existing AWS network
+resources:</p>
+<h3 id="management-cluster-is-ec2-based-self-managed">Management Cluster is EC2-Based (Self-Managed)<a class="headerlink" href="#management-cluster-is-ec2-based-self-managed" title="Permanent link">#</a></h3>
+<ul>
+<li>
+<p>If deployed using Mirantis k0rdent Enterprise (<code>aws-standalone-cp</code> template), use the <strong>name of the ClusterDeployment</strong> object.</p>
+</li>
+<li>
+<p>If created with Cluster API Provider AWS, use the value of <code>spec.clusterName</code> from the Cluster object.</p>
+</li>
+</ul>
+<h3 id="management-cluster-deployed-on-eks">Management Cluster Deployed on EKS<a class="headerlink" href="#management-cluster-deployed-on-eks" title="Permanent link">#</a></h3>
+<ul>
+<li>
+<p>If deployed using Mirantis k0rdent Enterprise (<code>aws-eks</code> template), the EKS cluster name defaults to:
+  <code>&lt;namespace&gt;_&lt;clusterdeploymentname&gt;-cp</code>, or to the value of <code>eksClusterName</code> if explicitly set.</p>
+</li>
+<li>
+<p>If deployed separately (using <code>eksctl</code> or manually via the AWS console), the <code>&lt;cluster-id&gt;</code> is typically the
+<strong>EKS cluster name</strong>.</p>
+</li>
+</ul>
 
 
 

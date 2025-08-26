@@ -2676,6 +2676,8 @@
       
         
       
+        
+      
     
     
     
@@ -2810,6 +2812,27 @@
   
   <span class="md-ellipsis">
     Custom CA Certificates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/known-issues-clusterctl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clusterctl Issues
   </span>
   
 
@@ -4049,6 +4072,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#configuring-default-timeout-for-helm-install-and-upgrade-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Default Timeout for Helm Install and Upgrade Operations
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4862,6 +4894,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#configuring-default-timeout-for-helm-install-and-upgrade-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Default Timeout for Helm Install and Upgrade Operations
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5167,6 +5208,19 @@ https://github.com/kubernetes-sigs/cluster-api-operator/blob/v0.18.1/api/v1alpha
 <span class="w">          </span><span class="nt">EKSEnableIAM</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">          </span><span class="nt">EKSAllowAddRoles</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
+<h3 id="configuring-default-timeout-for-helm-install-and-upgrade-operations">Configuring Default Timeout for Helm Install and Upgrade Operations<a class="headerlink" href="#configuring-default-timeout-for-helm-install-and-upgrade-operations" title="Permanent link">#</a></h3>
+<p>In some environments, Helm chart installations or upgrades may take longer than the default timeout of 5 minutes.
+This hardcoded limit could cause operations to fail unexpectedly if they exceeded the timeout.</p>
+<p>Starting from Mirantis k0rdent Enterprise v1.1.0, KCM allows you to configure the default Helm timeout using the <code>defaultHelmTimeout</code>
+controller setting:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">core</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">controller</span><span class="p">:</span>
+<span class="w">           </span><span class="nt">defaultHelmTimeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20m</span>
+</code></pre></div>
+<p>This value accepts standard duration format (for example, 20m or 1h).</p>
 
 
 
