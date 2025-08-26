@@ -608,7 +608,7 @@ CAPM3 provider can also be installed for {{{ docsVersionInfo.k0rdentName }}} and
    for i in $(ls images); do ARTIFACT=$(echo "$i" | tr '@' ':' | tr '&' '/' | sed 's/\.tar//g'); skopeo --insecure-policy copy --dest-cert-dir ~/certs -a oci-archive:images/${i} docker://${REGISTRY}/${ARTIFACT}; done 
    ```
 
-   It's implied here that the same HTTP server is used for CAPM3 binaries as for other {{{ docsVersionInfo.k0rdentName }}} binaries.
+   The same HTTP server is used for CAPM3 binaries as for other {{{ docsVersionInfo.k0rdentName }}} binaries.
    So, the same `binary.local` alias will be used as in [Install {{{ docsVersionInfo.k0rdentName }}} in the airgapped environment](../airgap/airgap-install.md).
 
    ```shell
@@ -898,3 +898,4 @@ For more information about bare metal cluster configuration options, see:
 - [CAPM3 API reference](https://github.com/metal3-io/cluster-api-provider-metal3/blob/main/docs/api.md)
 - [Metal3 network configuration guides](https://book.metal3.io/bmo/instance_customization#networkdata)
 - [Metal3 IPAM documentation](https://book.metal3.io/ipam/introduction)
+
