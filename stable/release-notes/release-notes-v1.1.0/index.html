@@ -5122,21 +5122,41 @@
 </ul>
 <h2 id="upgrade-notes">❗ Upgrade Notes ❗<a class="headerlink" href="#upgrade-notes" title="Permanent link">#</a></h2>
 <ul>
-<li>After upgrading KOF, please run:</li>
-</ul>
+<li>
+<p>After upgrading KOF, please run:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>--force-conflicts<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
 </code></pre></div>
-<ul>
-<li>And run the same for each regional cluster:</li>
-</ul>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$REGIONAL_CLUSTER_NAME</span>-kubeconfig<span class="w"> </span><span class="se">\</span>
+</li>
+<li>
+<p>And run the same for each regional cluster:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span><span class="nv">$REGIONAL_CLUSTER_NAME</span>-kubeconfig<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">={</span>.data.value<span class="o">}</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span>&gt;<span class="w"> </span>regional-kubeconfig
 
 <span class="nv">KUBECONFIG</span><span class="o">=</span>regional-kubeconfig<span class="w"> </span>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>--force-conflicts<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-f<span class="w"> </span>https://github.com/grafana/grafana-operator/releases/download/v5.18.0/crds.yaml
 </code></pre></div>
-<p>This is noted as required in the <a href="https://github.com/grafana/grafana-operator/releases/tag/v5.18.0">grafana-operator release notes</a>.</p>
+   This is noted as required in the <a href="https://github.com/grafana/grafana-operator/releases/tag/v5.18.0">grafana-operator release notes</a>.</p>
+</li>
+<li>
+<p>[ <strong>airgap only</strong> ] Before upgrade, please add the k0rdent-ui configuration to the
+  management cluster like so (where <code>registry.local</code> is your registry host):</p>
+<div class="highlight"><pre><span></span><code><span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">core</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">k0rdent-ui</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">image</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.local/k0rdent-enterprise/k0rdent-ui</span>
+</code></pre></div>
+</li>
+<li>
+<p>[ <strong>airgap only</strong> ] If you're using a self-signed certificate for the registry
+  and you were using workarounds to support it with <code>1.0.0</code>, you must create a CA
+  Secret and proceed with the <a href="../../appendix/appendix-extend-mgmt/#configuring-a-custom-oci-registry-for-kcm-components">custom CA configuration</a>
+  <strong>before</strong> the upgrade.</p>
+</li>
+</ul>
 <h3 id="notable-changes">✨ Notable Changes ✨<a class="headerlink" href="#notable-changes" title="Permanent link">#</a></h3>
 <ul>
 <li>Remove namespace from AWSClusterStaticIdentity reference (<a href="https://github.com/k0rdent/kcm/pull/1585">#1585</a>)</li>
@@ -5216,7 +5236,7 @@
 </tbody>
 </table>
 <h2 id="contributors">Contributors<a class="headerlink" href="#contributors" title="Permanent link">#</a></h2>
-<p>Huge thanks to the following contributors for making this release possible:<br />
+<p>Huge thanks to the following contributors for making this release possible:
 <a href="https://github.com/gmlexx">@gmlexx</a>, <a href="https://github.com/denis-ryzhkov">@denis-ryzhkov</a>, <a href="https://github.com/aglarendil">@aglarendil</a>, <a href="https://github.com/kylewuolle">@kylewuolle</a>, <a href="https://github.com/a13x5">@a13x5</a>, <a href="https://github.com/eromanova">@eromanova</a>, <a href="https://github.com/zerospiel">@zerospiel</a>, <a href="https://github.com/BROngineer">@BROngineer</a>, <a href="https://github.com/Kshatrix">@Kshatrix</a>, <a href="https://github.com/dis-xcom">@dis-xcom</a>, <a href="https://github.com/wahabmk">@wahabmk</a>, <a href="https://github.com/AndrejsPon00">@AndrejsPon00</a></p>
 <h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">#</a></h2>
 <ul>
