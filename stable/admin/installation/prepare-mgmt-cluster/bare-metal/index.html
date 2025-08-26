@@ -1246,9 +1246,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-the-cluster" class="md-nav__link">
+  <a href="#create-a-bare-metal-cluster" class="md-nav__link">
     <span class="md-ellipsis">
-      Create the cluster
+      Create a bare metal cluster
     </span>
   </a>
   
@@ -1264,46 +1264,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#install-and-use-capm3-provider-in-the-air-gapped-environment" class="md-nav__link">
     <span class="md-ellipsis">
-      Troubleshooting
+      Install and use CAPM3 provider in the air-gapped environment
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Troubleshooting">
+    <nav class="md-nav" aria-label="Install and use CAPM3 provider in the air-gapped environment">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#providertemplate-is-not-valid" class="md-nav__link">
+  <a href="#install-capm3-provider-in-the-air-gapped-environment" class="md-nav__link">
     <span class="md-ellipsis">
-      ProviderTemplate is not valid
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#management-object-does-not-become-ready" class="md-nav__link">
-    <span class="md-ellipsis">
-      Management object does not become ready
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-helmrelease-does-not-become-ready" class="md-nav__link">
-    <span class="md-ellipsis">
-      The HelmRelease does not become ready
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#useful-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      Useful resources
+      Install CAPM3 provider in the air-gapped environment
     </span>
   </a>
   
@@ -4934,9 +4907,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-the-cluster" class="md-nav__link">
+  <a href="#create-a-bare-metal-cluster" class="md-nav__link">
     <span class="md-ellipsis">
-      Create the cluster
+      Create a bare metal cluster
     </span>
   </a>
   
@@ -4952,46 +4925,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#install-and-use-capm3-provider-in-the-air-gapped-environment" class="md-nav__link">
     <span class="md-ellipsis">
-      Troubleshooting
+      Install and use CAPM3 provider in the air-gapped environment
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Troubleshooting">
+    <nav class="md-nav" aria-label="Install and use CAPM3 provider in the air-gapped environment">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#providertemplate-is-not-valid" class="md-nav__link">
+  <a href="#install-capm3-provider-in-the-air-gapped-environment" class="md-nav__link">
     <span class="md-ellipsis">
-      ProviderTemplate is not valid
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#management-object-does-not-become-ready" class="md-nav__link">
-    <span class="md-ellipsis">
-      Management object does not become ready
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-helmrelease-does-not-become-ready" class="md-nav__link">
-    <span class="md-ellipsis">
-      The HelmRelease does not become ready
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#useful-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      Useful resources
+      Install CAPM3 provider in the air-gapped environment
     </span>
   </a>
   
@@ -5069,14 +5015,14 @@ providers, these include a <code>HelmRepository</code>, <code>ProviderTemplate</
 <span class="s">apiVersion: k0rdent.mirantis.com/v1beta1</span>
 <span class="s">kind: ProviderTemplate</span>
 <span class="s">metadata:</span>
-<span class="s">  name: cluster-api-provider-metal3-0-2-0</span>
+<span class="s">  name: cluster-api-provider-metal3-0-2-1</span>
 <span class="s">  annotations:</span>
 <span class="s">    helm.sh/resource-policy: keep</span>
 <span class="s">spec:</span>
 <span class="s">  helm:</span>
 <span class="s">    chartSpec:</span>
 <span class="s">      chart: cluster-api-provider-metal3</span>
-<span class="s">      version: 0.2.0</span>
+<span class="s">      version: 0.2.1</span>
 <span class="s">      interval: 10m0s</span>
 <span class="s">      sourceRef:</span>
 <span class="s">        kind: HelmRepository</span>
@@ -5089,13 +5035,13 @@ providers, these include a <code>HelmRepository</code>, <code>ProviderTemplate</
 <span class="s">    helm.sh/resource-policy: keep</span>
 <span class="s">  labels:</span>
 <span class="s">    k0rdent.mirantis.com/component: kcm</span>
-<span class="s">  name: capm3-standalone-cp-0-2-0</span>
+<span class="s">  name: capm3-standalone-cp-0-2-1</span>
 <span class="s">  namespace: kcm-system</span>
 <span class="s">spec:</span>
 <span class="s">  helm:</span>
 <span class="s">    chartSpec:</span>
 <span class="s">      chart: capm3-standalone-cp</span>
-<span class="s">      version: 0.2.0</span>
+<span class="s">      version: 0.2.1</span>
 <span class="s">      interval: 10m0s</span>
 <span class="s">      reconcileStrategy: ChartVersion</span>
 <span class="s">      sourceRef:</span>
@@ -5107,10 +5053,10 @@ providers, these include a <code>HelmRepository</code>, <code>ProviderTemplate</
 <li>
 <p>Verify the <code>ProviderTemplate</code> is valid</p>
 <p>Check that the <code>ProviderTemplate</code> has been created successfully:</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>providertemplates<span class="w"> </span>cluster-api-provider-metal3-0-2-0
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>providertemplates<span class="w"> </span>cluster-api-provider-metal3-0-2-1
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                              VALID</span>
-<span class="go">cluster-api-provider-metal3-0-2-0 true</span>
+<span class="go">cluster-api-provider-metal3-0-2-1 true</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -5120,7 +5066,7 @@ providers, these include a <code>HelmRepository</code>, <code>ProviderTemplate</
 </code></pre></div>
 <p>Add the following configuration to the <code>providers</code> section:</p>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-metal3</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-metal3-0-2-0</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cluster-api-provider-metal3-0-2-1</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">global</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">ironic</span><span class="p">:</span>
@@ -5156,10 +5102,10 @@ providers, these include a <code>HelmRepository</code>, <code>ProviderTemplate</
 <li>
 <p>Verify the <code>ClusterTemplate</code> is valid</p>
 <p>Check that the <code>ClusterTemplate</code> has been created successfully:</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clustertemplates<span class="w"> </span>capm3-standalone-cp-0-2-0
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>get<span class="w"> </span>clustertemplates<span class="w"> </span>capm3-standalone-cp-0-2-1
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="go">NAME                        VALID</span>
-<span class="go">capm3-standalone-cp-0.2.0   true</span>
+<span class="go">capm3-standalone-cp-0-2-1   true</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -5281,7 +5227,7 @@ disk1 -&gt; part0 -+-&gt; RAID -&gt; [ p0, p1, p2 ... ]
 RAID1 array. The <code>rootDeviceHint</code> in the <code>BareMetalHost</code> <code>spec</code> must be defined, because if it has a RAID definition and doesn't have the 
 <code>rootDeviceHint</code>, the first RAID array will be marked as the root device <a href="https://github.com/metal3-io/baremetal-operator/blob/v0.9.2/pkg/provisioner/ironic/raid.go#L39">automatically</a>.</p>
 <p>For more information about software RAID support in IPA, see the <a href="https://docs.openstack.org/ironic/latest/admin/raid.html#software-raid">Ironic documentation</a>.</p>
-<h2 id="create-the-cluster">Create the cluster<a class="headerlink" href="#create-the-cluster" title="Permanent link">#</a></h2>
+<h2 id="create-a-bare-metal-cluster">Create a bare metal cluster<a class="headerlink" href="#create-a-bare-metal-cluster" title="Permanent link">#</a></h2>
 <p>You need to create several objects before Mirantis k0rdent Enterprise can create a bare metal cluster.</p>
 <ol>
 <li>
@@ -5334,7 +5280,7 @@ Start with a <code>capm3-example.yaml</code> file. This one creates a cluster wi
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">capm3-example</span>
 <span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;NAMESPACE&gt;</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">capm3-standalone-cp-0-2-0</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">capm3-standalone-cp-0-2-1</span>
 <span class="w">  </span><span class="nt">credential</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">capm3-stub-credential</span>
 <span class="w">  </span><span class="nt">dryRun</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
@@ -5414,7 +5360,7 @@ Start with a <code>capm3-example.yaml</code> file. This one creates a cluster wi
 <span class="w">        </span><span class="nt">externalAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;CLUSTER_API_VIP&gt;</span><span class="w">  </span><span class="c1"># e.g., 10.0.1.70</span>
 <span class="w">      </span><span class="nt">telemetry</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.32.3+k0s.0</span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.32.6+k0s.0</span>
 <span class="w">    </span><span class="nt">worker</span><span class="p">:</span>
 <span class="w">      </span><span class="c1"># the image that was uploaded by default</span>
 <span class="w">      </span><span class="nt">checksum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3</span>
@@ -5500,12 +5446,12 @@ using the same <code>BareMetalHost</code> objects.</p>
 </li>
 </ol>
 <h2 id="the-oot-capm3-provider-upgrade-notes">The OOT CAPM3 provider upgrade notes<a class="headerlink" href="#the-oot-capm3-provider-upgrade-notes" title="Permanent link">#</a></h2>
-<p>To upgrade the OOT CAPM3 provider from v0.1.x to v0.2.0, you need to proceed through the same steps as you do in case
+<p>To upgrade the OOT CAPM3 provider from v0.1.x to v0.2.x, you need to proceed through the same steps as you do in case
 of installing the provider from scratch.
 Pay attention to the parameters that are defined in the <code>management</code> object:</p>
 <ul>
 <li>
-<p>the following parameters are new to v0.2.0 and <code>"option:router,&lt;ROUTER_IP&gt;"</code> is a required one:
+<p>the following parameters are new to v0.2.x and <code>"option:router,&lt;ROUTER_IP&gt;"</code> is a required one:
    <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">ironic</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">networking</span><span class="p">:</span>
@@ -5528,7 +5474,7 @@ Pay attention to the parameters that are defined in the <code>management</code> 
 <span class="w">            </span><span class="nt">ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">sha256sum</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3</span>
 <span class="w">              </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://get.mirantis.com/k0rdent-bm/targetimages/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2</span>
-<span class="w">  </span><span class="c1"># v0.2.0</span>
+<span class="w">  </span><span class="c1"># v0.2.x</span>
 <span class="w">  </span><span class="nt">config</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">ironic</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
@@ -5539,11 +5485,252 @@ Pay attention to the parameters that are defined in the <code>management</code> 
 </code></pre></div></p>
 </li>
 </ul>
+<h2 id="install-and-use-capm3-provider-in-the-air-gapped-environment">Install and use CAPM3 provider in the air-gapped environment<a class="headerlink" href="#install-and-use-capm3-provider-in-the-air-gapped-environment" title="Permanent link">#</a></h2>
+<p>After Mirantis k0rdent Enterprise is installed in the air-gapped environment,
+CAPM3 provider can also be installed for Mirantis k0rdent Enterprise and used in this environment.</p>
+<h3 id="install-capm3-provider-in-the-air-gapped-environment">Install CAPM3 provider in the air-gapped environment<a class="headerlink" href="#install-capm3-provider-in-the-air-gapped-environment" title="Permanent link">#</a></h3>
+<ol>
+<li>Download and unpack the CAPM3 airgap bundle.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>get.mirantis.com/k0rdent-enterprise/bare-metal/0.2.1/airgap-bundle-0.2.1.tar.gz
+mkdir<span class="w"> </span>airgap-bm
+tar<span class="w"> </span>xf<span class="w"> </span>airgap-bundle-0.0.0-068c98d.tar.gz<span class="w"> </span>-C<span class="w"> </span>airgap-bm
+</code></pre></div>
+<ol>
+<li>
+<h1 id="upload-the-capm3-artifacts">Upload the CAPM3 artifacts.<a class="headerlink" href="#upload-the-capm3-artifacts" title="Permanent link">#</a></h1>
+</li>
+</ol>
+<p>It's implied here that the same registry host is used for CAPM3 artifacts as for general Mirantis k0rdent Enterprise artifacts.
+   So, the same <code>registry.local</code> alias will be used as in <a href="../../airgap/airgap-install/">Install Mirantis k0rdent Enterprise in the airgapped environment</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">REGISTRY</span><span class="o">=</span><span class="s2">&quot;registry.local&quot;</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Replace <code>registry.local</code> with your actual registry hostname.</p>
+</div>
+<p>Upload charts and images to the registry. </p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>airgap-bm/bundle
+
+<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>ls<span class="w"> </span>charts<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nv">ARTIFACT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$i</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;@&#39;</span><span class="w"> </span><span class="s1">&#39;:&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;&amp;&#39;</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/\.tar//g&#39;</span><span class="k">)</span><span class="p">;</span><span class="w"> </span>skopeo<span class="w"> </span>--insecure-policy<span class="w"> </span>copy<span class="w"> </span>--dest-cert-dir<span class="w"> </span>~/certs<span class="w"> </span>-a<span class="w"> </span>oci-archive:charts/<span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="w"> </span>docker://<span class="si">${</span><span class="nv">REGISTRY</span><span class="si">}</span>/<span class="si">${</span><span class="nv">ARTIFACT</span><span class="si">}</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+
+<span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>ls<span class="w"> </span>images<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nv">ARTIFACT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$i</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;@&#39;</span><span class="w"> </span><span class="s1">&#39;:&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;&amp;&#39;</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/\.tar//g&#39;</span><span class="k">)</span><span class="p">;</span><span class="w"> </span>skopeo<span class="w"> </span>--insecure-policy<span class="w"> </span>copy<span class="w"> </span>--dest-cert-dir<span class="w"> </span>~/certs<span class="w"> </span>-a<span class="w"> </span>oci-archive:images/<span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="w"> </span>docker://<span class="si">${</span><span class="nv">REGISTRY</span><span class="si">}</span>/<span class="si">${</span><span class="nv">ARTIFACT</span><span class="si">}</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="w"> </span>
+</code></pre></div>
+<p>The same HTTP server is used for CAPM3 binaries as for other Mirantis k0rdent Enterprise binaries.
+   So, the same <code>binary.local</code> alias will be used as in <a href="../../airgap/airgap-install/">Install Mirantis k0rdent Enterprise in the airgapped environment</a>.</p>
+<p><div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">BIN_PATH</span><span class="o">=</span><span class="s2">&quot;binary.local&quot;</span>
+</code></pre></div>
+</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Replace <code>binary.local</code> with the actual path used by your HTTP server.</p>
+</div>
+<p>Move the binary files so that they are accessible via the HTTP server.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>ls<span class="w"> </span>bins<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="nv">BIN</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$i</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;@&#39;</span><span class="w"> </span><span class="s1">&#39;:&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;&amp;&#39;</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/\.tar//g&#39;</span><span class="k">)</span>
+<span class="w">  </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">BIN_PATH</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BIN</span><span class="p">%/*</span><span class="si">}</span>
+<span class="w">  </span>mv<span class="w"> </span>bins/<span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">BIN_PATH</span><span class="si">}</span>/<span class="si">${</span><span class="nv">BIN</span><span class="si">}</span>
+<span class="k">done</span>
+</code></pre></div>
+<ol>
+<li>
+<p>Create the necessary Kubernetes CR objects to install the CAPM3 provider.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: source.toolkit.fluxcd.io/v1</span>
+<span class="s">kind: HelmRepository</span>
+<span class="s">metadata:</span>
+<span class="s">  name: oot-capm3-repo</span>
+<span class="s">  namespace: kcm-system</span>
+<span class="s">  labels:</span>
+<span class="s">    k0rdent.mirantis.com/managed: &quot;true&quot;</span>
+<span class="s">spec:</span>
+<span class="s">  type: oci</span>
+<span class="s">  url: &#39;oci://registry.local/k0rdent-bm/charts/&#39;</span>
+<span class="s">  interval: 10m0s</span>
+<span class="s">  certSecretRef:          # This is required only if you didn&#39;t add a reference to the registry cert secret</span>
+<span class="s">    name: &lt;registry-cert&gt; # in the &quot;management&quot; object: `spec.core.kcm.config.controller.registryCertSecret`</span>
+<span class="s">---</span>
+<span class="s">apiVersion: k0rdent.mirantis.com/v1beta1</span>
+<span class="s">kind: ProviderTemplate</span>
+<span class="s">metadata:</span>
+<span class="s">  name: cluster-api-provider-metal3-0-2-1</span>
+<span class="s">  annotations:</span>
+<span class="s">    helm.sh/resource-policy: keep</span>
+<span class="s">spec:</span>
+<span class="s">  helm:</span>
+<span class="s">    chartSpec:</span>
+<span class="s">      chart: cluster-api-provider-metal3</span>
+<span class="s">      version: 0.2.1</span>
+<span class="s">      interval: 10m0s</span>
+<span class="s">      sourceRef:</span>
+<span class="s">        kind: HelmRepository</span>
+<span class="s">        name: oot-capm3-repo</span>
+<span class="s">---</span>
+<span class="s">apiVersion: k0rdent.mirantis.com/v1beta1</span>
+<span class="s">kind: ClusterTemplate</span>
+<span class="s">metadata:</span>
+<span class="s">  annotations:</span>
+<span class="s">    helm.sh/resource-policy: keep</span>
+<span class="s">  labels:</span>
+<span class="s">    k0rdent.mirantis.com/component: kcm</span>
+<span class="s">  name: capm3-standalone-cp-0-2-1</span>
+<span class="s">  namespace: kcm-system</span>
+<span class="s">spec:</span>
+<span class="s">  helm:</span>
+<span class="s">    chartSpec:</span>
+<span class="s">      chart: capm3-standalone-cp</span>
+<span class="s">      version: 0.2.1</span>
+<span class="s">      interval: 10m0s</span>
+<span class="s">      reconcileStrategy: ChartVersion</span>
+<span class="s">      sourceRef:</span>
+<span class="s">        kind: HelmRepository</span>
+<span class="s">        name: oot-capm3-repo</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Replace <code>registry.local</code> with your actual registry hostname.</p>
+</div>
+<ol>
+<li>Verify the <code>ProviderTemplate</code> is valid</li>
+</ol>
+<p>Check that the <code>ProviderTemplate</code> has been created successfully:</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>providertemplates<span class="w"> </span>cluster-api-provider-metal3-0-2-1
+</code></pre></div>
+   <div class="highlight"><pre><span></span><code><span class="go">NAME                              VALID</span>
+<span class="go">cluster-api-provider-metal3-0-2-1 true</span>
+</code></pre></div></p>
+<ol>
+<li>
+<p>Configure the <code>Management</code> object</p>
+<p>Edit the <code>Management</code> object to add the CAPM3 provider configuration:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>managements.k0rdent.mirantis.com
+</code></pre></div>
+<p>Add the following configuration to the providers section:</p>
+<p><code>yaml
+- name: cluster-api-provider-metal3
+  template: cluster-api-provider-metal3-0-2-1
+  config:
+    baremetal-operator:
+      resources:
+        images:
+          bm_operator: registry.local/k0rdent-bm/images/external/metal3-io/baremetal-operator:v0.9.1-2025-04-17-16-07-19
+          kube_rbac_proxy: registry.local/k0rdent-bm/images/external/gcr.io/kubebuilder/kube-rbac-proxy:v0.5.1-amd64--2025-04-16-21-32-23
+    global:
+      ironic:
+        enabled: true # networking configuration ("ironic.networking" section) should be defined prior to enabling ironic
+    ironic:
+      dnsmasq:
+        ipxe_boot_server: http://binary.local/k0rdent-bm/ipa/pxe/
+      networking:
+        dhcp: # used by DHCP server to assign IPs to hosts during PXE boot
+          rangeBegin: &lt;DHCP_RANGE_START&gt;      # e.g., 10.0.1.51
+          rangeEnd: &lt;DHCP_RANGE_END&gt;          # e.g., 10.0.1.55
+          netmask: &lt;DHCP_SUBNET_MASK&gt;         # e.g., 255.255.255.192 (default is 255.255.255.0)
+          options:                            # DHCP options, used during PXE boot and by IPA
+            - "option:router,&lt;ROUTER_IP&gt;"     # e.g., 10.0.1.1. It's a mandatory option. 
+            - "option:dns-server,&lt;DNS_IP[,DNS2_IP...]&gt;" # can be set to KEEPALIVED_VIP (dnsmasq can serve as a DNS server with user-defined DNS records) or to IP of your preferred server. Optional.
+            - "option:ntp-server,&lt;NTP_IP&gt;"    # can be set to KEEPALIVED_VIP (internal ntp server) or to IP of your preferred server. That ntp server will be used on PXE boot stage then. Optional.
+        interface: &lt;PROVISION_INTERFACE&gt;      # e.g., bond0 - interface of the management cluster node connected to BM hosts provision network
+        ipAddress: &lt;KEEPALIVED_VIP&gt;          # e.g., 10.0.1.50 - keepalived VIP for DHCP server and Ironic services. This VIP will be configured on the &lt;PROVISION_INTERFACE&gt;, it must be in the same L3 network as DHCP range if no dhcp-relay used between management cluster and child cluster hosts.
+      resources:
+        images:
+          dnsmasq: registry.local/k0rdent-bm/images/baremetal-dnsmasq:base-alpine-20250217104414
+          dnsmasq_controller: registry.local/k0rdent-bm/images/dnsmasq-controller:0.2.0
+          dnsmasq_operator: registry.local/k0rdent-bm/images/dnsmasq-operator:0.2.0
+          dynamic_ipxe: registry.local/k0rdent-bm/images/dynamic-ipxe:0.2.0
+          ironic: registry.local/k0rdent-bm/images/external/metal3-io/ironic:v29.0.0-2025-04-16-21-32-23
+          keepalived: registry.local/k0rdent-bm/images/external/metal3-io/keepalived:2025-04-16-21-32-23
+          mariadb: registry.local/k0rdent-bm/images/external/metal3-io/mariadb:2025-04-16-21-32-23
+          ntp: registry.local/k0rdent-bm/images/baremetal-dnsmasq:base-alpine-20250217104414
+          resource_controller: registry.local/k0rdent-bm/images/resource-controller:0.2.0
+        images_ipa:
+        - checksum: 56abb6b45eb75373a4c1cfba5c0653b1
+          name: ironic-python-agent.initramfs
+          url: http://binary.local/k0rdent-bm/ipa/initramfs-caracal-noble-debug-20250624163043
+        - checksum: 960f08ee9c0d967bbcbd2105602a1098
+          name: ironic-python-agent.kernel
+          url: http://binary.local/k0rdent-bm/ipa/kernel-caracal-noble-debug-20250624163043
+        images_target:
+        # By default, "ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2" is the only image available.
+        # You can define custom OS images here if needed by adding new items:
+        - checksum: 581a672e494fcda3297cc8917a91d827157ddcfa3997ad552a914f207b3603c3
+          name: ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
+          url: http://binary.local/k0rdent-bm/target/ubuntu-noble-hwe-2025-05-15-15-22-56.qcow2
+    resources:
+      images:
+        capm_provider_metal3: registry.local/k0rdent-bm/images/metal3-io/cluster-api-provider-metal3:v1.9.3-2025-06-04-15-35-00
+        ip_address_manager: registry.local/k0rdent-bm/images/external/metal3-io/ip-address-manager:v1.9.4-2025-04-16-21-32-23</code></p>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Replace <code>registry.local</code> with your actual registry hostname.
+Replace <code>binary.local</code> with the actual path used by your HTTP server.</p>
+</div>
+<ol>
+<li>Continue with steps 4,5,6 of the "Prepare Mirantis k0rdent Enterprise for Bare Metal clusters" section</li>
+</ol>
+<h3 id="deploy-a-bare-metal-cluster-in-the-air-gapped-environment">Deploy a bare metal cluster in the air-gapped environment<a class="headerlink" href="#deploy-a-bare-metal-cluster-in-the-air-gapped-environment" title="Permanent link">#</a></h3>
+<p>After the CAPM3 provider is deployed in the air-gapped environment, you can create a bare metal child cluster.
+General procedure is the same as described in "Create a bare metal cluster" section.
+Though, there are certain differences in parameters of <code>ClusterDeployment</code> object (created in step 3):</p>
+<ul>
+<li><code>spec.config.k0s</code> parameters section must include the following:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">k0s</span><span class="p">:</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1.32.6+k0s.0</span><span class="w"> </span><span class="c1"># mandatory</span>
+<span class="w">    </span><span class="nt">arch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">amd64</span><span class="w"> </span><span class="c1"># mandatory</span>
+<span class="w">    </span><span class="nt">images</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">metricsserver</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;registry.local/k0rdent-enterprise/metrics-server/metrics-server&quot;</span>
+<span class="w">      </span><span class="nt">kubeproxy</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;registry.local/k0rdent-enterprise/k0sproject/kube-proxy&quot;</span>
+<span class="w">      </span><span class="nt">coredns</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;registry.local/k0rdent-enterprise/k0sproject/coredns&quot;</span>
+<span class="w">      </span><span class="nt">pause</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;registry.local/k0rdent-enterprise/pause&quot;</span>
+<span class="w">      </span><span class="nt">calico</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">cni</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;registry.local/k0rdent-enterprise/k0sproject/calico-cni&quot;</span>
+<span class="w">        </span><span class="nt">node</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;registry.local/k0rdent-enterprise/k0sproject/calico-node&quot;</span>
+<span class="w">        </span><span class="nt">kubecontrollers</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;registry.local/k0rdent-enterprise/k0sproject/calico-kube-controllers&quot;</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Replace <code>registry.local</code> with your actual registry hostname.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Ensure that the artifacts for your target k0s version are included in the Mirantis k0rdent Enterprise airgap bindle.</p>
+</div>
+<ul>
+<li><code>spec.config.controlPlane.preStartCommands</code> and <code>spec.config.worker.preStartCommands</code> must not
+  include commands that need access to external networks.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+<code>jq</code> package is still required for the deployment of child cluster.
+Thus, ensure that it's included in your target OS image, or it's uploaded from
+your HTTP server and installed during cloud-init - for both control plane and worker nodes.</p>
+</div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h2>
 <p>If you run into difficulties, you might find the solution here.</p>
 <h3 id="providertemplate-is-not-valid"><code>ProviderTemplate</code> is not valid<a class="headerlink" href="#providertemplate-is-not-valid" title="Permanent link">#</a></h3>
 <p>If the <code>ProviderTemplate</code> shows as invalid, inspect the object for error messages:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>providertemplates<span class="w"> </span>cluster-api-provider-metal3-0-2-0<span class="w"> </span>-oyaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>providertemplates<span class="w"> </span>cluster-api-provider-metal3-0-2-1<span class="w"> </span>-oyaml
 </code></pre></div>
 <p>Common issues include incorrect credentials for accessing artifacts or connection problems.</p>
 <h3 id="management-object-does-not-become-ready"><code>Management</code> object does not become ready<a class="headerlink" href="#management-object-does-not-become-ready" title="Permanent link">#</a></h3>
