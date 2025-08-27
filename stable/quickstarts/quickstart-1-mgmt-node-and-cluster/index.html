@@ -586,15 +586,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#verify-that-ksm-servicetemplate-objects-are-available" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verify that KSM ServiceTemplate objects are available
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
       Next steps
@@ -4957,15 +4948,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#verify-that-ksm-servicetemplate-objects-are-available" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verify that KSM ServiceTemplate objects are available
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
       Next steps
@@ -5164,20 +5146,6 @@ This command installs Mirantis k0rdent Enterprise with the UI disabled. To enabl
 <span class="go">remote-cluster-1-0-9            true</span>
 <span class="go">vsphere-hosted-cp-1-0-10         true</span>
 <span class="go">vsphere-standalone-cp-1-0-11     true</span>
-</code></pre></div>
-<h2 id="verify-that-ksm-servicetemplate-objects-are-available">Verify that KSM ServiceTemplate objects are available<a class="headerlink" href="#verify-that-ksm-servicetemplate-objects-are-available" title="Permanent link">#</a></h2>
-<p>Mirantis k0rdent Enterprise State Manager (KSM) uses Service Templates to lifecycle manage services and applications installed on clusters. These, too, are represented as declarative templates, instantiated as <code>ServiceTemplate</code> objects. Check that default <code>ServiceTemplate</code> objects have been created and validated:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>servicetemplate<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w">   </span><span class="c1"># list servicetemplate objects in the kcm-system namespace</span>
-</code></pre></div>
-<p>You should see output similar to:</p>
-<div class="highlight"><pre><span></span><code><span class="go">NAME                      VALID</span>
-<span class="go">cert-manager-1-16-2       true</span>
-<span class="go">dex-0-19-1                true</span>
-<span class="go">external-secrets-0-11-0   true</span>
-<span class="go">ingress-nginx-4-11-0      true</span>
-<span class="go">ingress-nginx-4-11-3      true</span>
-<span class="go">kyverno-3-2-6             true</span>
-<span class="go">velero-8-1-0              true</span>
 </code></pre></div>
 <h2 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">#</a></h2>
 <p>Your QuickStart management node is now complete, and Mirantis k0rdent Enterprise is installed and operational. Next, it's time to select <a href="../quickstart-2-aws/">AWS</a> or <a href="../quickstart-2-azure/">Azure</a> as an environment for hosting managed clusters.</p>
