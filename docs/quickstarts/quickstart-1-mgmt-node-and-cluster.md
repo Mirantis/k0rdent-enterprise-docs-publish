@@ -240,26 +240,6 @@ vsphere-hosted-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vspher
 vsphere-standalone-cp-{{{ extra.docsVersionInfo.providerVersions.dashVersions.vsphereStandaloneCpCluster }}}     true
 ```
 
-## Verify that KSM ServiceTemplate objects are available
-
-{{{ docsVersionInfo.k0rdentName }}} State Manager (KSM) uses Service Templates to lifecycle manage services and applications installed on clusters. These, too, are represented as declarative templates, instantiated as `ServiceTemplate` objects. Check that default `ServiceTemplate` objects have been created and validated:
-
-```shell
-kubectl get servicetemplate -n kcm-system   # list servicetemplate objects in the kcm-system namespace
-```
-
-You should see output similar to:
-
-```console
-NAME                      VALID
-cert-manager-1-16-2       true
-dex-0-19-1                true
-external-secrets-0-11-0   true
-ingress-nginx-4-11-0      true
-ingress-nginx-4-11-3      true
-kyverno-3-2-6             true
-velero-8-1-0              true
-```
 ## Next steps
 
 Your QuickStart management node is now complete, and {{{ docsVersionInfo.k0rdentName }}} is installed and operational. Next, it's time to select [AWS](quickstart-2-aws.md) or [Azure](quickstart-2-azure.md) as an environment for hosting managed clusters.
