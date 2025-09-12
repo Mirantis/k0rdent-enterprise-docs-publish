@@ -39,8 +39,9 @@ kubectl describe ClusterDeployment ksi-managed-cluster -n kcm-system
 ...
 ```
 
-If you don't see the `cert-manager` service, you can go ahead and add it.  Start by adding the new
-spec in a file called `clusterdeployment-patch.yaml`:
+If you don't see the `cert-manager` service, you can go ahead and add it. You can [add it from the k0rdent Catalog](https://catalog.k0rdent.io/latest/apps/cert-manager/#install), or you can add it manually.  
+
+To add it manually, start by adding the new spec in a file called `clusterdeployment-patch.yaml`:s
 
 ```yaml
 spec:
