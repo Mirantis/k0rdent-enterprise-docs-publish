@@ -896,7 +896,7 @@ Ironic might fail to register a `BareMetalHost` with the following error:
 ```
 
 Ironic fails to register a `BareMetalHost` when the MAC address is already associated with another node.
-This conflict might occur if a new `BareMetalHost`reuses the MAC address used by a previous `BareMetalHost`.
+This conflict might occur if a new `BareMetalHost` reuses the MAC address used by a previous `BareMetalHost`.
 
 > WARNING:
 > Before proceeding with any further command, ensure that there is indeed no `BareMetalHost` with
@@ -949,4 +949,5 @@ For more information about bare metal cluster configuration options, see:
 - [CAPM3 API reference](https://github.com/metal3-io/cluster-api-provider-metal3/blob/main/docs/api.md)
 - [Metal3 network configuration guides](https://book.metal3.io/bmo/instance_customization#networkdata)
 - [Metal3 IPAM documentation](https://book.metal3.io/ipam/introduction)
+
 
