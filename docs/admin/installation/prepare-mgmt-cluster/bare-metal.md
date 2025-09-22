@@ -1,6 +1,6 @@
 # Bare Metal
 
-{{{ docsVersionInfo.k0rdentName }}} can deploy managed clusters on bare metal servers using the Metal3 infrastructure provider. This implementation is based on the bare metal Cluster API Provider, [Metal3 CAPM3](https://github.com/metal3-io), and provides out-of-tree (OOT) bare metal provisioning capabilities. 
+{{{ docsVersionInfo.k0rdentName }}} can deploy managed clusters on bare metal servers using the Metal3 infrastructure provider. This implementation is based on the bare metal Cluster API Provider, [Metal3 CAPM3](https://github.com/metal3-io), and provides out-of-tree (OOT) bare metal provisioning capabilities.
 
 CAPM3 works by enabling you to add a representation of each bare metal server as a Kubernetes object. {{{ docsVersionInfo.k0rdentName }}} can then assemble these machine objects into a cluster.
 
@@ -12,7 +12,7 @@ The bare metal infrastructure provider is represented as a set of Helm charts. I
 * `capm3-crds` installs the `CustomResourceDefinition` objects for the Metal3 CAPM3 and IPAM components
 * `cluster-api-provider-metal3` installs the [Metal3 CAPM3 provider](https://github.com/metal3-io/cluster-api-provider-metal3) and [Metal3 IP Address Manager](https://github.com/metal3-io/ip-address-manager)
 * `ironic` installs [OpenStack Ironic](https://github.com/metal3-io/ironic-image) and accompanying components needed for management of bare metal machines:
-      MariaDB, keepalived, HTTP server, DHCP server, TFTP server, NTP server, dynamic-IPXE controller, resource controller. 
+      MariaDB, keepalived, HTTP server, DHCP server, TFTP server, NTP server, dynamic-IPXE controller, resource controller.
 
 ## Prerequisites
 
@@ -117,7 +117,7 @@ Follow these instructions to make {{{ docsVersionInfo.k0rdentName }}} capable of
               rangeEnd: <DHCP_RANGE_END>          # e.g., 10.0.1.55
               netmask: <DHCP_SUBNET_MASK>         # e.g., 255.255.255.192 (default is 255.255.255.0)
               options:                            # DHCP options, used during PXE boot and by IPA
-                - "option:router,<ROUTER_IP>"     # e.g., 10.0.1.1. It's a mandatory option. 
+                - "option:router,<ROUTER_IP>"     # e.g., 10.0.1.1. It's a mandatory option.
                 - "option:dns-server,<DNS_IP[,DNS2_IP...]>" # can be set to KEEPALIVED_VIP (dnsmasq can serve as a DNS server with user-defined DNS records) or to IP of your preferred server. Optional.
                 - "option:ntp-server,<NTP_IP>"    # can be set to KEEPALIVED_VIP (internal ntp server) or to IP of your preferred server. That ntp server will be used on PXE boot stage then. Optional.
             interface: <PROVISION_INTERFACE>      # e.g., bond0 - interface of the management cluster node connected to BM hosts provision network
@@ -176,7 +176,7 @@ The next step is to create `BareMetalHost` objects to represent your bare metal 
 For each bare metal machine, create two objects: a `Secret` and a `BareMetalHost`.
 For detailed instructions, see the [Metal3 BareMetalHost enrollment guide](https://book.metal3.io/bmo/introduction.html#enrolling-baremetalhosts) (just `Enrolling`, not `Provisioning`), or follow these instructions.
 
-> NOTE: 
+> NOTE:
 > You don't need to provision bare metal hosts at this stage. Provisioning should happen later as part of a cluster deployment.
 
 1. Create credential `Secret` objects
@@ -274,8 +274,8 @@ spec:
     deviceName: /dev/disk/by-path/pci-0000:00:07.0-scsi-0:0:0:0
 ```
 
-The host has three hard disks. The first one will be used as the root device, and the second and third disks will be assembled into the 
-RAID1 array. The `rootDeviceHint` in the `BareMetalHost` `spec` must be defined, because if it has a RAID definition and doesn't have the 
+The host has three hard disks. The first one will be used as the root device, and the second and third disks will be assembled into the
+RAID1 array. The `rootDeviceHint` in the `BareMetalHost` `spec` must be defined, because if it has a RAID definition and doesn't have the
 `rootDeviceHint`, the first RAID array will be marked as the root device [automatically](https://github.com/metal3-io/baremetal-operator/blob/v0.9.2/pkg/provisioner/ironic/raid.go#L39).
 
 For more information about software RAID support in IPA, see the [Ironic documentation](https://docs.openstack.org/ironic/latest/admin/raid.html#software-raid).
@@ -507,7 +507,7 @@ You need to create several objects before {{{ docsVersionInfo.k0rdentName }}} ca
     clusterdeployment.k0rdent.mirantis.com "capm3-example" deleted
     ```
 
-    Cluster deletion may take several minutes. Bare metal machines are deprovisioned at this time. 
+    Cluster deletion may take several minutes. Bare metal machines are deprovisioned at this time.
 
     Watch the `BareMetalHost` objects as they transition through provisioning states:
 
@@ -545,7 +545,7 @@ Pay attention to the parameters that are defined in the `management` object:
            dhcp: # used by DHCP server to assign IPs to hosts during PXE boot
              netmask: <DHCP_SUBNET_MASK>         # e.g., 255.255.255.192 (default is 255.255.255.0)
              options:                            # DHCP options, used during PXE boot and by IPA
-               - "option:router,<ROUTER_IP>"     # e.g., 10.0.1.1. It's a mandatory option. 
+               - "option:router,<ROUTER_IP>"     # e.g., 10.0.1.1. It's a mandatory option.
                - "option:dns-server,<DNS_IP[,DNS2_IP...]>" # can be set to KEEPALIVED_VIP (dnsmasq can serve as a DNS server with user-defined DNS records) or to IP of your preferred server. Optional.
                - "option:ntp-server,<NTP_IP>"    # can be set to KEEPALIVED_VIP (internal ntp server) or to IP of your preferred server. That ntp server will be used on PXE boot stage then. Optional.
    ```
@@ -598,14 +598,14 @@ CAPM3 provider can also be installed for {{{ docsVersionInfo.k0rdentName }}} and
    > WARNING:
    > Replace `registry.local` with your actual registry hostname.
 
-   Upload charts and images to the registry. 
+   Upload charts and images to the registry.
 
    ```shell
    cd airgap-bm/bundle
 
    for i in $(ls charts); do ARTIFACT=$(echo "$i" | tr '@' ':' | tr '&' '/' | sed 's/\.tar//g'); skopeo --insecure-policy copy --dest-cert-dir ~/certs -a oci-archive:charts/${i} docker://${REGISTRY}/${ARTIFACT}; done
 
-   for i in $(ls images); do ARTIFACT=$(echo "$i" | tr '@' ':' | tr '&' '/' | sed 's/\.tar//g'); skopeo --insecure-policy copy --dest-cert-dir ~/certs -a oci-archive:images/${i} docker://${REGISTRY}/${ARTIFACT}; done 
+   for i in $(ls images); do ARTIFACT=$(echo "$i" | tr '@' ':' | tr '&' '/' | sed 's/\.tar//g'); skopeo --insecure-policy copy --dest-cert-dir ~/certs -a oci-archive:images/${i} docker://${REGISTRY}/${ARTIFACT}; done
    ```
 
    The same HTTP server is used for CAPM3 binaries as for other {{{ docsVersionInfo.k0rdentName }}} binaries.
@@ -729,7 +729,7 @@ CAPM3 provider can also be installed for {{{ docsVersionInfo.k0rdentName }}} and
               rangeEnd: <DHCP_RANGE_END>          # e.g., 10.0.1.55
               netmask: <DHCP_SUBNET_MASK>         # e.g., 255.255.255.192 (default is 255.255.255.0)
               options:                            # DHCP options, used during PXE boot and by IPA
-                - "option:router,<ROUTER_IP>"     # e.g., 10.0.1.1. It's a mandatory option. 
+                - "option:router,<ROUTER_IP>"     # e.g., 10.0.1.1. It's a mandatory option.
                 - "option:dns-server,<DNS_IP[,DNS2_IP...]>" # can be set to KEEPALIVED_VIP (dnsmasq can serve as a DNS server with user-defined DNS records) or to IP of your preferred server. Optional.
                 - "option:ntp-server,<NTP_IP>"    # can be set to KEEPALIVED_VIP (internal ntp server) or to IP of your preferred server. That ntp server will be used on PXE boot stage then. Optional.
             interface: <PROVISION_INTERFACE>      # e.g., bond0 - interface of the management cluster node connected to BM hosts provision network
@@ -870,7 +870,7 @@ kubectl -n kcm-system delete helmrelease cluster-api-provider-metal3
 ```
 
 Flux will automatically reinstall the `HelmRelease`.
-If you see the same error again, set the `defaultHelmTimeout` value in the `management` object (default value is 5 minutes), 
+If you see the same error again, set the `defaultHelmTimeout` value in the `management` object (default value is 5 minutes),
 wait for the `management` object to become `Ready` and delete the `HelmRelease` again so Flux will reinstall it.
 
 ```shell
@@ -887,6 +887,57 @@ spec:
 
 For more context, see [the related issue](https://github.com/k0rdent/kcm/issues/1643).
 
+### `BareMetalHost` registration error
+
+Ironic might fail to register a `BareMetalHost` with the following error:
+
+```bash
+  MAC address 00:01:02:03:04:05 conflicts with existing node default~bmh1
+```
+
+Ironic fails to register a `BareMetalHost` when the MAC address is already associated with another node.
+This conflict might occur if a new `BareMetalHost` reuses the MAC address used by a previous `BareMetalHost`.
+
+> WARNING:
+> Before proceeding with any further command, ensure that there is indeed no `BareMetalHost` with
+> a conflicting MAC address in the environment.
+
+To resolve the issue, you can restart the Ironic pod:
+
+```bash
+  kubectl -n kcm-system rollout restart deploy cluster-api-provider-metal3-ironic
+```
+
+Without the Ironic restart, you can access the Ironic database using `baremetal` or `openstack` CLI as follows:
+
+```bash
+  kubectl port-forward -n kcm-system svc/cluster-api-provider-metal3-ironic <HOST_PORT>:<IRONIC_API_PORT>
+  export OS_ENDPOINT=https://localhost:<HOST_PORT>
+  export OS_AUTH_TYPE=none
+
+  # get a list of nodes:
+  baremetal node list
+  # unregister baremetal node:
+  baremetal node delete <node>
+```
+
+See also: [openstack baremetal Command-Line Interface (CLI)](https://docs.openstack.org/python-ironicclient/latest/cli/osc_plugin_cli.html)
+
+Alternatively, you can delete the information about the old `BareMetalHost` from
+the Ironic database with the following commands:
+
+```bash
+  kubectl -n kcm-system exec -it <IRONIC_POD_NAME> -c mariadb -- \
+    mysql -uironic -p<PASSWORD> ironic -e "DELETE p, ni FROM nodes n LEFT JOIN ports p ON p.node_id=n.id \
+    LEFT JOIN node_inventory ni ON ni.node_id=n.id WHERE n.name='<OLD_BMH_NAMESPACE>~<BMH_NAME>';”
+  kubectl -n kcm-system exec -it <IRONIC_POD_NAME> -c mariadb -- \
+    mysql -uironic -p<PASSWORD> ironic -e "DELETE FROM nodes WHERE name='<OLD_BMH_NAMESPACE>~<BMH_NAME>';”
+```
+
+> NOTE:
+> You can obtain the Ironic database password as follows:
+> ```kubectl -n kcm-system get secret ironic-auth-config -o jsonpath={.data.password} | base64 -d```
+
 ### Useful resources
 
 For additional troubleshooting guidance, refer to the [Metal3 troubleshooting documentation](https://book.metal3.io/troubleshooting).
@@ -898,4 +949,5 @@ For more information about bare metal cluster configuration options, see:
 - [CAPM3 API reference](https://github.com/metal3-io/cluster-api-provider-metal3/blob/main/docs/api.md)
 - [Metal3 network configuration guides](https://book.metal3.io/bmo/instance_customization#networkdata)
 - [Metal3 IPAM documentation](https://book.metal3.io/ipam/introduction)
+
 
