@@ -232,6 +232,7 @@ nav:
     - Mirantis k0rdent Virtualization:
       - Overview: addons/mkvirt/index.md
       - Install Mirantis k0rdent Virtualization and HCO: addons/mkvirt/mkvirt-install.md
+      - Mirantis k0rdent Virtualization and HCO Airgap Install: addons/mkvirt/mkvirt-airgap-install.md
       - Virtualization Configuration: addons/mkvirt/configuration.md
       - Getting Started: addons/mkvirt/getting-started.md
       - Windows on Mirantis k0rdent Virtualization: addons/mkvirt/mkvirt-windows.md
