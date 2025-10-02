@@ -18,7 +18,7 @@ theme:
   custom_dir: docs/custom_theme
   favicon: img/k0rdent-logo-mark.svg
   logo: img/k0rdent-enterprise-logo-horizontal-inverted.svg
-  
+
   palette:
     - scheme: default
       toggle:
@@ -92,7 +92,7 @@ plugins:
         admin-rbac.md: admin/access/rbac/index.md
         admin-backup.md: admin/backup/index.md
         user-create-cluster.md: user/user-create-cluster.md
-        user-create-service.md: user/services/index.md 
+        user-create-service.md: user/services/index.md
         user-enable-drift-detection.md: user/user-enable-drift-detection.md
         template-intro.md: reference/template/index.md
         template-predefined.md: reference/template/template-predefined.md
@@ -109,7 +109,7 @@ plugins:
         appendix-providers.md: appendix/appendix-providers.md
         admin/access/credentials/credentials-propogation.md: admin/access/credentials/credentials-propagation.md
         credentials-propogation.md: admin/access/credentials/credentials-propagation.md
- 
+
 nav:
   - Welcome to the docs: index.md
   - k0rdent concepts:
@@ -133,7 +133,7 @@ nav:
         - Create a multi-node k0s cluster: admin/installation/create-mgmt-clusters/mgmt-create-k0s-multi.md
         - Create a multinode EKS cluster: admin/installation/create-mgmt-clusters/mgmt-create-eks-multi.md
       - Install k0rdent: admin/installation/install-k0rdent.md
-      - Install k0rdent in airgapped environment: 
+      - Install k0rdent in airgapped environment:
         - Overview: admin/installation/airgap/index.md
         - Prerequisites: admin/installation/airgap/airgap-prereq.md
         - Installing an HTTP server: admin/installation/airgap/airgap-http.md
@@ -154,7 +154,7 @@ nav:
         - Okta: admin/installation/auth/okta.md
         - Entra-ID: admin/installation/auth/entra-id.md
         - Pinniped: admin/installation/auth/pinniped.md
-    - Working with clusters: 
+    - Working with clusters:
       - Overview: admin/clusters/index.md
       - Deploying standalone clusters: admin/clusters/deploy-cluster.md
       - Updating standalone clusters: admin/clusters/update-cluster.md
@@ -164,40 +164,40 @@ nav:
       - Overview: admin/services/index.md
       - Using and creating service templates: admin/services/admin-service-templates.md
       - Creating multi-cluster services: admin/services/admin-create-multiclusterservice.md
-    - Hosted control planes: 
+    - Hosted control planes:
       - Overview: admin/hosted-control-plane/index.md
       - AWS: admin/hosted-control-plane/hcp-aws.md
       - Azure: admin/hosted-control-plane/hcp-azure.md
       - OpenStack: admin/hosted-control-plane/hcp-openstack.md
       - VMware: admin/hosted-control-plane/hcp-vmware.md
       - GCP: admin/hosted-control-plane/hcp-gcp.md
-    - k0rdent Observability & FinOps: 
+    - k0rdent Observability & FinOps:
       - Overview: admin/kof/index.md
       - Architecture: admin/kof/kof-architecture.md
       - Installing KOF: admin/kof/kof-install.md
       - Verifying the KOF installation: admin/kof/kof-verification.md
       - Using KOF: admin/kof/kof-using.md
-      - KOF Alerts: admin/kof/kof-alerts.md      
+      - KOF Alerts: admin/kof/kof-alerts.md
       - Storing KOF data: admin/kof/kof-storing.md
       - Scaling KOF: admin/kof/kof-scaling.md
       - Maintaining KOF: admin/kof/kof-maintainence.md
       - Resource Limits: admin/kof/kof-limits.md
       - Version Compatibility: admin/kof/kof-version-compat.md
-    - Upgrading k0rdent: 
+    - Upgrading k0rdent:
       - Overview: admin/upgrade/index.md
     - Access Management:
       - Overview: admin/access/index.md
-      - k0rdent Credentials Management: 
+      - k0rdent Credentials Management:
         - Overview: admin/access/credentials/index.md
         - The Credentials Process: admin/access/credentials/credentials-process.md
         - Credential Propagation: admin/access/credentials/credentials-propagation.md
-      - k0rdent Role Based Access Control (RBAC): 
+      - k0rdent Role Based Access Control (RBAC):
         - Overview: admin/access/rbac/index.md
         - What Roles Do: admin/access/rbac/what-roles-do.md
         - Role Definitions: admin/access/rbac/roles-summary.md
     - Backup and Restore:
       - Overview: admin/backup/index.md
-      - Preparing for Backup: admin/backup/prepare-backups.md      
+      - Preparing for Backup: admin/backup/prepare-backups.md
       - Scheduled Management Backups: admin/backup/scheduled-backups.md
       - Management Backup on Demand: admin/backup/ondemand-backups.md
       - What's Included in a Backup: admin/backup/whats-included.md
@@ -205,7 +205,7 @@ nav:
       - Upgrades and Rollbacks: admin/backup/upgrades-rollbacks.md
       - Caveats: admin/backup/caveats.md
       - Customization: admin/backup/customization.md
-    - Troubleshooting: 
+    - Troubleshooting:
       - Overview: troubleshooting/index.md
       - Events: troubleshooting/events.md
       - AWS VPCs: troubleshooting/admin-troubleshooting-aws-vpcs.md
@@ -216,7 +216,7 @@ nav:
     - User Guide:
       - Overview: user/index.md
       - Creating clusters: user/user-create-cluster.md
-      - Adding services: 
+      - Adding services:
         - Overview: user/services/index.md
         - Understanding ServiceTemplates: user/services/understanding-servicetemplates.md
         - Adding a Service to a ClusterDeployment: user/services/add-service-to-clusterdeployment.md
@@ -243,7 +243,7 @@ nav:
       - Usage: addons/ui/k0rdent-ui-usage.md
   - Reference:
     - Overview: reference/index.md
-    - k0rdent CRDs: reference/crds/index.md    
+    - k0rdent CRDs: reference/crds/index.md
     - k0rdent Templates Reference:
       - Introduction to k0rdent templates: reference/template/index.md
       - Removing predefined templates: reference/template/template-predefined.md
@@ -261,6 +261,7 @@ nav:
     - Deploy from a private secure registry: appendix/private-secure-registry.md
     - Understanding the dry run: appendix/appendix-dryrun.md
     - Cloud provider credentials management in CAPI: appendix/appendix-providers.md
+    - Custom CAPI provider template creation in the airgapped environment: appendix/appendix-custom-ag-templates.md
   - Release Notes:
     - Overview: release-notes/index.md
     - v1.0.0: release-notes/release-notes-v1.0.0.md
@@ -271,7 +272,7 @@ nav:
       - Overview: addons/ceph/index.md
       - Installing Ceph: addons/ceph/ceph-install.md
       - Installing Ceph in an airgapped environment: addons/ceph/ceph-airgap.md
-      - Configuring Ceph: 
+      - Configuring Ceph:
         - Overview:  addons/ceph/configuration/index.md
         - MiraCeph: addons/ceph/configuration/MiraCeph.md
         - MiraCephHealth: addons/ceph/configuration/MiraCephHealth.md
@@ -410,17 +411,17 @@ extra:
         sveltosProvider: 0.57.2
     servicesVersions:
       dashVersions:
-        certManager: 1-17-1  
+        certManager: 1-17-1
         externalSecrets: 0-11-0
-        ingressNginx: 4-11-3   
-        kyverno: 3-2-6       
-        velero: 8-1-0   
+        ingressNginx: 4-11-3
+        kyverno: 3-2-6
+        velero: 8-1-0
       dotVersions:
-        certManager: 1.17.1  
+        certManager: 1.17.1
         externalSecrets: 0.11.0
-        ingressNginx: 4.11.3   
-        kyverno: 3.2.6       
-        velero: 8.1.0  
+        ingressNginx: 4.11.3
+        kyverno: 3.2.6
+        velero: 8.1.0
     addonVersions:
       digests:
         k0rdentUI: sha256:60ab7a9dafff9dc143a1d5d697052408f3cf8b27f53c460700d09668a5eb2c71
@@ -428,7 +429,7 @@ extra:
       dashVersions:
         ceph: 1-0-3
         dex: 0-19-1
-        hco: 1-16-0-mira  
+        hco: 1-16-1-mira
         stacklightOperator: 0-1-0
         stacklightChart: 0-1-0-mcp-16
         clusterApiProviderCapm3: 0-2-1
@@ -443,4 +444,3 @@ extra:
         clusterApiProviderCapm3: 0.2.1
         capm3StandaloneCpCluster: 0.2.1
         k0rdentUI: 1.0.0-rc7
-
