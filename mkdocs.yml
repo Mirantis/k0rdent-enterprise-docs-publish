@@ -213,6 +213,10 @@ nav:
       - GCP: troubleshooting/known-issues-gcp.md
       - Custom CA Certificates: troubleshooting/known-issues-custom-ca.md
       - Clusterctl Issues: troubleshooting/known-issues-clusterctl.md
+    - Template How-To:
+      - Overview: templatehowto/index.md
+      - The Templating System: templatehowto/the-templating-system-common-threads.md
+      - Creating and Modifying Templates: templatehowto/modifying-clusterTemplates.md
     - User Guide:
       - Overview: user/index.md
       - Creating clusters: user/user-create-cluster.md
