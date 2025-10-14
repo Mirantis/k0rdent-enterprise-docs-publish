@@ -762,11 +762,11 @@ CAPM3 provider can also be installed for {{{ docsVersionInfo.k0rdentName }}} and
           images:
             capm_provider_metal3: registry.local/k0rdent-bm/images/metal3-io/cluster-api-provider-metal3:v1.9.3-2025-06-04-15-35-00
             ip_address_manager: registry.local/k0rdent-bm/images/external/metal3-io/ip-address-manager:v1.9.4-2025-04-16-21-32-23
-   ```
+    ```
 
-   > WARNING:
-   > Replace `registry.local` with your actual registry hostname.
-   > Replace `binary.local` with the actual path used by your HTTP server.
+    > WARNING:
+    > Replace `registry.local` with your actual registry hostname.
+    > Replace `binary.local` with the actual path used by your HTTP server.
 
 6. Continue with steps 4,5,6 of the "Prepare {{{ docsVersionInfo.k0rdentName }}} for Bare Metal clusters" section
 
