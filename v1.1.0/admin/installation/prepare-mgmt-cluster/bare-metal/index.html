@@ -5324,12 +5324,149 @@ the <code>namespace</code> of the <code>ClusterTemplate</code> object used for d
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">online</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">bmc</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;BMC_ADDRESS&gt;</span><span class="w">  </span><span class="c1"># e.g., ipmi://192.168.1.100:623</span>
+<span class="w">    </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;BMC_ADDRESS&gt;</span><span class="w">  </span><span class="c1"># e.g., 192.168.1.100:623</span>
 <span class="w">    </span><span class="nt">credentialsName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;BMH_NAME&gt;-bmc-secret</span>
 <span class="w">    </span><span class="c1">#disableCertificateVerification: true # only needed when using redfish protocol</span>
 <span class="w">  </span><span class="nt">bootMACAddress</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;MAC_ADDRESS&gt;</span><span class="w"> </span><span class="c1"># MAC address that is used for booting. It’s a MAC address of an actual NIC of the host, not the BMC MAC address.</span>
 <span class="w">  </span><span class="c1">#bootMode: legacy # UEFI or legacy BIOS. UEFI is the default and should be used unless there are serious reasons not to.</span>
 </code></pre></div>
+<p>One of the two remote management protocols must be supported by a BMC to get it work with Mirantis k0rdent Enterprise bare metal infrastructure provider.
+   See <a href="https://book.metal3.io/bmo/supported_hardware.html#supported-hardware">Metal3 documentation</a> for details.</p>
+<p><strong>IPMI protocol.</strong></p>
+<p>IPMI is the oldest and by far the most widely available remote management protocol.</p>
+<p>There are notes and examples of setting <code>bmc.address</code> in the table below.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">BMC address format &amp; examples</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ipmi://<host>:<port></td>
+<td style="text-align: left;">Port is optional, defaults to 623.</td>
+</tr>
+<tr>
+<td style="text-align: left;">ipmi://1.2.3.4</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><host>:<port></td>
+<td style="text-align: left;">IPMI is the default protocol in Metal3.</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.2.3.4:623</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">1.2.3.4</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Only network boot over iPXE is supported for IPMI.</p>
+</div>
+<p><strong>Redfish protocol.</strong></p>
+<p>Before using Redfish, please read the related <a href="https://book.metal3.io/bmo/supported_hardware.html#redfish-and-its-variants">Metal3 documentation</a> carefully
+   and ensure that your hardware is supported and has the required licences.</p>
+<p>There are notes and examples of setting <code>bmc.address</code> for different vendors and boot methods in the table below. </p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Technology</th>
+<th style="text-align: left;">Boot method</th>
+<th style="text-align: left;">BMC address format &amp; examples</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Generic Redfish</td>
+<td style="text-align: left;">iPXE</td>
+<td style="text-align: left;">redfish://<host>:<port>/<systemID></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">redfish://1.2.3.4/redfish/v1/Systems/1</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Virtual media</td>
+<td style="text-align: left;">redfish-virtualmedia://<host>:<port>/<systemID></td>
+<td style="text-align: left;">Must not be used for Dell machines.</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">redfish-virtualmedia://1.2.3.4/redfish/v1/Systems/1</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Dell iDRAC 8+</td>
+<td style="text-align: left;">iPXE</td>
+<td style="text-align: left;">idrac-redfish://<host>:<port>/<systemID></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">idrac-redfish://1.2.3.4/redfish/v1/Systems/System.Embedded.1</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Virtual media</td>
+<td style="text-align: left;">idrac-virtualmedia://<host>:<port>/<systemID></td>
+<td style="text-align: left;">Requires firmware v6.10.30.00+ for iDRAC 9, v2.75.75.75+ for iDRAC 8.</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">idrac-virtualmedia://1.2.3.4/redfish/v1/Systems/System.Embedded.1</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">HPE iLO 5 and 6</td>
+<td style="text-align: left;">iPXE</td>
+<td style="text-align: left;">ilo5-redfish://<host>:<port>/<systemID></td>
+<td style="text-align: left;">An alias of redfish for convenience. RAID management only on iLO 6.</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ilo5-redfish://1.2.3.4/redfish/v1/Systems/1</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Virtual media</td>
+<td style="text-align: left;">ilo5-virtualmedia://<host>:<port>/<systemID></td>
+<td style="text-align: left;">An alias of redfish for convenience. RAID management only on iLO 6.</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ilo5-virtualmedia://1.2.3.4/redfish/v1/Systems/1</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p>For information on Redfish interoperability please check the <a href="https://book.metal3.io/bmo/supported_hardware.html#redfish-interoperability">Metal3 Documentation</a>.</p>
+<p><code>bmc.disableCertificateVerification</code> (useful with Redfish only) can be set to <code>true</code> to skip certificate validation
+   for <code>https</code> connection between a BMC and the management cluster.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Redfish support for Mirantis k0rdent Enterprise with bare metal infrastructure provider was tested on a limited number of vendors and protocols.
+Please contact Mirantis for detailed information.</p>
+</div>
 </li>
 <li>
 <p>Wait for <code>BareMetalHost</code> objects to complete enrollment</p>
