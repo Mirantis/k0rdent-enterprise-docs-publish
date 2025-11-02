@@ -199,25 +199,76 @@ For detailed instructions, see the [Metal3 BareMetalHost enrollment guide](https
    > `namespace` of all the objects used to describe bare metal machines and corresponding cluster must be equal to
    > the `namespace` of the `ClusterTemplate` object used for deployment of that cluster.
 
-2. Create `BareMetalHost` objects
+   2. Create `BareMetalHost` objects
 
-    A `BareMetalHost` object represents the physical machine. It contains a reference to the `Secret` created above. For example:
+       A `BareMetalHost` object represents the physical machine. It contains a reference to the `Secret` created above. For example:
 
-    ```yaml
-    apiVersion: metal3.io/v1alpha1
-    kind: BareMetalHost
-    metadata:
-      name: <BMH_NAME>
-      namespace: <NAMESPACE>
-    spec:
-      online: true
-      bmc:
-        address: <BMC_ADDRESS>  # e.g., ipmi://192.168.1.100:623
-        credentialsName: <BMH_NAME>-bmc-secret
-        #disableCertificateVerification: true # only needed when using redfish protocol
-      bootMACAddress: <MAC_ADDRESS> # MAC address that is used for booting. It’s a MAC address of an actual NIC of the host, not the BMC MAC address.
-      #bootMode: legacy # UEFI or legacy BIOS. UEFI is the default and should be used unless there are serious reasons not to.
-    ```
+       ```yaml
+       apiVersion: metal3.io/v1alpha1
+       kind: BareMetalHost
+       metadata:
+         name: <BMH_NAME>
+         namespace: <NAMESPACE>
+       spec:
+         online: true
+         bmc:
+           address: <BMC_ADDRESS>  # e.g., 192.168.1.100:623
+           credentialsName: <BMH_NAME>-bmc-secret
+           #disableCertificateVerification: true # only needed when using redfish protocol
+         bootMACAddress: <MAC_ADDRESS> # MAC address that is used for booting. It’s a MAC address of an actual NIC of the host, not the BMC MAC address.
+         #bootMode: legacy # UEFI or legacy BIOS. UEFI is the default and should be used unless there are serious reasons not to.
+       ```
+
+       One of the two remote management protocols must be supported by a BMC to get it work with {{{ docsVersionInfo.k0rdentName }}} bare metal infrastructure provider.
+       See [Metal3 documentation](https://book.metal3.io/bmo/supported_hardware.html#supported-hardware) for details.
+       
+       **IPMI protocol.**
+    
+       IPMI is the oldest and by far the most widely available remote management protocol.
+
+       There are notes and examples of setting `bmc.address` in the table below.
+ 
+       | BMC address format & examples | Notes                                   |
+       |:------------------------------|:----------------------------------------|
+       | ipmi://<host>:<port>          | Port is optional, defaults to 623.      |
+       | ipmi://1.2.3.4                |                                         |
+       | <host>:<port>                 | IPMI is the default protocol in Metal3. |
+       | 1.2.3.4:623                   |                                         |
+       | 1.2.3.4                       |                                         |
+
+       > NOTE:
+       > Only network boot over iPXE is supported for IPMI.
+   
+       **Redfish protocol.**
+
+       Before using Redfish, please read the related [Metal3 documentation](https://book.metal3.io/bmo/supported_hardware.html#redfish-and-its-variants) carefully
+       and ensure that your hardware is supported and has the required licences.
+    
+       There are notes and examples of setting `bmc.address` for different vendors and boot methods in the table below. 
+
+       | Technology      | Boot method   | BMC address format & examples                                     | Notes                                                                 |
+       |:----------------|:--------------|:------------------------------------------------------------------|:----------------------------------------------------------------------|
+       | Generic Redfish | iPXE          | redfish://<host>:<port>/<systemID>                                |                                                                       |
+       |                 |               | redfish://1.2.3.4/redfish/v1/Systems/1                            |                                                                       |
+       |                 | Virtual media | redfish-virtualmedia://<host>:<port>/<systemID>                   | Must not be used for Dell machines.                                   |
+       |                 |               | redfish-virtualmedia://1.2.3.4/redfish/v1/Systems/1               |                                                                       |
+       | Dell iDRAC 8+   | iPXE          | idrac-redfish://<host>:<port>/<systemID>                          |                                                                       |	
+       |                 |               | idrac-redfish://1.2.3.4/redfish/v1/Systems/System.Embedded.1      |                                                                       |
+       |                 | Virtual media | idrac-virtualmedia://<host>:<port>/<systemID>                     | Requires firmware v6.10.30.00+ for iDRAC 9, v2.75.75.75+ for iDRAC 8. |
+       |                 |               | idrac-virtualmedia://1.2.3.4/redfish/v1/Systems/System.Embedded.1 |                                                                       |
+       | HPE iLO 5 and 6 | iPXE          | ilo5-redfish://<host>:<port>/<systemID>                           | An alias of redfish for convenience. RAID management only on iLO 6.   |
+       |                 |               | ilo5-redfish://1.2.3.4/redfish/v1/Systems/1                       |                                                                       |
+       |                 | Virtual media | ilo5-virtualmedia://<host>:<port>/<systemID>                      | An alias of redfish for convenience. RAID management only on iLO 6.   |
+       |                 |               | ilo5-virtualmedia://1.2.3.4/redfish/v1/Systems/1                  |                                                                       |
+
+       For information on Redfish interoperability please check the [Metal3 Documentation](https://book.metal3.io/bmo/supported_hardware.html#redfish-interoperability).
+
+       `bmc.disableCertificateVerification` (useful with Redfish only) can be set to `true` to skip certificate validation
+       for `https` connection between a BMC and the management cluster.
+
+       > NOTE:
+       > Redfish support for {{{ docsVersionInfo.k0rdentName }}} with bare metal infrastructure provider was tested on a limited number of vendors and protocols.
+       > Please contact Mirantis for detailed information.
 
 3. Wait for `BareMetalHost` objects to complete enrollment
 
